@@ -28,11 +28,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package saw.gui;
 
+import common.CommonTools;
+import common.DataFactory;
 import common.DesignForm;
 import dialog.frmForce;
 import filehandlers.ImageTracker;
 import java.util.Vector;
-import saw.components.*;
+import components.*;
+import components.Equipment;
+import filehandlers.FileCommon;
+import filehandlers.Media;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JPopupMenu;
 
 public class frmMain extends javax.swing.JFrame implements DesignForm {
 
@@ -40,11 +51,27 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private ImageTracker imageTracker = new ImageTracker();
     //public dlgOpen dOpen = new dlgOpen(this, true);
     public frmForce dForce = new frmForce(this, imageTracker);
+    Object[][] Equipment = { { null }, { null }, { null }, { null }, { null }, { null }, { null }, { null } };
+    final int BALLISTIC = 0,
+              ENERGY = 1,
+              MISSILE = 2,
+              PHYSICAL = 3,
+              EQUIPMENT = 4,
+              AMMUNITION = 6,
+              SELECTED = 7,
+              ARTILLERY = 5;
+    public DataFactory data;
+    java.awt.Color RedCol = new java.awt.Color( 200, 0, 0 ),
+                   GreenCol = new java.awt.Color( 0, 40, 0 );
+    abPlaceable CurItem;
+    JPopupMenu mnuUtilities = new JPopupMenu();
 
     /** Creates new form frmMain */
     public frmMain() {
 
         initComponents();
+
+        cmbMotiveTypeActionPerformed(null);
     }
 
     /** This method is called from within the constructor to
@@ -157,6 +184,9 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         chkEscapePod = new javax.swing.JCheckBox();
         chkMinesweeper = new javax.swing.JCheckBox();
         chkJetBooster = new javax.swing.JCheckBox();
+        chkSupercharger = new javax.swing.JCheckBox();
+        lblSupercharger = new javax.swing.JLabel();
+        cmbSCLoc = new javax.swing.JComboBox();
         pnlChassisMods = new javax.swing.JPanel();
         chkFlotationHull = new javax.swing.JCheckBox();
         chkLimitedAmph = new javax.swing.JCheckBox();
@@ -213,14 +243,105 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         lblArmorTonsWasted = new javax.swing.JLabel();
         lblArmorLeftInLot = new javax.swing.JLabel();
         pnlEquipment = new javax.swing.JPanel();
+        tbpWeaponChooser = new javax.swing.JTabbedPane();
+        pnlBallistic = new javax.swing.JPanel();
+        jSeparator5 = new javax.swing.JSeparator();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        lstChooseBallistic = new javax.swing.JList();
+        jSeparator6 = new javax.swing.JSeparator();
+        pnlEnergy = new javax.swing.JPanel();
+        jSeparator7 = new javax.swing.JSeparator();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        lstChooseEnergy = new javax.swing.JList();
+        jSeparator8 = new javax.swing.JSeparator();
+        pnlMissile = new javax.swing.JPanel();
+        jSeparator9 = new javax.swing.JSeparator();
+        jScrollPane19 = new javax.swing.JScrollPane();
+        lstChooseMissile = new javax.swing.JList();
+        jSeparator10 = new javax.swing.JSeparator();
+        pnlPhysical = new javax.swing.JPanel();
+        jSeparator11 = new javax.swing.JSeparator();
+        jScrollPane20 = new javax.swing.JScrollPane();
+        lstChoosePhysical = new javax.swing.JList();
+        jSeparator12 = new javax.swing.JSeparator();
+        pnlEquipmentChooser = new javax.swing.JPanel();
+        jSeparator13 = new javax.swing.JSeparator();
+        jScrollPane21 = new javax.swing.JScrollPane();
+        lstChooseEquipment = new javax.swing.JList();
+        jSeparator14 = new javax.swing.JSeparator();
+        pnlArtillery = new javax.swing.JPanel();
+        jSeparator18 = new javax.swing.JSeparator();
+        jScrollPane24 = new javax.swing.JScrollPane();
+        lstChooseArtillery = new javax.swing.JList();
+        jSeparator19 = new javax.swing.JSeparator();
+        pnlAmmunition = new javax.swing.JPanel();
+        jSeparator15 = new javax.swing.JSeparator();
+        jScrollPane22 = new javax.swing.JScrollPane();
+        lstChooseAmmunition = new javax.swing.JList();
+        jSeparator16 = new javax.swing.JSeparator();
+        pnlSpecials = new javax.swing.JPanel();
+        jLabel36 = new javax.swing.JLabel();
+        chkUseTC = new javax.swing.JCheckBox();
+        chkFCSAIV = new javax.swing.JCheckBox();
+        chkFCSAV = new javax.swing.JCheckBox();
+        chkFCSApollo = new javax.swing.JCheckBox();
+        chkClanCASE = new javax.swing.JCheckBox();
+        pnlSelected = new javax.swing.JPanel();
+        jScrollPane23 = new javax.swing.JScrollPane();
+        lstSelectedEquipment = new javax.swing.JList();
+        pnlEquipInfo = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        lblInfoAVSL = new javax.swing.JLabel();
+        lblInfoAVSW = new javax.swing.JLabel();
+        lblInfoAVCI = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        lblInfoIntro = new javax.swing.JLabel();
+        lblInfoExtinct = new javax.swing.JLabel();
+        lblInfoReintro = new javax.swing.JLabel();
+        jLabel56 = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        jLabel60 = new javax.swing.JLabel();
+        lblInfoName = new javax.swing.JLabel();
+        lblInfoType = new javax.swing.JLabel();
+        lblInfoHeat = new javax.swing.JLabel();
+        lblInfoDamage = new javax.swing.JLabel();
+        lblInfoRange = new javax.swing.JLabel();
+        jSeparator17 = new javax.swing.JSeparator();
+        jLabel61 = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
+        jLabel63 = new javax.swing.JLabel();
+        jLabel64 = new javax.swing.JLabel();
+        lblInfoAmmo = new javax.swing.JLabel();
+        lblInfoTonnage = new javax.swing.JLabel();
+        lblInfoCrits = new javax.swing.JLabel();
+        lblInfoSpecials = new javax.swing.JLabel();
+        jSeparator20 = new javax.swing.JSeparator();
+        jLabel65 = new javax.swing.JLabel();
+        lblInfoCost = new javax.swing.JLabel();
+        jLabel66 = new javax.swing.JLabel();
+        lblInfoBV = new javax.swing.JLabel();
+        jLabel67 = new javax.swing.JLabel();
+        lblInfoMountRestrict = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
+        lblInfoRulesLevel = new javax.swing.JLabel();
+        pnlControls = new javax.swing.JPanel();
+        btnRemoveEquip = new javax.swing.JButton();
+        btnClearEquip = new javax.swing.JButton();
+        btnAddEquip = new javax.swing.JButton();
         pnlFluff = new javax.swing.JPanel();
         pnlInfoPane = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txtInfoTonnage = new javax.swing.JTextField();
+        txtInfoFreeTons = new javax.swing.JTextField();
+        txtInfoFreeCrits = new javax.swing.JTextField();
+        txtInfoUnplaced = new javax.swing.JTextField();
+        txtInfoBattleValue = new javax.swing.JTextField();
+        txtInfoCost = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -239,9 +360,15 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         jButton6 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mnuExit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         pnlBasics.setMinimumSize(new java.awt.Dimension(788, 493));
@@ -264,6 +391,11 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         cmbRulesLevel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tournament Legal", "Advanced", "Experimental" }));
         cmbRulesLevel.setMinimumSize(new java.awt.Dimension(150, 20));
         cmbRulesLevel.setPreferredSize(new java.awt.Dimension(150, 20));
+        cmbRulesLevel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbRulesLevelActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -368,7 +500,6 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         pblBasicInfo.add(chkYearRestrict, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         pnlBasicSetup.add(pblBasicInfo, gridBagConstraints);
 
@@ -378,6 +509,11 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         cmbMotiveType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hovercraft", "Naval (Displacement)", "Naval (Hydrofoil)", "Naval (Submarine)", "Tracked", "VTOL", "Wheeled", "WiGE" }));
         cmbMotiveType.setMinimumSize(new java.awt.Dimension(150, 20));
         cmbMotiveType.setPreferredSize(new java.awt.Dimension(150, 20));
+        cmbMotiveType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMotiveTypeActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -454,8 +590,7 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         pnlBasicSetup.add(pnlChassis, gridBagConstraints);
 
@@ -505,8 +640,7 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         pnlBasicSetup.add(pnlMovement, gridBagConstraints);
 
         pnlTurrets.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Turrets"));
@@ -548,8 +682,9 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.ipady = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         pnlBasicSetup.add(pnlTurrets, gridBagConstraints);
 
@@ -938,7 +1073,7 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 5;
+        gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         pnlBasicSetup.add(pnlSummary, gridBagConstraints);
 
@@ -1038,8 +1173,7 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         pnlBasicSetup.add(pnlInformation, gridBagConstraints);
@@ -1049,6 +1183,7 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
 
         chkArmoredMotive.setText("Armored Motive System");
         gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         pnlExperimental.add(chkArmoredMotive, gridBagConstraints);
 
@@ -1056,35 +1191,75 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         pnlExperimental.add(chkCommandConsole, gridBagConstraints);
 
         chkEscapePod.setText("Combat Vehicle Escape Pod");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         pnlExperimental.add(chkEscapePod, gridBagConstraints);
 
         chkMinesweeper.setText("Minesweeper");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         pnlExperimental.add(chkMinesweeper, gridBagConstraints);
 
         chkJetBooster.setText("VTOL Jet Booster");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         pnlExperimental.add(chkJetBooster, gridBagConstraints);
 
+        chkSupercharger.setText("Supercharger");
+        chkSupercharger.setEnabled(false);
+        chkSupercharger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkSuperchargerActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        pnlExperimental.add(chkSupercharger, gridBagConstraints);
+
+        lblSupercharger.setText("Install in:");
+        lblSupercharger.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        pnlExperimental.add(lblSupercharger, gridBagConstraints);
+
+        cmbSCLoc.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CT", "LT", "RT" }));
+        cmbSCLoc.setEnabled(false);
+        cmbSCLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSCLocActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        pnlExperimental.add(cmbSCLoc, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.ipady = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         pnlBasicSetup.add(pnlExperimental, gridBagConstraints);
 
@@ -1128,9 +1303,10 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 1;
+        gridBagConstraints.ipady = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         pnlBasicSetup.add(pnlChassisMods, gridBagConstraints);
 
@@ -1485,6 +1661,810 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         pnlBasics.addTab("Armor", jPanel2);
 
         pnlEquipment.setLayout(new java.awt.GridBagLayout());
+
+        tbpWeaponChooser.setTabPlacement(javax.swing.JTabbedPane.RIGHT);
+        tbpWeaponChooser.setMaximumSize(new java.awt.Dimension(300, 300));
+        tbpWeaponChooser.setMinimumSize(new java.awt.Dimension(300, 300));
+
+        pnlBallistic.setLayout(new javax.swing.BoxLayout(pnlBallistic, javax.swing.BoxLayout.Y_AXIS));
+
+        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator5.setAlignmentX(0.0F);
+        jSeparator5.setAlignmentY(0.0F);
+        pnlBallistic.add(jSeparator5);
+
+        jScrollPane8.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane8.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane8.setMaximumSize(new java.awt.Dimension(200, 260));
+        jScrollPane8.setMinimumSize(new java.awt.Dimension(200, 260));
+        jScrollPane8.setPreferredSize(new java.awt.Dimension(200, 260));
+
+        lstChooseBallistic.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Placeholder" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstChooseBallistic.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstChooseBallistic.setMaximumSize(new java.awt.Dimension(180, 10000));
+        lstChooseBallistic.setMinimumSize(new java.awt.Dimension(180, 100));
+        lstChooseBallistic.setPreferredSize(null);
+        lstChooseBallistic.setVisibleRowCount(16);
+        lstChooseBallistic.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstChooseBallisticValueChanged(evt);
+            }
+        });
+        MouseListener mlBallistic = new MouseAdapter() {
+            public void mouseClicked( MouseEvent e ) {
+                if ( e.getClickCount() == 2 && e.getButton() == 1 ) {
+                    btnAddEquipActionPerformed( null );
+                }
+            }
+        };
+        lstChooseBallistic.addMouseListener( mlBallistic );
+        lstChooseBallistic.setCellRenderer( new saw.gui.EquipmentListRenderer( this ) );
+        jScrollPane8.setViewportView(lstChooseBallistic);
+
+        pnlBallistic.add(jScrollPane8);
+
+        jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator6.setAlignmentX(0.0F);
+        jSeparator6.setAlignmentY(0.0F);
+        pnlBallistic.add(jSeparator6);
+
+        tbpWeaponChooser.addTab("Ballistic", pnlBallistic);
+
+        pnlEnergy.setLayout(new javax.swing.BoxLayout(pnlEnergy, javax.swing.BoxLayout.Y_AXIS));
+
+        jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator7.setAlignmentX(0.0F);
+        jSeparator7.setAlignmentY(0.0F);
+        pnlEnergy.add(jSeparator7);
+
+        jScrollPane9.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane9.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane9.setMaximumSize(new java.awt.Dimension(200, 260));
+        jScrollPane9.setMinimumSize(new java.awt.Dimension(200, 260));
+        jScrollPane9.setPreferredSize(new java.awt.Dimension(200, 260));
+
+        lstChooseEnergy.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Placeholder" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstChooseEnergy.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstChooseEnergy.setMaximumSize(new java.awt.Dimension(180, 10000));
+        lstChooseEnergy.setMinimumSize(new java.awt.Dimension(180, 100));
+        lstChooseEnergy.setPreferredSize(null);
+        lstChooseEnergy.setVisibleRowCount(16);
+        lstChooseEnergy.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstChooseEnergyValueChanged(evt);
+            }
+        });
+        MouseListener mlEnergy = new MouseAdapter() {
+            public void mouseClicked( MouseEvent e ) {
+                if ( e.getClickCount() == 2 && e.getButton() == 1 ) {
+                    btnAddEquipActionPerformed( null );
+                }
+            }
+        };
+        lstChooseEnergy.addMouseListener( mlEnergy );
+        lstChooseEnergy.setCellRenderer( new saw.gui.EquipmentListRenderer( this ) );
+        jScrollPane9.setViewportView(lstChooseEnergy);
+
+        pnlEnergy.add(jScrollPane9);
+
+        jSeparator8.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator8.setAlignmentX(0.0F);
+        jSeparator8.setAlignmentY(0.0F);
+        pnlEnergy.add(jSeparator8);
+
+        tbpWeaponChooser.addTab("Energy", pnlEnergy);
+
+        pnlMissile.setLayout(new javax.swing.BoxLayout(pnlMissile, javax.swing.BoxLayout.Y_AXIS));
+
+        jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator9.setAlignmentX(0.0F);
+        jSeparator9.setAlignmentY(0.0F);
+        pnlMissile.add(jSeparator9);
+
+        jScrollPane19.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane19.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane19.setMaximumSize(new java.awt.Dimension(200, 260));
+        jScrollPane19.setMinimumSize(new java.awt.Dimension(200, 260));
+        jScrollPane19.setPreferredSize(new java.awt.Dimension(200, 260));
+
+        lstChooseMissile.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Placeholder" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstChooseMissile.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstChooseMissile.setMaximumSize(new java.awt.Dimension(180, 10000));
+        lstChooseMissile.setMinimumSize(new java.awt.Dimension(180, 100));
+        lstChooseMissile.setPreferredSize(null);
+        lstChooseMissile.setVisibleRowCount(16);
+        lstChooseMissile.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstChooseMissileValueChanged(evt);
+            }
+        });
+        MouseListener mlMissile = new MouseAdapter() {
+            public void mouseClicked( MouseEvent e ) {
+                if ( e.getClickCount() == 2 && e.getButton() == 1 ) {
+                    btnAddEquipActionPerformed( null );
+                }
+            }
+        };
+        lstChooseMissile.addMouseListener( mlMissile );
+        lstChooseMissile.setCellRenderer( new saw.gui.EquipmentListRenderer( this ) );
+        jScrollPane19.setViewportView(lstChooseMissile);
+
+        pnlMissile.add(jScrollPane19);
+
+        jSeparator10.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator10.setAlignmentX(0.0F);
+        jSeparator10.setAlignmentY(0.0F);
+        pnlMissile.add(jSeparator10);
+
+        tbpWeaponChooser.addTab("Missile", pnlMissile);
+
+        pnlPhysical.setLayout(new javax.swing.BoxLayout(pnlPhysical, javax.swing.BoxLayout.Y_AXIS));
+
+        jSeparator11.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator11.setAlignmentX(0.0F);
+        jSeparator11.setAlignmentY(0.0F);
+        pnlPhysical.add(jSeparator11);
+
+        jScrollPane20.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane20.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane20.setMaximumSize(new java.awt.Dimension(200, 260));
+        jScrollPane20.setMinimumSize(new java.awt.Dimension(200, 260));
+        jScrollPane20.setPreferredSize(new java.awt.Dimension(200, 260));
+
+        lstChoosePhysical.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Placeholder" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstChoosePhysical.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstChoosePhysical.setMaximumSize(new java.awt.Dimension(180, 10000));
+        lstChoosePhysical.setMinimumSize(new java.awt.Dimension(180, 100));
+        lstChoosePhysical.setPreferredSize(null);
+        lstChoosePhysical.setVisibleRowCount(16);
+        lstChoosePhysical.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstChoosePhysicalValueChanged(evt);
+            }
+        });
+        MouseListener mlPhysical = new MouseAdapter() {
+            public void mouseClicked( MouseEvent e ) {
+                if ( e.getClickCount() == 2 && e.getButton() == 1 ) {
+                    btnAddEquipActionPerformed( null );
+                }
+            }
+        };
+        lstChoosePhysical.addMouseListener( mlPhysical );
+        lstChoosePhysical.setCellRenderer( new saw.gui.EquipmentListRenderer( this ) );
+        jScrollPane20.setViewportView(lstChoosePhysical);
+
+        pnlPhysical.add(jScrollPane20);
+
+        jSeparator12.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator12.setAlignmentX(0.0F);
+        jSeparator12.setAlignmentY(0.0F);
+        pnlPhysical.add(jSeparator12);
+
+        tbpWeaponChooser.addTab("Physical", pnlPhysical);
+
+        pnlEquipmentChooser.setLayout(new javax.swing.BoxLayout(pnlEquipmentChooser, javax.swing.BoxLayout.Y_AXIS));
+
+        jSeparator13.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator13.setAlignmentX(0.0F);
+        jSeparator13.setAlignmentY(0.0F);
+        pnlEquipmentChooser.add(jSeparator13);
+
+        jScrollPane21.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane21.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane21.setMaximumSize(new java.awt.Dimension(200, 260));
+        jScrollPane21.setMinimumSize(new java.awt.Dimension(200, 260));
+        jScrollPane21.setPreferredSize(new java.awt.Dimension(200, 260));
+
+        lstChooseEquipment.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Placeholder" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstChooseEquipment.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstChooseEquipment.setMaximumSize(new java.awt.Dimension(180, 10000));
+        lstChooseEquipment.setMinimumSize(new java.awt.Dimension(180, 100));
+        lstChooseEquipment.setPreferredSize(null);
+        lstChooseEquipment.setVisibleRowCount(16);
+        lstChooseEquipment.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstChooseEquipmentValueChanged(evt);
+            }
+        });
+        MouseListener mlEquipment = new MouseAdapter() {
+            public void mouseClicked( MouseEvent e ) {
+                if ( e.getClickCount() == 2 && e.getButton() == 1 ) {
+                    btnAddEquipActionPerformed( null );
+                }
+            }
+        };
+        lstChooseEquipment.addMouseListener( mlEquipment );
+        lstChooseEquipment.setCellRenderer( new saw.gui.EquipmentListRenderer( this ) );
+        jScrollPane21.setViewportView(lstChooseEquipment);
+
+        pnlEquipmentChooser.add(jScrollPane21);
+
+        jSeparator14.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator14.setAlignmentX(0.0F);
+        jSeparator14.setAlignmentY(0.0F);
+        pnlEquipmentChooser.add(jSeparator14);
+
+        tbpWeaponChooser.addTab("Equipment", pnlEquipmentChooser);
+
+        pnlArtillery.setLayout(new javax.swing.BoxLayout(pnlArtillery, javax.swing.BoxLayout.Y_AXIS));
+
+        jSeparator18.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator18.setAlignmentX(0.0F);
+        jSeparator18.setAlignmentY(0.0F);
+        pnlArtillery.add(jSeparator18);
+
+        jScrollPane24.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane24.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane24.setMaximumSize(new java.awt.Dimension(200, 260));
+        jScrollPane24.setMinimumSize(new java.awt.Dimension(200, 260));
+        jScrollPane24.setPreferredSize(new java.awt.Dimension(200, 260));
+
+        lstChooseArtillery.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Placeholder" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstChooseArtillery.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstChooseArtillery.setMaximumSize(new java.awt.Dimension(180, 10000));
+        lstChooseArtillery.setMinimumSize(new java.awt.Dimension(180, 100));
+        lstChooseArtillery.setPreferredSize(null);
+        lstChooseArtillery.setVisibleRowCount(16);
+        lstChooseArtillery.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstChooseArtilleryValueChanged(evt);
+            }
+        });
+        MouseListener mlArtillery = new MouseAdapter() {
+            public void mouseClicked( MouseEvent e ) {
+                if ( e.getClickCount() == 2 && e.getButton() == 1 ) {
+                    btnAddEquipActionPerformed( null );
+                }
+            }
+        };
+        lstChooseArtillery.addMouseListener( mlArtillery );
+        lstChooseArtillery.setCellRenderer( new saw.gui.EquipmentListRenderer( this ) );
+        jScrollPane24.setViewportView(lstChooseArtillery);
+
+        pnlArtillery.add(jScrollPane24);
+
+        jSeparator19.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator19.setAlignmentX(0.0F);
+        jSeparator19.setAlignmentY(0.0F);
+        pnlArtillery.add(jSeparator19);
+
+        tbpWeaponChooser.addTab("Artillery", pnlArtillery);
+
+        pnlAmmunition.setLayout(new javax.swing.BoxLayout(pnlAmmunition, javax.swing.BoxLayout.Y_AXIS));
+
+        jSeparator15.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator15.setAlignmentX(0.0F);
+        jSeparator15.setAlignmentY(0.0F);
+        pnlAmmunition.add(jSeparator15);
+
+        jScrollPane22.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane22.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane22.setMaximumSize(new java.awt.Dimension(200, 260));
+        jScrollPane22.setMinimumSize(new java.awt.Dimension(200, 260));
+        jScrollPane22.setPreferredSize(new java.awt.Dimension(200, 260));
+
+        lstChooseAmmunition.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Placeholder" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        lstChooseAmmunition.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        lstChooseAmmunition.setMaximumSize(new java.awt.Dimension(180, 10000));
+        lstChooseAmmunition.setMinimumSize(new java.awt.Dimension(180, 100));
+        lstChooseAmmunition.setPreferredSize(null);
+        lstChooseAmmunition.setVisibleRowCount(16);
+        lstChooseAmmunition.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstChooseAmmunitionValueChanged(evt);
+            }
+        });
+        MouseListener mlAmmo = new MouseAdapter() {
+            public void mouseClicked( MouseEvent e ) {
+                if ( e.getClickCount() == 2 && e.getButton() == 1 ) {
+                    btnAddEquipActionPerformed( null );
+                }
+            }
+        };
+        lstChooseAmmunition.addMouseListener( mlAmmo );
+        lstChooseAmmunition.setCellRenderer( new saw.gui.EquipmentListRenderer( this ) );
+        jScrollPane22.setViewportView(lstChooseAmmunition);
+
+        pnlAmmunition.add(jScrollPane22);
+
+        jSeparator16.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator16.setAlignmentX(0.0F);
+        jSeparator16.setAlignmentY(0.0F);
+        pnlAmmunition.add(jSeparator16);
+
+        tbpWeaponChooser.addTab("Ammunition", pnlAmmunition);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridheight = 2;
+        pnlEquipment.add(tbpWeaponChooser, gridBagConstraints);
+
+        pnlSpecials.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Specials"));
+        pnlSpecials.setLayout(new java.awt.GridBagLayout());
+
+        jLabel36.setText("Missile Guidance:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
+        pnlSpecials.add(jLabel36, gridBagConstraints);
+
+        chkUseTC.setText("Targeting Computer");
+        chkUseTC.setEnabled(false);
+        chkUseTC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkUseTCActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 2, 0, 0);
+        pnlSpecials.add(chkUseTC, gridBagConstraints);
+
+        chkFCSAIV.setText("Use Artemis IV");
+        chkFCSAIV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkFCSAIVActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
+        pnlSpecials.add(chkFCSAIV, gridBagConstraints);
+
+        chkFCSAV.setText("Use Artemis V");
+        chkFCSAV.setEnabled(false);
+        chkFCSAV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkFCSAVActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
+        pnlSpecials.add(chkFCSAV, gridBagConstraints);
+
+        chkFCSApollo.setText("Use MRM Apollo");
+        chkFCSApollo.setEnabled(false);
+        chkFCSApollo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkFCSApolloActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
+        pnlSpecials.add(chkFCSApollo, gridBagConstraints);
+
+        chkClanCASE.setText("Use Clan CASE");
+        chkClanCASE.setEnabled(false);
+        chkClanCASE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkClanCASEActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(8, 2, 0, 0);
+        pnlSpecials.add(chkClanCASE, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        pnlEquipment.add(pnlSpecials, gridBagConstraints);
+
+        pnlSelected.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Selected Equipment"));
+        pnlSelected.setMaximumSize(new java.awt.Dimension(212, 286));
+        pnlSelected.setMinimumSize(new java.awt.Dimension(212, 286));
+        pnlSelected.setLayout(new javax.swing.BoxLayout(pnlSelected, javax.swing.BoxLayout.LINE_AXIS));
+
+        jScrollPane23.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane23.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        lstSelectedEquipment.setModel( new javax.swing.DefaultListModel()
+        );
+        lstSelectedEquipment.setMaximumSize(new java.awt.Dimension(180, 225));
+        lstSelectedEquipment.setMinimumSize(new java.awt.Dimension(180, 225));
+        lstSelectedEquipment.setPreferredSize(null);
+        lstSelectedEquipment.setVisibleRowCount(16);
+        lstSelectedEquipment.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstSelectedEquipmentValueChanged(evt);
+            }
+        });
+        lstSelectedEquipment.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lstSelectedEquipmentKeyPressed(evt);
+            }
+        });
+        MouseListener mlSelect = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                int Index = lstSelectedEquipment.locationToIndex( e.getPoint() );
+                if( Index < 0 ) { return; }
+                CurItem = (abPlaceable) CurVee.GetLoadout().GetNonCore().get( Index );
+                if( e.isPopupTrigger() ) {
+                    ConfigureUtilsMenu(e.getComponent());
+                    mnuUtilities.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                int Index = lstSelectedEquipment.locationToIndex( e.getPoint() );
+                if( Index < 0 ) { return; }
+                CurItem = (abPlaceable) CurVee.GetLoadout().GetNonCore().get( Index );
+                if( e.isPopupTrigger() ) {
+                    ConfigureUtilsMenu(e.getComponent());
+                    mnuUtilities.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        lstSelectedEquipment.addMouseListener( mlSelect );
+        lstSelectedEquipment.setCellRenderer( new saw.gui.EquipmentSelectedRenderer( this ) );
+        jScrollPane23.setViewportView(lstSelectedEquipment);
+
+        pnlSelected.add(jScrollPane23);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        pnlEquipment.add(pnlSelected, gridBagConstraints);
+
+        pnlEquipInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Information"));
+        pnlEquipInfo.setLayout(new java.awt.GridBagLayout());
+
+        jLabel37.setText("Availability(AoW/SL)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        pnlEquipInfo.add(jLabel37, gridBagConstraints);
+
+        jLabel38.setText("Availability (SW)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        pnlEquipInfo.add(jLabel38, gridBagConstraints);
+
+        jLabel39.setText("Availability (CI)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        pnlEquipInfo.add(jLabel39, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoAVSL, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoAVSW, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoAVCI, gridBagConstraints);
+
+        jLabel53.setText("Introduction");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel53, gridBagConstraints);
+
+        jLabel54.setText("Extinction");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel54, gridBagConstraints);
+
+        jLabel55.setText("Reintroduction");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel55, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoIntro, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoExtinct, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoReintro, gridBagConstraints);
+
+        jLabel56.setText("Name");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 3);
+        pnlEquipInfo.add(jLabel56, gridBagConstraints);
+
+        jLabel57.setText("Type");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel57, gridBagConstraints);
+
+        jLabel58.setText("Heat");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel58, gridBagConstraints);
+
+        jLabel59.setText("Damage");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel59, gridBagConstraints);
+
+        jLabel60.setText("Range");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel60, gridBagConstraints);
+
+        lblInfoName.setText(" ");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        pnlEquipInfo.add(lblInfoName, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoType, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoHeat, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoDamage, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoRange, gridBagConstraints);
+
+        jSeparator17.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        pnlEquipInfo.add(jSeparator17, gridBagConstraints);
+
+        jLabel61.setText("Ammo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel61, gridBagConstraints);
+
+        jLabel62.setText("Tonnage");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel62, gridBagConstraints);
+
+        jLabel63.setText("Crits");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel63, gridBagConstraints);
+
+        jLabel64.setText("Specials");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 0);
+        pnlEquipInfo.add(jLabel64, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoAmmo, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoTonnage, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoCrits, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        pnlEquipInfo.add(lblInfoSpecials, gridBagConstraints);
+
+        jSeparator20.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        pnlEquipInfo.add(jSeparator20, gridBagConstraints);
+
+        jLabel65.setText("Cost");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel65, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        pnlEquipInfo.add(lblInfoCost, gridBagConstraints);
+
+        jLabel66.setText("BV");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel66, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        pnlEquipInfo.add(lblInfoBV, gridBagConstraints);
+
+        jLabel67.setText("Mounting Restrictions");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 3);
+        pnlEquipInfo.add(jLabel67, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 4, 0);
+        pnlEquipInfo.add(lblInfoMountRestrict, gridBagConstraints);
+
+        jLabel68.setText("Rules Level");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel68, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        pnlEquipInfo.add(lblInfoRulesLevel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        pnlEquipment.add(pnlEquipInfo, gridBagConstraints);
+
+        pnlControls.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Controls"));
+        pnlControls.setLayout(new java.awt.GridBagLayout());
+
+        btnRemoveEquip.setText("<<");
+        btnRemoveEquip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveEquipActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 8);
+        pnlControls.add(btnRemoveEquip, gridBagConstraints);
+
+        btnClearEquip.setText("Clear");
+        btnClearEquip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearEquipActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
+        pnlControls.add(btnClearEquip, gridBagConstraints);
+
+        btnAddEquip.setText(">>");
+        btnAddEquip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddEquipActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
+        pnlControls.add(btnAddEquip, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        pnlEquipment.add(pnlControls, gridBagConstraints);
+
         pnlBasics.addTab("Equipment", pnlEquipment);
 
         javax.swing.GroupLayout pnlFluffLayout = new javax.swing.GroupLayout(pnlFluff);
@@ -1505,53 +2485,53 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         gridBagConstraints.gridy = 1;
         getContentPane().add(pnlBasics, gridBagConstraints);
 
-        jTextField1.setEditable(false);
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Tonnage: 000.00");
-        jTextField1.setMaximumSize(new java.awt.Dimension(110, 20));
-        jTextField1.setMinimumSize(new java.awt.Dimension(110, 20));
-        jTextField1.setPreferredSize(new java.awt.Dimension(110, 20));
-        pnlInfoPane.add(jTextField1);
+        txtInfoTonnage.setEditable(false);
+        txtInfoTonnage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoTonnage.setText("Tonnage: 000.00");
+        txtInfoTonnage.setMaximumSize(new java.awt.Dimension(110, 20));
+        txtInfoTonnage.setMinimumSize(new java.awt.Dimension(110, 20));
+        txtInfoTonnage.setPreferredSize(new java.awt.Dimension(110, 20));
+        pnlInfoPane.add(txtInfoTonnage);
 
-        jTextField3.setEditable(false);
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("Free Tons: 000.00");
-        jTextField3.setMaximumSize(new java.awt.Dimension(115, 20));
-        jTextField3.setMinimumSize(new java.awt.Dimension(115, 20));
-        jTextField3.setPreferredSize(new java.awt.Dimension(115, 20));
-        pnlInfoPane.add(jTextField3);
+        txtInfoFreeTons.setEditable(false);
+        txtInfoFreeTons.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoFreeTons.setText("Free Tons: 000.00");
+        txtInfoFreeTons.setMaximumSize(new java.awt.Dimension(115, 20));
+        txtInfoFreeTons.setMinimumSize(new java.awt.Dimension(115, 20));
+        txtInfoFreeTons.setPreferredSize(new java.awt.Dimension(115, 20));
+        pnlInfoPane.add(txtInfoFreeTons);
 
-        jTextField4.setEditable(false);
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("Space: 00");
-        jTextField4.setMaximumSize(new java.awt.Dimension(65, 20));
-        jTextField4.setMinimumSize(new java.awt.Dimension(65, 20));
-        jTextField4.setPreferredSize(new java.awt.Dimension(65, 20));
-        pnlInfoPane.add(jTextField4);
+        txtInfoFreeCrits.setEditable(false);
+        txtInfoFreeCrits.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoFreeCrits.setText("Space: 00");
+        txtInfoFreeCrits.setMaximumSize(new java.awt.Dimension(65, 20));
+        txtInfoFreeCrits.setMinimumSize(new java.awt.Dimension(65, 20));
+        txtInfoFreeCrits.setPreferredSize(new java.awt.Dimension(65, 20));
+        pnlInfoPane.add(txtInfoFreeCrits);
 
-        jTextField5.setEditable(false);
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setText("Unplaced Items: 00");
-        jTextField5.setMaximumSize(new java.awt.Dimension(120, 20));
-        jTextField5.setMinimumSize(new java.awt.Dimension(120, 20));
-        jTextField5.setPreferredSize(new java.awt.Dimension(120, 20));
-        pnlInfoPane.add(jTextField5);
+        txtInfoUnplaced.setEditable(false);
+        txtInfoUnplaced.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoUnplaced.setText("Unplaced Items: 00");
+        txtInfoUnplaced.setMaximumSize(new java.awt.Dimension(120, 20));
+        txtInfoUnplaced.setMinimumSize(new java.awt.Dimension(120, 20));
+        txtInfoUnplaced.setPreferredSize(new java.awt.Dimension(120, 20));
+        pnlInfoPane.add(txtInfoUnplaced);
 
-        jTextField6.setEditable(false);
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("BV: 00,000");
-        jTextField6.setMaximumSize(new java.awt.Dimension(75, 20));
-        jTextField6.setMinimumSize(new java.awt.Dimension(75, 20));
-        jTextField6.setPreferredSize(new java.awt.Dimension(75, 20));
-        pnlInfoPane.add(jTextField6);
+        txtInfoBattleValue.setEditable(false);
+        txtInfoBattleValue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoBattleValue.setText("BV: 00,000");
+        txtInfoBattleValue.setMaximumSize(new java.awt.Dimension(75, 20));
+        txtInfoBattleValue.setMinimumSize(new java.awt.Dimension(75, 20));
+        txtInfoBattleValue.setPreferredSize(new java.awt.Dimension(75, 20));
+        pnlInfoPane.add(txtInfoBattleValue);
 
-        jTextField7.setEditable(false);
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setText("Cost: 000,000,000,000.00");
-        jTextField7.setMaximumSize(new java.awt.Dimension(165, 20));
-        jTextField7.setMinimumSize(new java.awt.Dimension(165, 20));
-        jTextField7.setPreferredSize(new java.awt.Dimension(165, 20));
-        pnlInfoPane.add(jTextField7);
+        txtInfoCost.setEditable(false);
+        txtInfoCost.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoCost.setText("Cost: 000,000,000,000.00");
+        txtInfoCost.setMaximumSize(new java.awt.Dimension(165, 20));
+        txtInfoCost.setMinimumSize(new java.awt.Dimension(165, 20));
+        txtInfoCost.setPreferredSize(new java.awt.Dimension(165, 20));
+        pnlInfoPane.add(txtInfoCost);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1662,6 +2642,15 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
         getContentPane().add(jToolBar1, gridBagConstraints);
 
         jMenu1.setText("File");
+
+        mnuExit.setText("Exit");
+        mnuExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuExit);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -1671,6 +2660,20 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
+    private void CloseProgram() {
+        try {
+            //if (BatchWindow != null) BatchWindow.dispose();
+            //if (dOpen != null) dOpen.dispose();
+            if (dForce != null) dForce.dispose();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.flush();
+
+        dispose();
+    }
 
     private void btnForceListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForceListActionPerformed
         dForce.setLocationRelativeTo(this);
@@ -1689,6 +2692,1043 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private void btnPostToS7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostToS7ActionPerformed
         //mnuPostS7ActionPerformed(evt);
 }//GEN-LAST:event_btnPostToS7ActionPerformed
+    private void RefreshSummary() {
+        // refreshes the display completely using info from the mech.
+        txtSumEngTons.setText( "" + CurVee.GetEngine().GetTonnage() );
+        txtSumHSTons.setText( "" + CurVee.GetHeatSinks().GetTonnage() );
+        txtSumJJTons.setText( "" + CurVee.GetJumpJets().GetTonnage() );
+        txtSumArmTons.setText( "" + CurVee.GetArmor().GetTonnage() );
+        txtSumPATons.setText( "" + CurVee.GetLoadout().GetPowerAmplifier().GetTonnage() );
+        txtSumEngAV.setText( CurVee.GetEngine().GetAvailability().GetBestCombinedCode() );
+        txtSumHSAV.setText( CurVee.GetHeatSinks().GetAvailability().GetBestCombinedCode() );
+        txtSumJJAV.setText( CurVee.GetJumpJets().GetAvailability().GetBestCombinedCode() );
+        txtSumPAAV.setText( CurVee.GetLoadout().GetPowerAmplifier().GetAvailability().GetBestCombinedCode() );
+
+        // added for the armor pane
+        lblArmorTotals.setText( CurVee.GetArmor().GetArmorValue() + " of " + CurVee.GetArmor().GetMaxArmor() + " Armor Points" );
+        lblArmorCoverage.setText( CurVee.GetArmor().GetCoverage() + "% Coverage" );
+        lblArmorTonsWasted.setText( CurVee.GetArmor().GetWastedTonnage() + " Tons Wasted" );
+        lblArmorLeftInLot.setText( CurVee.GetArmor().GetWastedAV() + " Points Left In This 1/2 Ton Lot" );
+
+        // added for Battleforce pane
+        /*
+        BattleForceStats bfs = new BattleForceStats(CurVee);
+
+        lblBFMV.setText( BattleForceTools.GetMovementString( CurVee ) );
+        lblBFWt.setText( "" + CurVee.GetBFSize() );
+        lblBFArmor.setText( "" + CurVee.GetBFArmor() );
+        lblBFStructure.setText( "" + CurVee.GetBFStructure() );
+        lblBFPoints.setText("" + CurVee.GetBFPoints() );
+
+        int [] BFdmg = CurVee.GetBFDamage( bfs );
+        lblBFShort.setText("" + BFdmg[BFConstants.BF_SHORT]);
+        lblBFMedium.setText("" + BFdmg[BFConstants.BF_MEDIUM]);
+        lblBFLong.setText("" + BFdmg[BFConstants.BF_LONG]);
+        lblBFExtreme.setText("" + BFdmg[BFConstants.BF_EXTREME]);
+        lblBFOV.setText("" + BFdmg[BFConstants.BF_OV]);
+
+        lblBFSA.setText( bfs.getAbilitiesString() );
+        */
+    }
+
+    public void RefreshInfoPane() {
+        // refreshes the information pane at the bottom of the screen
+        // set the colors
+        if( CurVee.GetCurrentTons() > CurVee.GetTonnage() ) {
+            txtInfoTonnage.setForeground( RedCol );
+            txtInfoFreeTons.setForeground( RedCol );
+        } else {
+            txtInfoTonnage.setForeground( GreenCol );
+            txtInfoFreeTons.setForeground( GreenCol );
+        }
+        if( CurVee.GetLoadout().FreeCrits() - CurVee.GetLoadout().UnplacedCrits() < 0 ) {
+            txtInfoFreeCrits.setForeground( RedCol );
+            txtInfoUnplaced.setForeground( RedCol );
+        } else {
+            txtInfoFreeCrits.setForeground( GreenCol );
+            txtInfoUnplaced.setForeground( GreenCol );
+        }
+        // fill in the info
+        if( CurVee.UsingFractionalAccounting() ) {
+            txtInfoTonnage.setText( "Tons: " + CommonTools.RoundFractionalTons( CurVee.GetCurrentTons() ) );
+            txtInfoFreeTons.setText( "Free Tons: " + CommonTools.RoundFractionalTons( CurVee.GetTonnage() - CurVee.GetCurrentTons() ) );
+        } else {
+            txtInfoTonnage.setText( "Tons: " + CurVee.GetCurrentTons() );
+            txtInfoFreeTons.setText( "Free Tons: " + ( CurVee.GetTonnage() - CurVee.GetCurrentTons() ) );
+        }
+         txtInfoFreeCrits.setText( "Free Crits: " + CurVee.GetLoadout().FreeCrits() );
+        txtInfoUnplaced.setText( "Unplaced Crits: " + CurVee.GetLoadout().UnplacedCrits() );
+        txtInfoBattleValue.setText( "BV: " + String.format( "%1$,d", CurVee.GetCurrentBV() ) );
+        txtInfoCost.setText( "Cost: " + String.format( "%1$,.0f", Math.floor( CurVee.GetTotalCost() + 0.5f ) ) );
+
+        // fill in the movement summary
+        String temp = "Max C/F/J/B: ";
+        //temp += CurVee.GetAdjustedWalkingMP( false, true ) + "/";
+        //temp += CurVee.GetAdjustedRunningMP( false, true ) + "/";
+        //temp += CurVee.GetAdjustedJumpingMP( false ) + "/";
+        //temp += "0";
+        //lblMoveSummary.setText( temp );
+
+        lstSelectedEquipment.repaint();
+        //javax.swing.table.AbstractTableModel m = (javax.swing.table.AbstractTableModel) tblWeaponManufacturers.getModel();
+        //m.fireTableDataChanged();
+
+        //CheckEquipment();
+
+        //UpdateBasicChart();
+    }
+
+    private void ResetAmmo() {
+        // first, get the weapons from the loadout that need ammunition
+        Vector v = CurVee.GetLoadout().GetNonCore(), wep = new Vector();
+        Object a;
+
+        for( int i = 0; i < v.size(); i++ ) {
+            a = v.get( i );
+            if( a instanceof ifWeapon ) {
+                if( ((ifWeapon) a).HasAmmo() ) {
+                    wep.add( a );
+                }
+            } else if( a instanceof Equipment ) {
+                if( ((Equipment) a).HasAmmo() ) {
+                    wep.add( a );
+                }
+            }
+        }
+
+        // see if we need to retrieve any ammunition
+        Object[] result = { " " };
+        if( wep.size() > 0 ) {
+            // get the ammunition for those weapons
+            int[] key = new int[wep.size()];
+            for( int i = 0; i < wep.size(); i++ ) {
+                if( wep.get( i ) instanceof ifWeapon ) {
+                    key[i] = ((ifWeapon) wep.get( i )).GetAmmoIndex();
+                } else if( wep.get( i ) instanceof Equipment ) {
+                    key[i] = ((Equipment) wep.get( i )).GetAmmoIndex();
+                }
+            }
+            result = data.GetEquipment().GetAmmo( key, CurVee );
+        }
+
+        // put the results into the chooser
+        Equipment[AMMUNITION] = result;
+        lstChooseAmmunition.setListData( result );
+        lstChooseAmmunition.repaint();
+    }
+
+    private void ConfigureUtilsMenu( java.awt.Component c ) {
+        // configures the utilities popup menu
+
+    }
+
+    private void BuildTechBaseSelector() {
+        switch( CurVee.GetEra() ) {
+            case AvailableCode.ERA_STAR_LEAGUE:
+                cmbTechBase.setModel( new javax.swing.DefaultComboBoxModel( new String[] { "Inner Sphere" } ) );
+                break;
+            default:
+                if( CurVee.GetRulesLevel() >= AvailableCode.RULES_EXPERIMENTAL ) {
+                    cmbTechBase.setModel( new javax.swing.DefaultComboBoxModel( new String[] { "Inner Sphere", "Clan", "Mixed" } ) );
+                } else if( CurVee.GetRulesLevel() == AvailableCode.RULES_INTRODUCTORY ) {
+                    cmbTechBase.setModel( new javax.swing.DefaultComboBoxModel( new String[] { "Inner Sphere" } ) );
+                } else {
+                    cmbTechBase.setModel( new javax.swing.DefaultComboBoxModel( new String[] { "Inner Sphere", "Clan" } ) );
+                }
+                break;
+        }
+        try {
+
+            cmbTechBase.setSelectedIndex( CurVee.GetTechbase() );
+        } catch( Exception e ) {
+            Media.Messager( "Could not set the Techbase due to changes.\nReverting to Inner Sphere." );
+            cmbTechBase.setSelectedIndex( 0 );
+        }
+    }
+
+    private void RefreshEquipment() {
+        // refreshes the equipment selectors
+
+        // fix Artemis IV controls
+        ifMissileGuidance ArtCheck = new ArtemisIVFCS( null );
+        if( CommonTools.IsAllowed( ArtCheck.GetAvailability(), CurVee ) ) {
+            chkFCSAIV.setEnabled( true );
+        } else {
+            chkFCSAIV.setSelected( false );
+            chkFCSAIV.setEnabled( false );
+        }
+
+        // fix Artemis V controls
+        ArtCheck = new ArtemisVFCS( null );
+        if( CommonTools.IsAllowed( ArtCheck.GetAvailability(), CurVee ) ) {
+            chkFCSAV.setEnabled( true );
+        } else {
+            chkFCSAV.setSelected( false );
+            chkFCSAV.setEnabled( false );
+        }
+
+        // fix Apollo controls
+        ArtCheck = new ApolloFCS( null );
+        if( CommonTools.IsAllowed( ArtCheck.GetAvailability(), CurVee ) ) {
+            chkFCSApollo.setEnabled( true );
+        } else {
+            chkFCSApollo.setSelected( false );
+            chkFCSApollo.setEnabled( false );
+        }
+
+        // fix the targeting computer display
+        if( CommonTools.IsAllowed( CurVee.GetLoadout().GetTC().GetAvailability(), CurVee ) ) {
+            chkUseTC.setEnabled( true );
+            if( CurVee.GetLoadout().UsingTC() ) {
+                chkUseTC.setSelected( true );
+            } else {
+                chkUseTC.setSelected( false );
+            }
+        } else {
+            chkUseTC.setSelected( false );
+            chkUseTC.setEnabled( false );
+        }
+
+        // now set all the equipment if needed
+        if( ! chkFCSAIV.isEnabled() ) {
+            try {
+                CurVee.GetLoadout().SetFCSArtemisIV( false );
+            } catch( Exception e ) {
+                Media.Messager( this, e.getMessage() );
+            }
+            chkFCSAIV.setSelected( false );
+        } else {
+            if( CurVee.GetLoadout().UsingArtemisIV() ) {
+                chkFCSAIV.setSelected( true );
+            } else {
+                chkFCSAIV.setSelected( false );
+            }
+        }
+        if( ! chkFCSAV.isEnabled() ) {
+            try {
+                CurVee.GetLoadout().SetFCSArtemisV( false );
+            } catch( Exception e ) {
+                Media.Messager( this, e.getMessage() );
+            }
+            chkFCSAV.setSelected( false );
+        } else {
+            if( CurVee.GetLoadout().UsingArtemisV() ) {
+                chkFCSAV.setSelected( true );
+            } else {
+                chkFCSAV.setSelected( false );
+            }
+        }
+        if( ! chkFCSApollo.isEnabled() ) {
+            try {
+                CurVee.GetLoadout().SetFCSApollo( false );
+            } catch( Exception e ) {
+                Media.Messager( this, e.getMessage() );
+            }
+            chkFCSApollo.setSelected( false );
+        } else {
+            if( CurVee.GetLoadout().UsingApollo() ) {
+                chkFCSApollo.setSelected( true );
+            } else {
+                chkFCSApollo.setSelected( false );
+            }
+        }
+        if( ! chkSupercharger.isEnabled() ) {
+            try {
+                CurVee.GetLoadout().SetSupercharger( false, 0, -1 );
+            } catch( Exception e ) {
+                Media.Messager( this, e.getMessage() );
+            }
+        } else {
+            if( CurVee.GetLoadout().HasSupercharger() ) {
+                chkSupercharger.setSelected( true );
+            } else {
+                chkSupercharger.setSelected( false );
+            }
+        }
+        if( ! chkUseTC.isEnabled() ) { CurVee.GetLoadout().UseTC( false, false ); }
+
+        if( CurVee.GetRulesLevel() >= AvailableCode.RULES_EXPERIMENTAL ) {
+            //chkFractional.setEnabled( true );
+        } else {
+            //chkFractional.setEnabled( false );
+            CurVee.SetFractionalAccounting( false );
+        }
+        //chkFractional.setSelected( CurVee.UsingFractionalAccounting() );
+
+        if( CurVee.IsOmni() ) {
+            // these items can only be loaded into the base chassis, so they
+            // are always locked for an omnimech (although they may be checked).
+            chkEnviroSealing.setEnabled( false );
+            chkCommandConsole.setEnabled( false );
+
+            // now see if we have a supercharger on the base chassis
+            if( CurVee.GetLoadout().HasSupercharger() ) {
+                chkSupercharger.setEnabled( false );
+                cmbSCLoc.setEnabled( false );
+                lblSupercharger.setEnabled( false );
+            }
+        } else {
+            try {
+                //if( ! chkEnviroSealing.isEnabled() ) { CurVee.SetEnviroSealing( false ); }
+                //if( ! chkCommandConsole.isEnabled() ) { CurVee.SetCommandConsole( false ); }
+            } catch( Exception e ) {
+                // we should never get this, but report it if we do
+                Media.Messager( this, e.getMessage() );
+            }
+        }
+    }
+
+    private void cmbMotiveTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMotiveTypeActionPerformed
+        if ( cmbMotiveType.getSelectedItem().toString().equals("Hovercraft") ) {
+            CurVee.SetHover();
+        } else if ( cmbMotiveType.getSelectedItem().toString().equals("Naval (Displacement)") ) {
+            CurVee.SetDisplacement();
+        } else if ( cmbMotiveType.getSelectedItem().toString().equals("Naval (Hydrofoil)") ) {
+            CurVee.SetHydrofoil();
+        } else if ( cmbMotiveType.getSelectedItem().toString().equals("Naval (Submarine)") ) {
+            CurVee.SetSubmarine();
+        } else if ( cmbMotiveType.getSelectedItem().toString().equals("Tracked") ) {
+            CurVee.SetTracked();
+        } else if ( cmbMotiveType.getSelectedItem().toString().equals("VTOL") ) {
+            CurVee.setVTOL();
+        } else if ( cmbMotiveType.getSelectedItem().toString().equals("Wheeled") ) {
+            CurVee.SetWheeled();
+        } else if ( cmbMotiveType.getSelectedItem().toString().equals("WiGE") ) {
+            CurVee.SetWiGE();
+        }
+
+        spnJumpMP.setEnabled(CurVee.CanUseJump());
+        if (!spnJumpMP.isEnabled()) { spnJumpMP.setValue(0); }
+
+        chkTrailer.setEnabled(CurVee.CanBeTrailer());
+        if ( !chkTrailer.isEnabled()) { chkTrailer.setSelected(false); }
+    }//GEN-LAST:event_cmbMotiveTypeActionPerformed
+
+    private void cmbRulesLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRulesLevelActionPerformed
+        int NewLevel = cmbRulesLevel.getSelectedIndex();
+        int OldLevel = CurVee.GetLoadout().GetRulesLevel();
+        int OldType = cmbMotiveType.getSelectedIndex();
+        int OldTech = CurVee.GetTechbase();
+
+        if( OldLevel == NewLevel ) {
+            // we're already at the correct rules level.
+            return;
+        }
+
+        // do we have an OmniMech?
+        if( CurVee.IsOmni() ) {
+            // see if we can set to the new rules level.
+            if( CurVee.GetLoadout().SetRulesLevel( NewLevel ) ) {
+                // we can.
+                if( OldLevel > NewLevel ) {
+                    //CurVee.GetLoadout().FlushIllegal( NewLevel, 0, false );
+                    CurVee.GetLoadout().FlushIllegal();
+                }
+                BuildTechBaseSelector();
+                cmbTechBase.setSelectedIndex( CurVee.GetLoadout().GetTechBase() );
+                RefreshEquipment();
+                //RecalcEquipment();
+            } else {
+                // can't.  reset to the default rules level and scold the user
+                Media.Messager( this, "You cannot set an OmniMech's loadout to a Rules Level\nlower than it's chassis' Rules Level." );
+                cmbRulesLevel.setSelectedIndex( CurVee.GetLoadout().GetRulesLevel() );
+                return;
+            }
+        } else {
+            CurVee.GetLoadout().SetRulesLevel( NewLevel );
+            //BuildMechTypeSelector();
+            //CheckTonnage( true );
+
+            // get the currently chosen selections
+            //SaveSelections();
+            BuildTechBaseSelector();
+            if( OldTech >= cmbTechBase.getItemCount() ) {
+                // ooooh fun, we can't set it correctly.
+                switch( OldTech ) {
+                    case AvailableCode.TECH_INNER_SPHERE:
+                        // WTF???
+                        System.err.println( "Fatal Error when reseting techbase, Inner Sphere not available." );
+                        break;
+                    default:
+                        // set it to Inner Sphere
+                        cmbTechBase.setSelectedIndex( 0 );
+                        //cmbTechBaseActionPerformed( null );
+                        break;
+                }
+            }
+        }
+    }//GEN-LAST:event_cmbRulesLevelActionPerformed
+
+    private void ShowInfoOn( abPlaceable p ) {
+        // this fills in all the information on the Equipment panel for the given
+        // item.  Depending on what the item is, more or less info is provided
+        AvailableCode AC = p.GetAvailability();
+
+        lblInfoAVSL.setText( AC.GetISSLCode() + " / " + AC.GetCLSLCode() );
+        lblInfoAVSW.setText( AC.GetISSWCode() + " / " + AC.GetCLSWCode() );
+        lblInfoAVCI.setText( AC.GetISCICode() + " / " + AC.GetCLCICode() );
+        switch( AC.GetTechBase() ){
+            case AvailableCode.TECH_INNER_SPHERE:
+                lblInfoIntro.setText( AC.GetISIntroDate() + " (" + AC.GetISIntroFaction() + ")" );
+                if( AC.WentExtinctIS() ) {
+                    lblInfoExtinct.setText( "" + AC.GetISExtinctDate() );
+                } else {
+                    lblInfoExtinct.setText( "--" );
+                }
+                if( AC.WasReIntrodIS() ) {
+                    lblInfoReintro.setText( AC.GetISReIntroDate() + " (" + AC.GetISReIntroFaction() + ")" );
+                } else {
+                    lblInfoReintro.setText( "--" );
+                }
+                break;
+            case AvailableCode.TECH_CLAN:
+                lblInfoIntro.setText( AC.GetCLIntroDate() + " (" + AC.GetCLIntroFaction() + ")" );
+                if( AC.WentExtinctCL() ) {
+                    lblInfoExtinct.setText( "" + AC.GetCLExtinctDate() );
+                } else {
+                    lblInfoExtinct.setText( "--" );
+                }
+                if( AC.WasReIntrodCL() ) {
+                    lblInfoReintro.setText( AC.GetCLReIntroDate() + " (" + AC.GetCLReIntroFaction() + ")" );
+                } else {
+                    lblInfoReintro.setText( "--" );
+                }
+                break;
+            case AvailableCode.TECH_BOTH:
+                lblInfoIntro.setText( AC.GetISIntroDate() + " (" + AC.GetISIntroFaction() + ") / " + AC.GetCLIntroDate() + " (" + AC.GetCLIntroFaction() + ")" );
+                if( AC.WentExtinctIS() ) {
+                    lblInfoExtinct.setText( "" + AC.GetISExtinctDate() );
+                } else {
+                    lblInfoExtinct.setText( "--" );
+                }
+                if( AC.WentExtinctCL() ) {
+                    lblInfoExtinct.setText( lblInfoExtinct.getText() + " / " + AC.GetCLExtinctDate() );
+                } else {
+                    lblInfoExtinct.setText( lblInfoExtinct.getText() + " / --" );
+                }
+                if( AC.WasReIntrodIS() ) {
+                    lblInfoReintro.setText( AC.GetISReIntroDate() + " (" + AC.GetISReIntroFaction() + ")" );
+                } else {
+                    lblInfoReintro.setText( "--" );
+                }
+                if( AC.WasReIntrodCL() ) {
+                    lblInfoReintro.setText( lblInfoReintro.getText() + " / " + AC.GetCLReIntroDate() + " (" + AC.GetCLReIntroFaction() + ")" );
+                } else {
+                    lblInfoReintro.setText( lblInfoReintro.getText() + " / --" );
+                }
+                break;
+        }
+
+        switch( AC.GetRulesLevel_BM() ) {
+            case AvailableCode.RULES_INTRODUCTORY:
+                lblInfoRulesLevel.setText( "Introductory" );
+                break;
+            case AvailableCode.RULES_TOURNAMENT:
+                lblInfoRulesLevel.setText( "Tournament" );
+                break;
+            case AvailableCode.RULES_ADVANCED:
+                lblInfoRulesLevel.setText( "Advanced" );
+                break;
+            case AvailableCode.RULES_EXPERIMENTAL:
+                lblInfoRulesLevel.setText( "Experimental" );
+                break;
+            case AvailableCode.RULES_ERA_SPECIFIC:
+                lblInfoRulesLevel.setText( "Era Specific" );
+                break;
+            default:
+                lblInfoRulesLevel.setText( "??" );
+        }
+        lblInfoName.setText( p.CritName() );
+        lblInfoTonnage.setText( "" + p.GetTonnage() );
+        lblInfoCrits.setText( "" + p.NumCrits() );
+        lblInfoCost.setText( "" + String.format( "%1$,.0f", p.GetCost() ) );
+        lblInfoBV.setText( CommonTools.GetAggregateReportBV( p ) );
+
+        // now do all the mounting restrictions
+        String restrict = "";
+        if( ! p.CanAllocHD() ) {
+            restrict += "No Head, ";
+        }
+        if( ! p.CanAllocCT() ) {
+            restrict += "No Center Torso, ";
+        }
+        if( ! p.CanAllocTorso() ) {
+            restrict += "No Side Torsos, ";
+        }
+        if( ! p.CanAllocArms() ) {
+            restrict += "No Arms, ";
+        }
+        if( ! p.CanAllocLegs() ) {
+            restrict += "No Legs, ";
+        }
+        if( p.CanSplit() ) {
+            restrict += "Can Split, ";
+        }
+
+        // now for weapon and ammo specific
+        if( p instanceof ifWeapon ) {
+            ifWeapon w = (ifWeapon) p;
+            lblInfoType.setText( w.GetType() );
+
+            if( w.IsUltra() || w.IsRotary() ) {
+                lblInfoHeat.setText( w.GetHeat() + "/shot" );
+            } else {
+                if( w instanceof RangedWeapon ) {
+                    if( ((RangedWeapon) w).IsUsingCapacitor() ) {
+                        lblInfoHeat.setText( w.GetHeat() + "*" );
+                    } else if( ((RangedWeapon) w).IsUsingInsulator() ) {
+                        lblInfoHeat.setText( w.GetHeat() + " (I)" );
+                    } else {
+                        lblInfoHeat.setText( "" + w.GetHeat() );
+                    }
+                } else {
+                    lblInfoHeat.setText( "" + w.GetHeat() );
+                }
+            }
+
+            if( w.GetWeaponClass() == ifWeapon.W_MISSILE ) {
+                lblInfoDamage.setText( w.GetDamageShort() + "/msl" );
+            } else if( w.GetWeaponClass() == ifWeapon.W_ARTILLERY ) {
+                lblInfoDamage.setText( w.GetDamageShort() + "A" );
+            } else if( w instanceof MGArray ) {
+                lblInfoDamage.setText( w.GetDamageShort() + "/gun" );
+            } else if( w.GetDamageShort() == w.GetDamageMedium() && w.GetDamageShort() == w.GetDamageLong() ) {
+                if( w.IsUltra() || w.IsRotary() ) {
+                    lblInfoDamage.setText( w.GetDamageShort() + "/shot" );
+                } else {
+                    if( w instanceof RangedWeapon ) {
+                        if( ((RangedWeapon) w).IsUsingCapacitor() ) {
+                            lblInfoDamage.setText( w.GetDamageShort() + "*" );
+                        } else {
+                            lblInfoDamage.setText( "" + w.GetDamageShort() );
+                        }
+                    } else {
+                        lblInfoDamage.setText( "" + w.GetDamageShort() );
+                    }
+                }
+            } else {
+                if( w instanceof RangedWeapon ) {
+                    if( ((RangedWeapon) w).IsUsingCapacitor() ) {
+                        lblInfoDamage.setText( w.GetDamageShort() + "/" + w.GetDamageMedium() + "/" + w.GetDamageLong() + "*" );
+                    } else {
+                        lblInfoDamage.setText( w.GetDamageShort() + "/" + w.GetDamageMedium() + "/" + w.GetDamageLong() );
+                    }
+                } else {
+                    lblInfoDamage.setText( w.GetDamageShort() + "/" + w.GetDamageMedium() + "/" + w.GetDamageLong() );
+                }
+            }
+
+            if( w.GetRangeLong() < 1 ) {
+                if( w.GetRangeMedium() < 1 ) {
+                    if( w.GetWeaponClass() == ifWeapon.W_ARTILLERY ) {
+                        lblInfoRange.setText( w.GetRangeShort() + " boards" );
+                    } else {
+                        lblInfoRange.setText( w.GetRangeShort() + "" );
+                    }
+                } else {
+                    lblInfoRange.setText( w.GetRangeMin() + "/" + w.GetRangeShort() + "/" + w.GetRangeMedium() + "/-" );
+                }
+            } else {
+                lblInfoRange.setText( w.GetRangeMin() + "/" + w.GetRangeShort() + "/" + w.GetRangeMedium() + "/" + w.GetRangeLong() );
+            }
+
+            if( w.HasAmmo() ) {
+                lblInfoAmmo.setText( "" + w.GetAmmoLotSize() );
+            } else {
+                lblInfoAmmo.setText( "--" );
+            }
+            lblInfoSpecials.setText( w.GetSpecials() );
+            if( w.OmniRestrictActuators() ) {
+                restrict += "Omni Actuator Restricted";
+            }
+        } else if ( p instanceof Ammunition ) {
+            Ammunition a = (Ammunition) p;
+            lblInfoType.setText( "--" );
+            lblInfoHeat.setText( "--" );
+            if( a.ClusterGrouping() > 1 ) {
+                lblInfoDamage.setText( a.GetDamageShort() + "/hit" );
+            } else {
+                lblInfoDamage.setText( a.GetDamageShort() + "" );
+            }
+            if( a.GetLongRange() < 1 ) {
+                if( a.GetMediumRange() < 1 ) {
+                    lblInfoRange.setText( a.GetShortRange() + " boards" );
+                } else {
+                    lblInfoRange.setText( a.GetMinRange() + "/" + a.GetShortRange() + "/" + a.GetMediumRange() + "/-" );
+                }
+            } else {
+                lblInfoRange.setText( a.GetMinRange() + "/" + a.GetShortRange() + "/" + a.GetMediumRange() + "/" + a.GetLongRange() );
+            }
+            lblInfoAmmo.setText( "" + a.GetLotSize() );
+            if( a.IsExplosive() ) {
+                lblInfoSpecials.setText( "Explosive" );
+            } else {
+                lblInfoSpecials.setText( "--" );
+            }
+        } else if( p instanceof Equipment ) {
+            Equipment e = (Equipment) p;
+            lblInfoType.setText( e.GetType() );
+            lblInfoHeat.setText( "" + e.GetHeat() );
+            lblInfoDamage.setText( "--" );
+            if( e.GetShortRange() <= 0 && e.GetMediumRange() <= 0 ) {
+                if( e.GetLongRange() > 0 ) {
+                    lblInfoRange.setText( "" + e.GetLongRange() );
+                } else {
+                    lblInfoRange.setText( "--" );
+                }
+            } else {
+                lblInfoRange.setText( "0/" + e.GetShortRange() + "/" + e.GetMediumRange() + "/" + e.GetLongRange() );
+            }
+            if( e.HasAmmo() ) {
+                lblInfoAmmo.setText( "" + e.GetAmmo() );
+            } else {
+                lblInfoAmmo.setText( "--" );
+            }
+            lblInfoSpecials.setText( e.GetSpecials() );
+        } else {
+            lblInfoType.setText( "--" );
+            lblInfoHeat.setText( "--" );
+            lblInfoDamage.setText( "--" );
+            lblInfoRange.setText( "--" );
+            lblInfoAmmo.setText( "--" );
+            lblInfoSpecials.setText( "--" );
+        }
+
+        // set the restrictions label
+        if( restrict.length() > 0 ) {
+            if( restrict.endsWith( ", ") ) {
+                restrict = restrict.substring( 0, restrict.length() - 2 );
+            }
+            lblInfoMountRestrict.setText( restrict );
+        } else {
+            lblInfoMountRestrict.setText( "None" );
+        }
+    }
+
+        private void lstChooseBallisticValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseBallisticValueChanged
+            if( lstChooseBallistic.getSelectedIndex() < 0 ) { return; }
+            abPlaceable p = (abPlaceable) Equipment[BALLISTIC][lstChooseBallistic.getSelectedIndex()];
+            ShowInfoOn( p );
+}//GEN-LAST:event_lstChooseBallisticValueChanged
+
+        private void lstChooseEnergyValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseEnergyValueChanged
+            if( lstChooseEnergy.getSelectedIndex() < 0 ) { return; }
+            abPlaceable p = (abPlaceable) Equipment[ENERGY][lstChooseEnergy.getSelectedIndex()];
+            ShowInfoOn( p );
+}//GEN-LAST:event_lstChooseEnergyValueChanged
+
+        private void lstChooseMissileValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseMissileValueChanged
+            if( lstChooseMissile.getSelectedIndex() < 0 ) { return; }
+            abPlaceable p = (abPlaceable) Equipment[MISSILE][lstChooseMissile.getSelectedIndex()];
+            ShowInfoOn( p );
+}//GEN-LAST:event_lstChooseMissileValueChanged
+
+        private void lstChoosePhysicalValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChoosePhysicalValueChanged
+            if( lstChoosePhysical.getSelectedIndex() < 0 ) { return; }
+            if( ! ( Equipment[PHYSICAL][lstChoosePhysical.getSelectedIndex()] instanceof PhysicalWeapon ) ) { return; }
+            abPlaceable p = (abPlaceable) Equipment[PHYSICAL][lstChoosePhysical.getSelectedIndex()];
+            ShowInfoOn( p );
+}//GEN-LAST:event_lstChoosePhysicalValueChanged
+
+        private void lstChooseEquipmentValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseEquipmentValueChanged
+            if( lstChooseEquipment.getSelectedIndex() < 0 ) { return; }
+            if( ! ( Equipment[EQUIPMENT][lstChooseEquipment.getSelectedIndex()] instanceof Equipment ) ) { return; }
+            abPlaceable p = (abPlaceable) Equipment[EQUIPMENT][lstChooseEquipment.getSelectedIndex()];
+            ShowInfoOn( p );
+}//GEN-LAST:event_lstChooseEquipmentValueChanged
+
+        private void lstChooseArtilleryValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseArtilleryValueChanged
+            if( lstChooseArtillery.getSelectedIndex() < 0 ) { return; }
+            if( ( ! ( Equipment[ARTILLERY][lstChooseArtillery.getSelectedIndex()] instanceof RangedWeapon ) && ( ! ( Equipment[ARTILLERY][lstChooseArtillery.getSelectedIndex()] instanceof VehicularGrenadeLauncher ) ) ) ) { return; }
+            abPlaceable p = (abPlaceable) Equipment[ARTILLERY][lstChooseArtillery.getSelectedIndex()];
+            ShowInfoOn( p );
+}//GEN-LAST:event_lstChooseArtilleryValueChanged
+
+        private void lstChooseAmmunitionValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseAmmunitionValueChanged
+            if( lstChooseAmmunition.getSelectedIndex() < 0 ) { return; }
+            if( ! ( Equipment[AMMUNITION][lstChooseAmmunition.getSelectedIndex()] instanceof Ammunition ) ) { return; }
+            abPlaceable p = (abPlaceable) Equipment[AMMUNITION][lstChooseAmmunition.getSelectedIndex()];
+            ShowInfoOn( p );
+}//GEN-LAST:event_lstChooseAmmunitionValueChanged
+
+        private void chkUseTCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkUseTCActionPerformed
+            if( CurVee.GetLoadout().UsingTC() == chkUseTC.isSelected() ) { return; }
+            if( chkUseTC.isSelected() ) {
+                try {
+                    CurVee.GetLoadout().CheckExclusions( CurVee.GetLoadout().GetTC() );
+                    if( CurVee.GetLoadout().GetTechBase() == AvailableCode.TECH_BOTH ) {
+                        //dlgTechBaseChooser tech = new dlgTechBaseChooser( this, true );
+                        //tech.setLocationRelativeTo( this );
+                        //tech.setVisible( true );
+                        //CurVee.GetLoadout().UseTC( true, tech.IsClan() );
+                    } else if( CurVee.GetLoadout().GetTechBase() == AvailableCode.TECH_CLAN ) {
+                        CurVee.GetLoadout().UseTC( true, true );
+                    } else {
+                        CurVee.GetLoadout().UseTC( true, false );
+                    }
+                } catch( Exception e ) {
+                    Media.Messager( this, e.getMessage() );
+                    CurVee.GetLoadout().UseTC( false, false );
+                }
+            } else {
+                CurVee.GetLoadout().UseTC( false, false );
+            }
+
+            // now refresh the information panes
+            //RefreshSummary();
+            //RefreshInfoPane();
+}//GEN-LAST:event_chkUseTCActionPerformed
+
+        private void chkFCSAIVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkFCSAIVActionPerformed
+            if( CurVee.GetLoadout().UsingArtemisIV() == chkFCSAIV.isSelected() ) { return; }
+            if( chkFCSAIV.isSelected() ) {
+                try {
+                    CurVee.GetLoadout().SetFCSArtemisIV( true );
+                } catch( Exception e ) {
+                    Media.Messager( this, e.getMessage() );
+                    chkFCSAIV.setSelected( false );
+                }
+            } else {
+                try {
+                    CurVee.GetLoadout().SetFCSArtemisIV( false );
+                } catch( Exception e ) {
+                    Media.Messager( this, e.getMessage() );
+                    chkFCSAIV.setSelected( true );
+                }
+            }
+            // now refresh the information panes
+            //RefreshSummary();
+            //RefreshInfoPane();
+}//GEN-LAST:event_chkFCSAIVActionPerformed
+
+        private void chkFCSAVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkFCSAVActionPerformed
+            if( CurVee.GetLoadout().UsingArtemisV() == chkFCSAV.isSelected() ) { return; }
+            if( chkFCSAV.isSelected() ) {
+                try {
+                    CurVee.GetLoadout().SetFCSArtemisV( true );
+                } catch( Exception e ) {
+                    Media.Messager( this, e.getMessage() );
+                    chkFCSAV.setSelected( false );
+                }
+            } else {
+                try {
+                    CurVee.GetLoadout().SetFCSArtemisV( false );
+                } catch( Exception e ) {
+                    Media.Messager( this, e.getMessage() );
+                    chkFCSAV.setSelected( true );
+                }
+            }
+            // now refresh the information panes
+            RefreshSummary();
+            RefreshInfoPane();
+}//GEN-LAST:event_chkFCSAVActionPerformed
+
+        private void chkFCSApolloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkFCSApolloActionPerformed
+            if( CurVee.GetLoadout().UsingApollo() == chkFCSApollo.isSelected() ) { return; }
+            if( chkFCSApollo.isSelected() ) {
+                try {
+                    CurVee.GetLoadout().SetFCSApollo( true );
+                } catch( Exception e ) {
+                    Media.Messager( this, e.getMessage() );
+                    chkFCSApollo.setSelected( false );
+                }
+            } else {
+                try {
+                    CurVee.GetLoadout().SetFCSApollo( false );
+                } catch( Exception e ) {
+                    Media.Messager( this, e.getMessage() );
+                    chkFCSApollo.setSelected( true );
+                }
+            }
+            // now refresh the information panes
+            RefreshSummary();
+            RefreshInfoPane();
+}//GEN-LAST:event_chkFCSApolloActionPerformed
+
+        private void chkClanCASEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkClanCASEActionPerformed
+            CurVee.GetLoadout().SetClanCASE( chkClanCASE.isSelected() );
+            RefreshSummary();
+            RefreshInfoPane();
+}//GEN-LAST:event_chkClanCASEActionPerformed
+
+        private void lstSelectedEquipmentValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSelectedEquipmentValueChanged
+            if( lstSelectedEquipment.getSelectedIndex() < 0 ) { return; }
+            abPlaceable p;
+            try {
+                p = (abPlaceable) CurVee.GetLoadout().GetNonCore().get( lstSelectedEquipment.getSelectedIndex() );
+            } catch( Exception e ) {
+                return;
+            }
+            ShowInfoOn( p );
+}//GEN-LAST:event_lstSelectedEquipmentValueChanged
+
+        private void lstSelectedEquipmentKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lstSelectedEquipmentKeyPressed
+            if ( evt.getKeyCode() == KeyEvent.VK_DELETE ) {
+                btnRemoveEquipActionPerformed(new ActionEvent(evt.getSource(), evt.getID(), null));
+            }
+}//GEN-LAST:event_lstSelectedEquipmentKeyPressed
+
+        private void btnRemoveEquipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveEquipActionPerformed
+            if( lstSelectedEquipment.getSelectedIndex() < 0 ) { return; }
+            int[] selected = lstSelectedEquipment.getSelectedIndices();
+            if( selected.length == 0 ) { return; }
+            // we work in reverse so we can properly manage the items in the queue
+            for( int i = selected.length - 1; i >= 0; i-- ) {
+                // abPlaceable p = (abPlaceable) CurVee.GetLoadout().GetNonCore().get( lstSelectedEquipment.getSelectedIndex() );
+                abPlaceable p = (abPlaceable) CurVee.GetLoadout().GetNonCore().get( selected[i] );
+                if( p.LocationLocked() ) {
+                    Media.Messager( this, "You may not remove a locked item from the loadout." );
+                    return;
+                } else {
+                    CurVee.GetLoadout().Remove( p );
+                }
+            }
+            // refresh the selected equipment listbox
+            if( CurVee.GetLoadout().GetNonCore().toArray().length <= 0 ) {
+                Equipment[SELECTED] = new Object[] { " " };
+            } else {
+                Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+            }
+            lstSelectedEquipment.setListData( Equipment[SELECTED] );
+
+            // Check the targeting computer if needed
+            if( CurVee.GetLoadout().UsingTC() ) {
+                CurVee.GetLoadout().UnallocateTC();
+            }
+
+            // refresh the ammunition display
+            ResetAmmo();
+
+            // now refresh the information panes
+            RefreshSummary();
+            RefreshInfoPane();
+}//GEN-LAST:event_btnRemoveEquipActionPerformed
+
+        private void btnClearEquipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearEquipActionPerformed
+            CurVee.GetLoadout().SafeClearLoadout();
+
+            // refresh the selected equipment listbox
+            if( CurVee.GetLoadout().GetNonCore().toArray().length <= 0 ) {
+                Equipment[SELECTED] = new Object[] { " " };
+            } else {
+                Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+            }
+            lstSelectedEquipment.setListData( Equipment[SELECTED] );
+
+            // Check the targeting computer if needed
+            if( CurVee.GetLoadout().UsingTC() ) {
+                CurVee.GetLoadout().CheckTC();
+            }
+
+            // refresh the ammunition display
+            ResetAmmo();
+
+            // now refresh the information panes
+            RefreshSummary();
+            RefreshInfoPane();
+}//GEN-LAST:event_btnClearEquipActionPerformed
+
+        private void btnAddEquipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEquipActionPerformed
+            abPlaceable a = null;
+            int Index = 0;
+            Vector v;
+
+            // figure out which list box to pull from
+            switch( tbpWeaponChooser.getSelectedIndex() ) {
+                case BALLISTIC:
+                    if( lstChooseBallistic.getSelectedIndex() < 0 ) { break; }
+                    a = (abPlaceable) Equipment[BALLISTIC][lstChooseBallistic.getSelectedIndex()];
+                    a = data.GetEquipment().GetCopy( a, CurVee );
+                    break;
+                case ENERGY:
+                    if( lstChooseEnergy.getSelectedIndex() < 0 ) { break; }
+                    a = (abPlaceable) Equipment[ENERGY][lstChooseEnergy.getSelectedIndex()];
+                    a = data.GetEquipment().GetCopy( a, CurVee );
+                    break;
+                case MISSILE:
+                    if( lstChooseMissile.getSelectedIndex() < 0 ) { break; }
+                    a = (abPlaceable) Equipment[MISSILE][lstChooseMissile.getSelectedIndex()];
+                    a = data.GetEquipment().GetCopy( a, CurVee );
+                    if( ((RangedWeapon) a).IsFCSCapable() ) {
+                        if( CurVee.GetLoadout().UsingArtemisIV() ) {
+                            if( ((RangedWeapon) a).GetFCSType() == ifMissileGuidance.FCS_ArtemisIV || ((RangedWeapon) a).GetFCSType() == ifMissileGuidance.FCS_ArtemisV ) {
+                                ((RangedWeapon) a).UseFCS( true, ifMissileGuidance.FCS_ArtemisIV );
+                            }
+                        }
+                        if( CurVee.GetLoadout().UsingArtemisV() ) {
+                            if( ((RangedWeapon) a).GetFCSType() == ifMissileGuidance.FCS_ArtemisV ) {
+                                ((RangedWeapon) a).UseFCS( true, ifMissileGuidance.FCS_ArtemisV );
+                            }
+                        }
+                        if( CurVee.GetLoadout().UsingApollo() ) {
+                            if( ((RangedWeapon) a).GetFCSType() == ifMissileGuidance.FCS_Apollo ) {
+                                ((RangedWeapon) a).UseFCS( true, ifMissileGuidance.FCS_Apollo );
+                            }
+                        }
+                    }
+                    break;
+                case PHYSICAL:
+                    if( lstChoosePhysical.getSelectedIndex() < 0 ) { break; }
+                    if( ! ( Equipment[PHYSICAL][lstChoosePhysical.getSelectedIndex()] instanceof abPlaceable ) ) {
+                        break;
+                    }
+                    a = (abPlaceable) Equipment[PHYSICAL][lstChoosePhysical.getSelectedIndex()];
+                    a = data.GetEquipment().GetCopy( a, CurVee );
+                    break;
+                case ARTILLERY:
+                    if( lstChooseArtillery.getSelectedIndex() < 0 ) { break; }
+                    if( ! ( Equipment[ARTILLERY][lstChooseArtillery.getSelectedIndex()] instanceof abPlaceable ) ) {
+                        break;
+                    }
+                    a = (abPlaceable) Equipment[ARTILLERY][lstChooseArtillery.getSelectedIndex()];
+                    a = data.GetEquipment().GetCopy( a, CurVee );
+                    break;
+                case EQUIPMENT:
+                    if( lstChooseEquipment.getSelectedIndex() < 0 ) { break; }
+                    if( ! ( Equipment[EQUIPMENT][lstChooseEquipment.getSelectedIndex()] instanceof abPlaceable ) ) {
+                        break;
+                    }
+                    a = (abPlaceable) Equipment[EQUIPMENT][lstChooseEquipment.getSelectedIndex()];
+                    a = data.GetEquipment().GetCopy( a, CurVee );
+                    break;
+                case AMMUNITION:
+                    if( lstChooseAmmunition.getSelectedIndex() < 0 ) { break; }
+                    Index = lstChooseAmmunition.getSelectedIndex();
+                    if( ! ( Equipment[AMMUNITION][Index] instanceof abPlaceable ) ) {
+                        break;
+                    }
+                    a = (abPlaceable) Equipment[AMMUNITION][Index];
+                    a = data.GetEquipment().GetCopy( a, CurVee );
+                    break;
+            }
+
+            // check exclusions if needed
+            if( a != null ) {
+                try {
+                    CurVee.GetLoadout().CheckExclusions( a );
+                    if( a instanceof Equipment ) {
+                        /*
+                        if ( ! ((Equipment) a).Validate( CurVee ) ) {
+                            if( ((Equipment) a).RequiresQuad() ) {
+                                throw new Exception( a.CritName() + " may only be mounted on a quad 'Mech." );
+                            } else if( ((Equipment) a).MaxAllowed() > 0 ) {
+                                throw new Exception( "Only " + ((Equipment) a).MaxAllowed() + " " + a.CritName() + "(s) may be mounted on one 'Mech." );
+                            }
+                        }
+                        */
+                    }
+                } catch( Exception e ) {
+                    Media.Messager( e.getMessage() );
+                    a = null;
+                }
+            }
+
+            // now we can add it to the 'Mech
+            if( a != null ) {
+                boolean result = true;
+                if( a instanceof Equipment ) {
+                    if( ((Equipment) a).IsVariableSize() ) {
+                        //dlgVariableSize SetTons = new dlgVariableSize( this, true, (Equipment) a );
+                        //SetTons.setLocationRelativeTo( this );
+                        //SetTons.setVisible( true );
+                        //result = SetTons.GetResult();
+                    }
+                }
+                if( result ) {
+                    CurVee.GetLoadout().AddToQueue( a );
+
+                    // unallocate the TC if needed (if the size changes)
+                    if( a instanceof ifWeapon ) {
+                        if( ((ifWeapon) a).IsTCCapable() && CurVee.GetLoadout().UsingTC() ) {
+                            CurVee.GetLoadout().UnallocateTC();
+                        }
+                    }
+
+                    // see if we need ammunition and add it if applicable
+                    ResetAmmo();
+
+                    if( a instanceof Ammunition ) {
+                        // added for support if the user selected ammo.  The ResetAmmo()
+                        // method clears the selected index.
+                        lstChooseAmmunition.setSelectedIndex(Index);
+                    }
+
+                    // refresh the selected equipment listbox
+                    if( CurVee.GetLoadout().GetNonCore().toArray().length <= 0 ) {
+                        Equipment[SELECTED] = new Object[] { " " };
+                    } else {
+                        Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+                    }
+                    lstSelectedEquipment.setListData( Equipment[SELECTED] );
+                }
+
+                // now refresh the information panes
+                RefreshSummary();
+                RefreshInfoPane();
+            }
+}//GEN-LAST:event_btnAddEquipActionPerformed
+
+        private void chkSuperchargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkSuperchargerActionPerformed
+            if( CurVee.GetLoadout().HasSupercharger() == chkSupercharger.isSelected() ) {
+                return;
+            }
+            try {
+                CurVee.GetLoadout().SetSupercharger( chkSupercharger.isSelected(), FileCommon.DecodeLocation( (String) cmbSCLoc.getSelectedItem() ), -1 );
+            } catch( Exception e ) {
+                Media.Messager( this, e.getMessage() );
+                try {
+                    CurVee.GetLoadout().SetSupercharger( false , 0, -1 );
+                } catch( Exception x ) {
+                    // how the hell did we get an error removing it?
+                    Media.Messager( this, x.getMessage() );
+                    // now refresh the information panes
+                    RefreshSummary();
+                    RefreshInfoPane();
+                }
+                chkSupercharger.setSelected( false );
+                // now refresh the information panes
+                RefreshSummary();
+                RefreshInfoPane();
+                return;
+            }
+            // now refresh the information panes
+            RefreshSummary();
+            RefreshInfoPane();
+}//GEN-LAST:event_chkSuperchargerActionPerformed
+
+        private void cmbSCLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSCLocActionPerformed
+            int curLoc = CurVee.GetLoadout().Find( CurVee.GetLoadout().GetSupercharger() );
+            int DesiredLoc = FileCommon.DecodeLocation( (String) cmbSCLoc.getSelectedItem() );
+            if( curLoc == DesiredLoc ) { return; }
+            if( CurVee.GetLoadout().HasSupercharger() ) {
+                try {
+                    CurVee.GetLoadout().SetSupercharger( true, DesiredLoc, -1 );
+                } catch( Exception e ) {
+                    Media.Messager( this, e.getMessage() );
+                    chkSupercharger.setSelected( false );
+                    // now refresh the information panes
+                    RefreshSummary();
+                    RefreshInfoPane();
+                    return;
+                }
+            }
+            // now refresh the information panes
+            RefreshSummary();
+            RefreshInfoPane();
+}//GEN-LAST:event_cmbSCLocActionPerformed
+
+        private void mnuExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuExitActionPerformed
+            if( CurVee.HasChanged() ) {
+                int choice = javax.swing.JOptionPane.showConfirmDialog( this,
+                    "The current Vehicle has changed.\nDo you want to discard those changes?", "Discard Changes?", javax.swing.JOptionPane.YES_NO_OPTION );
+                if( choice == 1 ) { return; }
+            }
+            CloseProgram();
+        }//GEN-LAST:event_mnuExitActionPerformed
+
+        private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+            CloseProgram();
+        }//GEN-LAST:event_formWindowClosing
 
     public void setUnit(Vector v) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -1703,21 +3743,28 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddEquip;
     private javax.swing.JButton btnAddToForceList;
+    private javax.swing.JButton btnClearEquip;
     private javax.swing.JButton btnForceList;
     private javax.swing.JButton btnMaximize;
     private javax.swing.JButton btnPostToS7;
+    private javax.swing.JButton btnRemoveEquip;
     private javax.swing.JButton btnSetArmorTons;
     private javax.swing.JButton btnUseRemaining;
     private javax.swing.JCheckBox chkArmoredMotive;
     private javax.swing.JCheckBox chkBalanceFRArmor;
     private javax.swing.JCheckBox chkBalanceLRArmor;
     private javax.swing.JCheckBox chkChinTurret;
+    private javax.swing.JCheckBox chkClanCASE;
     private javax.swing.JCheckBox chkCommandConsole;
     private javax.swing.JCheckBox chkDualTurret;
     private javax.swing.JCheckBox chkDuneBuggy;
     private javax.swing.JCheckBox chkEnviroSealing;
     private javax.swing.JCheckBox chkEscapePod;
+    private javax.swing.JCheckBox chkFCSAIV;
+    private javax.swing.JCheckBox chkFCSAV;
+    private javax.swing.JCheckBox chkFCSApollo;
     private javax.swing.JCheckBox chkFlotationHull;
     private javax.swing.JCheckBox chkFullAmph;
     private javax.swing.JCheckBox chkJetBooster;
@@ -1727,13 +3774,16 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private javax.swing.JCheckBox chkOmniVee;
     private javax.swing.JCheckBox chkSingleTurret;
     private javax.swing.JCheckBox chkSponsoonTurrets;
+    private javax.swing.JCheckBox chkSupercharger;
     private javax.swing.JCheckBox chkTrailer;
+    private javax.swing.JCheckBox chkUseTC;
     private javax.swing.JCheckBox chkYearRestrict;
     private javax.swing.JComboBox cmbArmorType;
     private javax.swing.JComboBox cmbEngineType;
     private javax.swing.JComboBox cmbEra;
     private javax.swing.JComboBox cmbMotiveType;
     private javax.swing.JComboBox cmbRulesLevel;
+    private javax.swing.JComboBox cmbSCLoc;
     private javax.swing.JComboBox cmbTechBase;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -1771,6 +3821,10 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
@@ -1786,7 +3840,23 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1797,17 +3867,35 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane19;
+    private javax.swing.JScrollPane jScrollPane20;
+    private javax.swing.JScrollPane jScrollPane21;
+    private javax.swing.JScrollPane jScrollPane22;
+    private javax.swing.JScrollPane jScrollPane23;
+    private javax.swing.JScrollPane jScrollPane24;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator11;
+    private javax.swing.JSeparator jSeparator12;
+    private javax.swing.JSeparator jSeparator13;
+    private javax.swing.JSeparator jSeparator14;
+    private javax.swing.JSeparator jSeparator15;
+    private javax.swing.JSeparator jSeparator16;
+    private javax.swing.JSeparator jSeparator17;
+    private javax.swing.JSeparator jSeparator18;
+    private javax.swing.JSeparator jSeparator19;
     private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JSeparator jSeparator20;
     private javax.swing.JToolBar.Separator jSeparator25;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JLabel lblArmorCoverage;
     private javax.swing.JLabel lblArmorLeftInLot;
@@ -1819,6 +3907,25 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private javax.swing.JLabel lblFlankMP;
     private javax.swing.JLabel lblFreeHeatSinks;
     private javax.swing.JLabel lblFrontIntPts;
+    private javax.swing.JLabel lblInfoAVCI;
+    private javax.swing.JLabel lblInfoAVSL;
+    private javax.swing.JLabel lblInfoAVSW;
+    private javax.swing.JLabel lblInfoAmmo;
+    private javax.swing.JLabel lblInfoBV;
+    private javax.swing.JLabel lblInfoCost;
+    private javax.swing.JLabel lblInfoCrits;
+    private javax.swing.JLabel lblInfoDamage;
+    private javax.swing.JLabel lblInfoExtinct;
+    private javax.swing.JLabel lblInfoHeat;
+    private javax.swing.JLabel lblInfoIntro;
+    private javax.swing.JLabel lblInfoMountRestrict;
+    private javax.swing.JLabel lblInfoName;
+    private javax.swing.JLabel lblInfoRange;
+    private javax.swing.JLabel lblInfoReintro;
+    private javax.swing.JLabel lblInfoRulesLevel;
+    private javax.swing.JLabel lblInfoSpecials;
+    private javax.swing.JLabel lblInfoTonnage;
+    private javax.swing.JLabel lblInfoType;
     private javax.swing.JLabel lblLeftIntPts;
     private javax.swing.JLabel lblMinEngineTons;
     private javax.swing.JLabel lblNumCrew;
@@ -1826,24 +3933,45 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private javax.swing.JLabel lblRearTurretIntPts;
     private javax.swing.JLabel lblRightIntPts;
     private javax.swing.JLabel lblSupensionFacter;
+    private javax.swing.JLabel lblSupercharger;
     private javax.swing.JLabel lblTurretIntPts;
     private javax.swing.JLabel lblVeeClass;
+    private javax.swing.JList lstChooseAmmunition;
+    private javax.swing.JList lstChooseArtillery;
+    private javax.swing.JList lstChooseBallistic;
+    private javax.swing.JList lstChooseEnergy;
+    private javax.swing.JList lstChooseEquipment;
+    private javax.swing.JList lstChooseMissile;
+    private javax.swing.JList lstChoosePhysical;
+    private javax.swing.JList lstSelectedEquipment;
+    private javax.swing.JMenuItem mnuExit;
     private javax.swing.JPanel pblBasicInfo;
+    private javax.swing.JPanel pnlAmmunition;
+    private javax.swing.JPanel pnlArtillery;
+    private javax.swing.JPanel pnlBallistic;
     private javax.swing.JPanel pnlBasicSetup;
     private javax.swing.JTabbedPane pnlBasics;
     private javax.swing.JPanel pnlChassis;
     private javax.swing.JPanel pnlChassisMods;
+    private javax.swing.JPanel pnlControls;
+    private javax.swing.JPanel pnlEnergy;
+    private javax.swing.JPanel pnlEquipInfo;
     private javax.swing.JPanel pnlEquipment;
+    private javax.swing.JPanel pnlEquipmentChooser;
     private javax.swing.JPanel pnlExperimental;
     private javax.swing.JPanel pnlFluff;
     private javax.swing.JPanel pnlFrontArmor;
     private javax.swing.JPanel pnlInfoPane;
     private javax.swing.JPanel pnlInformation;
     private javax.swing.JPanel pnlLeftArmor;
+    private javax.swing.JPanel pnlMissile;
     private javax.swing.JPanel pnlMovement;
+    private javax.swing.JPanel pnlPhysical;
     private javax.swing.JPanel pnlRearArmor;
     private javax.swing.JPanel pnlRearTurretArmor;
     private javax.swing.JPanel pnlRightArmor;
+    private javax.swing.JPanel pnlSelected;
+    private javax.swing.JPanel pnlSpecials;
     private javax.swing.JPanel pnlSummary;
     private javax.swing.JPanel pnlTurretArmor;
     private javax.swing.JPanel pnlTurrets;
@@ -1856,8 +3984,15 @@ public class frmMain extends javax.swing.JFrame implements DesignForm {
     private javax.swing.JSpinner spnRightArmor;
     private javax.swing.JSpinner spnTonnage;
     private javax.swing.JSpinner spnTurretArmor;
+    private javax.swing.JTabbedPane tbpWeaponChooser;
     private javax.swing.JTextField txtArmorSpace;
     private javax.swing.JTextField txtArmorTons;
+    private javax.swing.JTextField txtInfoBattleValue;
+    private javax.swing.JTextField txtInfoCost;
+    private javax.swing.JTextField txtInfoFreeCrits;
+    private javax.swing.JTextField txtInfoFreeTons;
+    private javax.swing.JTextField txtInfoTonnage;
+    private javax.swing.JTextField txtInfoUnplaced;
     private javax.swing.JTextField txtModel;
     private javax.swing.JTextField txtProdYear;
     private javax.swing.JTextField txtSumArmAV;
