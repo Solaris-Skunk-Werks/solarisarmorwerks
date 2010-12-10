@@ -38,7 +38,7 @@ import javax.swing.ImageIcon;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import saw.gui.frmMain;
+import saw.gui.frmVee;
 
 public class Main {
 
@@ -50,8 +50,8 @@ public class Main {
         Preferences prefs = Preferences.userNodeForPackage("/java/lang".getClass());
         prefs.remove("FileToOpen");
 
-        //Was trying to save args into Prefs and read inside frmMain but keeps showing up as blank!?!?!
-        //Turns out that the prefs are going to ssw/gui/frmMain but are going to java/lang.
+        //Was trying to save args into Prefs and read inside frmVee but keeps showing up as blank!?!?!
+        //Turns out that the prefs are going to ssw/gui/frmVee but are going to java/lang.
         //args = new String[]{"k:\\ssw\\master\\Anvil ANV-6M.ssw"};
 
         if ( args.length >= 1 ) {
@@ -113,7 +113,7 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ImageIcon icon;
-                frmMain MainFrame = new frmMain();
+                frmVee MainFrame = new frmVee();
                 try {
                     icon = new ImageIcon(MainFrame.getClass().getResource("/saw/Images/appicon.png"));
                     MainFrame.setIconImage(icon.getImage());
@@ -121,7 +121,7 @@ public class Main {
                     System.out.println("Error loading Icon image...\n" + e.getMessage());
                 }
                 MainFrame.setTitle( Constants.AppDescription + " " + Constants.Version );
-                MainFrame.setSize( 750, 600 );
+                MainFrame.setSize( 800, 600 );
                 MainFrame.setLocationRelativeTo( null );
                 MainFrame.setResizable( true );
                 MainFrame.setDefaultCloseOperation( javax.swing.JFrame.DISPOSE_ON_CLOSE );
