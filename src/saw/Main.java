@@ -47,7 +47,7 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        Preferences prefs = Preferences.userNodeForPackage("/java/lang".getClass());
+        Preferences prefs = Preferences.userRoot().node( common.Constants.SAWPrefs );
         prefs.remove("FileToOpen");
 
         //Was trying to save args into Prefs and read inside frmVee but keeps showing up as blank!?!?!
@@ -121,7 +121,7 @@ public class Main {
                     System.out.println("Error loading Icon image...\n" + e.getMessage());
                 }
                 MainFrame.setTitle( Constants.AppDescription + " " + Constants.Version );
-                MainFrame.setSize( 800, 600 );
+                //MainFrame.setSize( 800, 600 );
                 MainFrame.setLocationRelativeTo( null );
                 MainFrame.setResizable( true );
                 MainFrame.setDefaultCloseOperation( javax.swing.JFrame.DISPOSE_ON_CLOSE );

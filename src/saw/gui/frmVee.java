@@ -30,6 +30,7 @@ package saw.gui;
 
 import battleforce.BattleForceStats;
 import common.CommonTools;
+import common.Constants;
 import components.AvailableCode;
 import components.CVArmor;
 import components.CombatVehicle;
@@ -54,6 +55,7 @@ public class frmVee extends javax.swing.JFrame {
     CombatVehicle CurVee;
     abPlaceable CurItem;
     Preferences Prefs;
+    String[] Selections = { "", "" };
 
     FocusAdapter spinners = new FocusAdapter() {
         @Override
@@ -73,7 +75,7 @@ public class frmVee extends javax.swing.JFrame {
     public frmVee() {
         initComponents();
 
-        Prefs = Preferences.userNodeForPackage( this.getClass() );
+        Prefs = Preferences.userRoot().node( Constants.SAWPrefs );
         CurVee = new CombatVehicle( );
         cmbMotiveTypeActionPerformed(null);
 
@@ -137,6 +139,13 @@ public class frmVee extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        pnlInfoPane = new javax.swing.JPanel();
+        txtInfoTonnage = new javax.swing.JTextField();
+        txtInfoFreeTons = new javax.swing.JTextField();
+        txtInfoFreeCrits = new javax.swing.JTextField();
+        txtInfoUnplaced = new javax.swing.JTextField();
+        txtInfoBattleValue = new javax.swing.JTextField();
+        txtInfoCost = new javax.swing.JTextField();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -429,18 +438,60 @@ public class frmVee extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jScrollPane14 = new javax.swing.JScrollPane();
         jTextAreaBFConversion = new javax.swing.JTextArea();
-        pnlInfoPane = new javax.swing.JPanel();
-        txtInfoTonnage = new javax.swing.JTextField();
-        txtInfoFreeTons = new javax.swing.JTextField();
-        txtInfoFreeCrits = new javax.swing.JTextField();
-        txtInfoUnplaced = new javax.swing.JTextField();
-        txtInfoBattleValue = new javax.swing.JTextField();
-        txtInfoCost = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        txtInfoTonnage.setEditable(false);
+        txtInfoTonnage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoTonnage.setText("Tonnage: 000.00");
+        txtInfoTonnage.setMaximumSize(new java.awt.Dimension(110, 20));
+        txtInfoTonnage.setMinimumSize(new java.awt.Dimension(110, 20));
+        txtInfoTonnage.setPreferredSize(new java.awt.Dimension(110, 20));
+        pnlInfoPane.add(txtInfoTonnage);
+
+        txtInfoFreeTons.setEditable(false);
+        txtInfoFreeTons.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoFreeTons.setText("Free Tons: 000.00");
+        txtInfoFreeTons.setMaximumSize(new java.awt.Dimension(115, 20));
+        txtInfoFreeTons.setMinimumSize(new java.awt.Dimension(115, 20));
+        txtInfoFreeTons.setPreferredSize(new java.awt.Dimension(115, 20));
+        pnlInfoPane.add(txtInfoFreeTons);
+
+        txtInfoFreeCrits.setEditable(false);
+        txtInfoFreeCrits.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoFreeCrits.setText("Space: 00");
+        txtInfoFreeCrits.setMaximumSize(new java.awt.Dimension(65, 20));
+        txtInfoFreeCrits.setMinimumSize(new java.awt.Dimension(65, 20));
+        txtInfoFreeCrits.setPreferredSize(new java.awt.Dimension(65, 20));
+        pnlInfoPane.add(txtInfoFreeCrits);
+
+        txtInfoUnplaced.setEditable(false);
+        txtInfoUnplaced.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoUnplaced.setText("Unplaced Items: 00");
+        txtInfoUnplaced.setMaximumSize(new java.awt.Dimension(120, 20));
+        txtInfoUnplaced.setMinimumSize(new java.awt.Dimension(120, 20));
+        txtInfoUnplaced.setPreferredSize(new java.awt.Dimension(120, 20));
+        pnlInfoPane.add(txtInfoUnplaced);
+
+        txtInfoBattleValue.setEditable(false);
+        txtInfoBattleValue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoBattleValue.setText("BV: 00,000");
+        txtInfoBattleValue.setMaximumSize(new java.awt.Dimension(75, 20));
+        txtInfoBattleValue.setMinimumSize(new java.awt.Dimension(75, 20));
+        txtInfoBattleValue.setPreferredSize(new java.awt.Dimension(75, 20));
+        pnlInfoPane.add(txtInfoBattleValue);
+
+        txtInfoCost.setEditable(false);
+        txtInfoCost.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtInfoCost.setText("Cost: 000,000,000,000.00");
+        txtInfoCost.setMaximumSize(new java.awt.Dimension(165, 20));
+        txtInfoCost.setMinimumSize(new java.awt.Dimension(165, 20));
+        txtInfoCost.setPreferredSize(new java.awt.Dimension(165, 20));
+        pnlInfoPane.add(txtInfoCost);
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -585,7 +636,7 @@ public class frmVee extends javax.swing.JFrame {
         chkYearRestrict.setText("Restrict Availability by Year");
 
         jLabel81.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel81.setText("Model:");
+        jLabel81.setText("Source:");
 
         txtSource.setMinimumSize(new java.awt.Dimension(150, 20));
         txtSource.setPreferredSize(new java.awt.Dimension(150, 20));
@@ -621,23 +672,24 @@ public class frmVee extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addComponent(chkYearRestrict))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(2, 2, 2)
-                            .addComponent(txtVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addGap(35, 35, 35)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel5Layout.createSequentialGroup()
-                                    .addComponent(jLabel81, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel81, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtVehicleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                                     .addGap(2, 2, 2)
                                     .addComponent(txtSource, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel5Layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(2, 2, 2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(txtModel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -729,7 +781,7 @@ public class frmVee extends javax.swing.JFrame {
                         .addComponent(jLabel13)
                         .addGap(2, 2, 2)
                         .addComponent(spnJumpMP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         pnlMovementLayout.setVerticalGroup(
             pnlMovementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1419,7 +1471,7 @@ public class frmVee extends javax.swing.JFrame {
                     .addComponent(chkMinesweeper)
                     .addComponent(chkCommandConsole)
                     .addComponent(chkEscapePod))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         pnlExperimentalLayout.setVerticalGroup(
             pnlExperimentalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2783,54 +2835,6 @@ public class frmVee extends javax.swing.JFrame {
 
         tbpMainTabPane.addTab("BattleForce", jPanel9);
 
-        txtInfoTonnage.setEditable(false);
-        txtInfoTonnage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtInfoTonnage.setText("Tonnage: 000.00");
-        txtInfoTonnage.setMaximumSize(new java.awt.Dimension(110, 20));
-        txtInfoTonnage.setMinimumSize(new java.awt.Dimension(110, 20));
-        txtInfoTonnage.setPreferredSize(new java.awt.Dimension(110, 20));
-        pnlInfoPane.add(txtInfoTonnage);
-
-        txtInfoFreeTons.setEditable(false);
-        txtInfoFreeTons.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtInfoFreeTons.setText("Free Tons: 000.00");
-        txtInfoFreeTons.setMaximumSize(new java.awt.Dimension(115, 20));
-        txtInfoFreeTons.setMinimumSize(new java.awt.Dimension(115, 20));
-        txtInfoFreeTons.setPreferredSize(new java.awt.Dimension(115, 20));
-        pnlInfoPane.add(txtInfoFreeTons);
-
-        txtInfoFreeCrits.setEditable(false);
-        txtInfoFreeCrits.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtInfoFreeCrits.setText("Space: 00");
-        txtInfoFreeCrits.setMaximumSize(new java.awt.Dimension(65, 20));
-        txtInfoFreeCrits.setMinimumSize(new java.awt.Dimension(65, 20));
-        txtInfoFreeCrits.setPreferredSize(new java.awt.Dimension(65, 20));
-        pnlInfoPane.add(txtInfoFreeCrits);
-
-        txtInfoUnplaced.setEditable(false);
-        txtInfoUnplaced.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtInfoUnplaced.setText("Unplaced Items: 00");
-        txtInfoUnplaced.setMaximumSize(new java.awt.Dimension(120, 20));
-        txtInfoUnplaced.setMinimumSize(new java.awt.Dimension(120, 20));
-        txtInfoUnplaced.setPreferredSize(new java.awt.Dimension(120, 20));
-        pnlInfoPane.add(txtInfoUnplaced);
-
-        txtInfoBattleValue.setEditable(false);
-        txtInfoBattleValue.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtInfoBattleValue.setText("BV: 00,000");
-        txtInfoBattleValue.setMaximumSize(new java.awt.Dimension(75, 20));
-        txtInfoBattleValue.setMinimumSize(new java.awt.Dimension(75, 20));
-        txtInfoBattleValue.setPreferredSize(new java.awt.Dimension(75, 20));
-        pnlInfoPane.add(txtInfoBattleValue);
-
-        txtInfoCost.setEditable(false);
-        txtInfoCost.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtInfoCost.setText("Cost: 000,000,000,000.00");
-        txtInfoCost.setMaximumSize(new java.awt.Dimension(165, 20));
-        txtInfoCost.setMinimumSize(new java.awt.Dimension(165, 20));
-        txtInfoCost.setPreferredSize(new java.awt.Dimension(165, 20));
-        pnlInfoPane.add(txtInfoCost);
-
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -2844,18 +2848,17 @@ public class frmVee extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-            .addComponent(tbpMainTabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addComponent(pnlInfoPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(tbpMainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tbpMainTabPane, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(tbpMainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -3059,8 +3062,107 @@ public class frmVee extends javax.swing.JFrame {
     }
 
     private void cmbRulesLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRulesLevelActionPerformed
-           
+        int NewLevel = cmbRulesLevel.getSelectedIndex();
+        int OldLevel = CurVee.GetLoadout().GetRulesLevel();
+        int OldType = cmbMotiveType.getSelectedIndex();
+        int OldTech = CurVee.GetTechbase();
+
+        if( OldLevel == NewLevel ) {
+            // we're already at the correct rules level.
+            return;
+        }
+
+        // do we have an OmniVee?
+        if( CurVee.IsOmni() ) {
+            // see if we can set to the new rules level.
+            if( CurVee.GetLoadout().SetRulesLevel( NewLevel ) ) {
+                // we can.
+                if( OldLevel > NewLevel ) {
+                    CurVee.GetLoadout().FlushIllegal();
+                }
+                BuildTechBaseSelector();
+                cmbTechBase.setSelectedIndex( CurVee.GetLoadout().GetTechBase() );
+                //RefreshEquipment();
+                //RecalcEquipment();
+            } else {
+                // can't.  reset to the default rules level and scold the user
+                Media.Messager( this, "You cannot set an OmniVee's loadout to a Rules Level\nlower than it's chassis' Rules Level." );
+                cmbRulesLevel.setSelectedIndex( CurVee.GetLoadout().GetRulesLevel() );
+                return;
+            }
+        } else {
+            CurVee.SetRulesLevel( NewLevel );
+            CheckTonnage( true );
+
+            // get the currently chosen selections
+            SaveSelections();
+            BuildTechBaseSelector();
+            if( OldTech >= cmbTechBase.getItemCount() ) {
+                // ooooh fun, we can't set it correctly.
+                switch( OldTech ) {
+                    case AvailableCode.TECH_INNER_SPHERE:
+                        // WTF???
+                        System.err.println( "Fatal Error when reseting techbase, Inner Sphere not available." );
+                        break;
+                    default:
+                        // set it to Inner Sphere
+                        cmbTechBase.setSelectedIndex( 0 );
+                        //cmbTechBaseActionPerformed( null );
+                        break;
+                }
+            }
+
+            // since you can only ever change the rules level when not restricted,
+            // we're not doing it here.  Pass in default values.
+            //CurMech.GetLoadout().FlushIllegal( CurMech.GetEra(), 0, false );
+            CurVee.GetLoadout().FlushIllegal();
+
+            // refresh all the combo boxes.
+            BuildEngineSelector();
+            BuildArmorSelector();
+            //FixWalkMPSpinner();
+            FixJJSpinnerModel();
+            //RefreshEquipment();
+
+            // now reset the combo boxes to the closest choices we previously selected
+            LoadSelections();
+
+            //RecalcEngine();
+            //RecalcIntStruc();
+            //RecalcHeatSinks();
+            //RecalcArmor();
+            //RecalcEquipment();
+        }
+
+        // now refresh the information panes
+        RefreshSummary();
+        RefreshInfoPane();
+        //SetWeaponChoosers();
+        //ResetAmmo();
 }//GEN-LAST:event_cmbRulesLevelActionPerformed
+    // check the tonnage to see if it's legal and acts accordingly
+    public void CheckTonnage( boolean RulesChange ) {
+        if( CurVee.GetTonnage() < 1 ) {
+            spnTonnage.setValue(1);
+        }
+        
+        if ( CurVee.GetTonnage() >= CurVee.GetMaxTonnage() ) {
+            spnTonnage.setValue(CurVee.GetMaxTonnage());
+        }
+    }
+
+    private void SaveSelections() {
+        // saves the current GUI selections
+        Selections[0] = BuildLookupName( CurVee.GetEngine().GetCurrentState() );
+        Selections[1] = BuildLookupName( CurVee.GetArmor().GetCurrentState() );
+    }
+
+    private void LoadSelections() {
+        // sets the current selections to the last saved selections or to the
+        // default selections.  We'll do some validation here as well.
+        cmbEngineType.setSelectedItem( Selections[0] );
+        cmbArmorType.setSelectedItem( Selections[1] );
+    }
 
     private void cmbMotiveTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMotiveTypeActionPerformed
         switch ( cmbMotiveType.getSelectedIndex() ) {
