@@ -2910,27 +2910,27 @@ public class frmVee extends javax.swing.JFrame {
         // sets some of the basic vehicle information normally kept in the GUI and
         // prepares the vehicle for saving to file
         int year = 0;
-        CurVee.setName( txtVehicleName.getText() );
-        CurVee.setModel( txtModel.getText() );
+        CurVee.SetName( txtVehicleName.getText() );
+        CurVee.SetModel( txtModel.getText() );
         if( txtProdYear.getText().isEmpty() ) {
             switch( cmbEra.getSelectedIndex() ) {
             case AvailableCode.ERA_STAR_LEAGUE:
-                CurVee.setYear( 2750, false );
+                CurVee.SetYear( 2750, false );
                 break;
             case AvailableCode.ERA_SUCCESSION:
-                CurVee.setYear( 3025, false );
+                CurVee.SetYear( 3025, false );
                 break;
             case AvailableCode.ERA_CLAN_INVASION:
-                CurVee.setYear( 3070, false );
+                CurVee.SetYear( 3070, false );
                 break;
             case AvailableCode.ERA_DARK_AGES:
-                CurVee.setYear( 3132, false );
+                CurVee.SetYear( 3132, false );
                 break;
             }
         } else {
             try{
                 year = Integer.parseInt( txtProdYear.getText() ) ;
-                CurVee.setYear( year, true );
+                CurVee.SetYear( year, true );
             } catch( NumberFormatException n ) {
                 Media.Messager( this, "The production year is not a number." );
                 tbpMainTabPane.setSelectedComponent( pnlBasicSetup );
@@ -2955,7 +2955,7 @@ public class frmVee extends javax.swing.JFrame {
         //}
         //CurVee.SetCommSystem( txtCommSystem.getText() );
         //CurVee.SetTandTSystem( txtTNTSystem.getText() );
-        CurVee.setSource( txtSource.getText() );
+        CurVee.SetSource( txtSource.getText() );
     }
 
     private void BuildArmorSelector() {
@@ -3030,12 +3030,13 @@ public class frmVee extends javax.swing.JFrame {
     private void FixArmorSpinners() {
         // fixes the armor spinners to match the new tonnage / motive type
         CVArmor a = CurVee.GetArmor();
-        spnFrontArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_FRONT ), 0, a.GetLocationMax( LocationIndex.CV_LOC_FRONT ), 1) );
-        spnLeftArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_LEFT ), 0, a.GetLocationMax( LocationIndex.CV_LOC_LEFT), 1) );
-        spnRightArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_RIGHT ), 0, a.GetLocationMax( LocationIndex.CV_LOC_RIGHT), 1) );
-        spnRearArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_REAR ), 0, a.GetLocationMax( LocationIndex.CV_LOC_REAR), 1) );
-        spnTurretArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_TURRET1 ), 0, a.GetLocationMax( LocationIndex.CV_LOC_TURRET1), 1) );
-        spnRearTurretArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_TURRET2 ), 0, a.GetLocationMax( LocationIndex.CV_LOC_TURRET2), 1) );
+  
+        spnFrontArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_FRONT ), 0, a.GetMaxArmor(), 1) );
+        spnLeftArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_LEFT ), 0, a.GetMaxArmor(), 1) );
+        spnRightArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_RIGHT ), 0, a.GetMaxArmor(), 1) );
+        spnRearArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_REAR ), 0, a.GetMaxArmor(), 1) );
+        spnTurretArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_TURRET1 ), 0, a.GetMaxArmor(), 1) );
+        spnRearTurretArmor.setModel( new javax.swing.SpinnerNumberModel( a.GetLocationArmor( LocationIndex.CV_LOC_TURRET2 ), 0, a.GetMaxArmor(), 1) );
     }
 
     public String BuildLookupName( ifState s ) {
@@ -3305,12 +3306,12 @@ public class frmVee extends javax.swing.JFrame {
         }
         try {
             // the commitedit worked, so set the engine rating and report the running mp
-            CurVee.setCruiseMP( n.getNumber().intValue() );
+            CurVee.SetCruiseMP( n.getNumber().intValue() );
         } catch( Exception e ) {
             Media.Messager( e.getMessage() );
             spnCruiseMP.setValue( spnCruiseMP.getPreviousValue() );
         }
-        lblFlankMP.setText( "" + CurVee.getFlankMP() );
+        lblFlankMP.setText( "" + CurVee.GetFlankMP() );
 
         // when the walking mp changes, we also have to change the jump mp
         // spinner model and recalculate the heat sinks
@@ -3339,7 +3340,7 @@ public class frmVee extends javax.swing.JFrame {
 //            min = CurVee.GetJumpJets().GetBaseLoadoutNumJJ();
 //        }
 
-        max = CurVee.getCruiseMP();
+        max = CurVee.GetCruiseMP();
 
 //        current = CurVee.GetJumpJets().GetNumJJ();
 
