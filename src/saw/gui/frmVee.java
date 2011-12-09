@@ -515,6 +515,11 @@ public class frmVee extends javax.swing.JFrame {
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton7);
         jToolBar1.add(jSeparator1);
 
@@ -2910,27 +2915,27 @@ public class frmVee extends javax.swing.JFrame {
         // sets some of the basic vehicle information normally kept in the GUI and
         // prepares the vehicle for saving to file
         int year = 0;
-        CurVee.SetName( txtVehicleName.getText() );
-        CurVee.SetModel( txtModel.getText() );
+        CurVee.setName( txtVehicleName.getText() );
+        CurVee.setModel( txtModel.getText() );
         if( txtProdYear.getText().isEmpty() ) {
             switch( cmbEra.getSelectedIndex() ) {
             case AvailableCode.ERA_STAR_LEAGUE:
-                CurVee.SetYear( 2750, false );
+                CurVee.setYear( 2750, false );
                 break;
             case AvailableCode.ERA_SUCCESSION:
-                CurVee.SetYear( 3025, false );
+                CurVee.setYear( 3025, false );
                 break;
             case AvailableCode.ERA_CLAN_INVASION:
-                CurVee.SetYear( 3070, false );
+                CurVee.setYear( 3070, false );
                 break;
             case AvailableCode.ERA_DARK_AGES:
-                CurVee.SetYear( 3132, false );
+                CurVee.setYear( 3132, false );
                 break;
             }
         } else {
             try{
                 year = Integer.parseInt( txtProdYear.getText() ) ;
-                CurVee.SetYear( year, true );
+                CurVee.setYear( year, true );
             } catch( NumberFormatException n ) {
                 Media.Messager( this, "The production year is not a number." );
                 tbpMainTabPane.setSelectedComponent( pnlBasicSetup );
@@ -2955,7 +2960,7 @@ public class frmVee extends javax.swing.JFrame {
         //}
         //CurVee.SetCommSystem( txtCommSystem.getText() );
         //CurVee.SetTandTSystem( txtTNTSystem.getText() );
-        CurVee.SetSource( txtSource.getText() );
+        CurVee.setSource( txtSource.getText() );
     }
 
     private void BuildArmorSelector() {
@@ -3306,12 +3311,12 @@ public class frmVee extends javax.swing.JFrame {
         }
         try {
             // the commitedit worked, so set the engine rating and report the running mp
-            CurVee.SetCruiseMP( n.getNumber().intValue() );
+            CurVee.setCruiseMP( n.getNumber().intValue() );
         } catch( Exception e ) {
             Media.Messager( e.getMessage() );
             spnCruiseMP.setValue( spnCruiseMP.getPreviousValue() );
         }
-        lblFlankMP.setText( "" + CurVee.GetFlankMP() );
+        lblFlankMP.setText( "" + CurVee.getFlankMP() );
 
         // when the walking mp changes, we also have to change the jump mp
         // spinner model and recalculate the heat sinks
@@ -3328,6 +3333,11 @@ public class frmVee extends javax.swing.JFrame {
 
     }//GEN-LAST:event_spnTonnageFocusGained
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        SolidifyVehicle();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     private void FixJJSpinnerModel() {
         // since the jump jet spinner model changes every time the walking mp
         // changes, here is a quick little routine to do it without extra fuss.
@@ -3340,7 +3350,7 @@ public class frmVee extends javax.swing.JFrame {
 //            min = CurVee.GetJumpJets().GetBaseLoadoutNumJJ();
 //        }
 
-        max = CurVee.GetCruiseMP();
+        max = CurVee.getCruiseMP();
 
 //        current = CurVee.GetJumpJets().GetNumJJ();
 
