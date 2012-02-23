@@ -64,7 +64,7 @@ public class EquipmentSelectedRenderer extends DefaultListCellRenderer {
                 Text = a.CritName();
             }
             if( Loc < 11 ) {
-                Text = "(" + FileCommon.EncodeLocation( Loc, false ) + ") " + Text;
+                Text = "(" + FileCommon.EncodeLocation( Loc, false, Parent.CurVee ) + ") " + Text;
             }
         }
 

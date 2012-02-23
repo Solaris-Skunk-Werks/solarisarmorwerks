@@ -34,7 +34,7 @@ public class Constants {
     // here is the versioning and program name
     public final static String AppName = "SAW",
                         AppDescription = "Solaris Armor Werks",
-                        Version = "0.0.0",
+                        Version = "0.0.1",
                         AppRelease = "Alpha",
                         ImageListFileName = "S7Images",
                         LogFileName = "SAW_Log.txt",
@@ -47,4 +47,6 @@ public class Constants {
                      ART4_ART_4 = 1,
                      ART4_ART_5 = 2,
                      ART4_APOLLO = 3;
+    public final static int SCREEN_SIZE_NORMAL = 0,
+                            SCREEN_SIZE_WIDE_1280 = 1;
 }
