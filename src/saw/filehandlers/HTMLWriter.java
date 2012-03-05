@@ -35,16 +35,15 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.ArrayList;
 import common.CommonTools;
 import filehandlers.FileCommon;
-import states.stChassisMSBP;
+import java.util.HashMap;
 
 public class HTMLWriter {
 
     private CombatVehicle CurVee;
-    private Hashtable lookup = new Hashtable<String, String>( 90 );
+    private HashMap lookup = new HashMap<String, String>( 90 );
     private String NL = "<br />",
                    tformat = "";
 
@@ -438,7 +437,7 @@ public class HTMLWriter {
 
         for( int i = 0; i < loadouts.size(); i++ ) {
             // set the mech to the current loadout
-            CurVee.SetCurLoadout( ((ifMechLoadout) loadouts.get(i)).GetName() );
+            CurVee.SetCurLoadout( ((ifCVLoadout) loadouts.get(i)).GetName() );
             EQLines.clear();
 
             // now read each line in turn and fill in the blanks.
@@ -880,12 +879,12 @@ public class HTMLWriter {
                             }
                         } else if( check.equals( "<+-SSW_EQUIP_LOCATION-+>" ) ) {
                             if( a.CanSplit() ) {
-                                retval += FileCommon.EncodeLocations( CurVee.GetLoadout().FindInstances( a ), false );
+                                retval += FileCommon.EncodeLocations( CurVee.GetLoadout().FindInstances( a ), false, common.CommonTools.Vehicle );
                             } else {
                                 if( a instanceof MultiSlotSystem || a instanceof MechanicalJumpBooster ) {
                                     retval += "*";
                                 } else {
-                                    retval += FileCommon.EncodeLocation( CurVee.GetLoadout().Find( a ), false );
+                                    retval += FileCommon.EncodeLocation( CurVee.GetLoadout().Find( a ), false, common.CommonTools.Vehicle );
                                 }
                             }
                         } else if( check.equals( "<+-SSW_EQUIP_HEAT-+>" ) ) {
@@ -1032,12 +1031,12 @@ public class HTMLWriter {
                             }
                         } else if( check.equals( "<+-SSW_EQUIP_LOCATION-+>" ) ) {
                             if( a.CanSplit() ) {
-                                retval += FileCommon.EncodeLocations( CurVee.GetLoadout().FindInstances( a ), false );
+                                retval += FileCommon.EncodeLocations( CurVee.GetLoadout().FindInstances( a ), false, common.CommonTools.Vehicle );
                             } else {
                                 if( a instanceof MultiSlotSystem || a instanceof MechanicalJumpBooster ) {
                                     retval += "*";
                                 } else {
-                                    retval += FileCommon.EncodeLocation( CurVee.GetLoadout().Find( a ), false );
+                                    retval += FileCommon.EncodeLocation( CurVee.GetLoadout().Find( a ), false, common.CommonTools.Vehicle );
                                 }
                             }
                         } else if( check.equals( "<+-SSW_EQUIP_HEAT-+>" ) ) {
@@ -1189,9 +1188,6 @@ public class HTMLWriter {
             if( CurVee.HasBlueShield() ) {
                 ret.add( CurVee.GetBlueShield() );
             }
-            if( CurVee.HasEnviroSealing() ) {
-                ret.add( CurVee.GetEnviroSealing() );
-            }
         }
 
         // turn the return ArrayList into an array
@@ -1213,6 +1209,7 @@ public class HTMLWriter {
         }
         lookup.put( "<+-SSW_TONNAGE-+>", FormatTonnage( CurVee.GetTonnage(), 1 ) );
         lookup.put( "<+-SSW_DRY_TONNAGE-+>", FormatTonnage( CurVee.GetCurrentDryTons(), 1 ) );
+        lookup.put( "<+-SSW_CHASSIS_CONFIG-+>", CurVee.GetMotiveLookupName() );
         AvailableCode AC = CurVee.GetAvailability();
         lookup.put( "<+-SSW_AVAILABILITY-+>", AC.GetBestCombinedCode() );
         lookup.put( "<+-SSW_PROD_YEAR-+>", "" + CurVee.GetYear() );
@@ -1312,7 +1309,7 @@ public class HTMLWriter {
         lookup.put( "<+-SSW_MANUFACTURER-+>", CurVee.GetCompany() );
         lookup.put( "<+-SSW_MANUFACTURER_LOCATION-+>", CurVee.GetLocation() );
         lookup.put( "<+-SSW_MANUFACTURER_ENGINE-+>", CurVee.GetEngineManufacturer()+ " " + CurVee.GetEngine().GetRating() + " " + CurVee.GetEngine() );
-        lookup.put( "<+-SSW_MANUFACTURER_CHASSIS-+>", CurVee.GetChassisModel() + " " + new stChassisMSBP().CritName() );
+        lookup.put( "<+-SSW_MANUFACTURER_CHASSIS-+>", CurVee.GetChassisModel() + " " + CurVee.GetIntStruc().CritName() );
         lookup.put( "<+-SSW_MANUFACTURER_ARMOR-+>", CurVee.GetArmorModel() + " " + CurVee.GetArmor().CritName() );
         lookup.put( "<+-SSW_MANUFACTURER_JUMPJETS-+>", CurVee.GetJJModel() );
         lookup.put( "<+-SSW_MANUFACTURER_COMM_SYSTEM-+>", GetCommSystem() );
@@ -1324,56 +1321,25 @@ public class HTMLWriter {
         lookup.put( "<+-SSW_JUMPJET_TONNAGE-+>", FormatTonnage( CurVee.GetJumpJets().GetTonnage(), 1 ) );
         // need a routine for this...
         lookup.put( "<+-SSW_EQUIPMENT_TOTAL_TONNAGE-+>", "" );
-        lookup.put( "<+-SSW_HD_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_HD ) );
-        lookup.put( "<+-SSW_CT_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_CT ) );
-        lookup.put( "<+-SSW_LT_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LT ) );
-        lookup.put( "<+-SSW_RT_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RT ) );
-        if( CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RT ) != CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LT ) ) {
-            lookup.put( "<+-SSW_TORSO_ARMOR-+>", "LT: " + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LT ) + " RT: " + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RT ) );
-        } else {
-            lookup.put( "<+-SSW_TORSO_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LT ) );
-        }
-        lookup.put( "<+-SSW_LA_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LA ) );
-        lookup.put( "<+-SSW_RA_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RA ) );
-        if( CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RA ) != CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LA ) ) {
-            lookup.put( "<+-SSW_ARM_ARMOR-+>", "LA: " + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LA ) + " RA: " + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RA ) );
-        } else {
-            lookup.put( "<+-SSW_ARM_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LA ) );
-        }
-        lookup.put( "<+-SSW_LL_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LL ) );
-        lookup.put( "<+-SSW_RL_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RL ) );
-        if( CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RL ) != CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LL ) ) {
-            lookup.put( "<+-SSW_LEG_ARMOR-+>", "LL: " + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LL ) + " RL: " + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RL ) );
-        } else {
-            lookup.put( "<+-SSW_LEG_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LL ) );
-        }
-        lookup.put( "<+-SSW_CTR_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_CTR ) );
-        lookup.put( "<+-SSW_LTR_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LTR ) );
-        lookup.put( "<+-SSW_RTR_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RTR ) );
-        if( CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RTR ) != CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LTR ) ) {
-            lookup.put( "<+-SSW_TORSO_REAR_ARMOR-+>", "LTR: " + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LTR ) + " RTR: " + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_RTR ) );
-        } else {
-            lookup.put( "<+-SSW_TORSO_REAR_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.MECH_LOC_LTR ) );
-        }
+        lookup.put( "<+-SSW_FRONT_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.CV_LOC_FRONT ) );
+        lookup.put( "<+-SSW_LEFT_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.CV_LOC_LEFT ) );
+        lookup.put( "<+-SSW_RIGHT_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.CV_LOC_RIGHT ) );
+        lookup.put( "<+-SSW_REAR_ARMOR-+>", "" + CurVee.GetArmor().GetLocationArmor( LocationIndex.CV_LOC_REAR ) );
+        lookup.put( "<+-SSW_TURRET_ARMOR-+>", "" + (CurVee.isHasTurret1() ? CurVee.GetArmor().GetLocationArmor( LocationIndex.CV_LOC_TURRET1 ) : "") );
+        lookup.put( "<+-SSW_ROTOR_ARMOR-+>", "" + (CurVee.IsVTOL() ? CurVee.GetArmor().GetLocationArmor( LocationIndex.CV_LOC_ROTOR ) : "") );
         lookup.put( "<+-SSW_FRONT_ARMOR_TYPE-+>", " (" + CurVee.GetArmor().GetFrontArmorType().LookupName() + ")" );
         lookup.put( "<+-SSW_LEFT_ARMOR_TYPE-+>", " (" + CurVee.GetArmor().GetLeftArmorType().LookupName() + ")" );
         lookup.put( "<+-SSW_RIGHT_ARMOR_TYPE-+>", " (" + CurVee.GetArmor().GetRightArmorType().LookupName() + ")" );
+        lookup.put( "<+-SSW_TURRET_ARMOR_TYPE-+>", (CurVee.isHasTurret1() ? " (" + CurVee.GetArmor().GetTurret1ArmorType().LookupName() + ")" : "") );
+        lookup.put( "<+-SSW_ROTOR_ARMOR_TYPE-+>", ( CurVee.IsVTOL() ? " (" + CurVee.GetArmor().GetRotorArmorType().LookupName() + ")" : "" ) );
         lookup.put( "<+-SSW_REAR_ARMOR_TYPE-+>", " (" + CurVee.GetArmor().GetRearArmorType().LookupName() + ")" );
-        lookup.put( "<+-SSW_TURRET_ARMOR_TYPE-+>", " (" + CurVee.GetArmor().GetTurret1ArmorType().LookupName() + ")" );
-        lookup.put( "<+-SSW_REARTURRET_ARMOR_TYPE-+>", " (" + CurVee.GetArmor().GetTurret2ArmorType().LookupName() + ")" );
-        lookup.put( "<+-SSW_FRONT_INTERNAL-+>", "" + CurVee.getInternalStructurePoints() );
-        lookup.put( "<+-SSW_LEFT_INTERNAL-+>", "" + CurVee.getInternalStructurePoints() );
-        lookup.put( "<+-SSW_RIGHT_INTERNAL-+>", "" + CurVee.getInternalStructurePoints() );
-        lookup.put( "<+-SSW_REAR_INTERNAL-+>", "" + CurVee.getInternalStructurePoints() );
-        lookup.put( "<+-SSW_TURRET_INTERNAL-+>", "" + CurVee.getInternalStructurePoints() );
-        lookup.put( "<+-SSW_REARTURRET_INTERNAL-+>", "" + CurVee.getInternalStructurePoints() );
         lookup.put( "<+-SSW_ARMOR_COVERAGE-+>", "" + CurVee.GetArmor().GetCoverage() );
-        lookup.put( "<+-SSW_JUMPJET_COUNT-+>", "" + CurVee.GetJumpJets().GetNumJJ() );
+        lookup.put( "<+-SSW_JUPMJET_COUNT-+>", "" + CurVee.GetJumpJets().GetNumJJ() );
         lookup.put( "<+-SSW_JUMPJET_DISTANCE-+>", GetJumpJetDistanceLine() );
-        lookup.put( "<+-SSW_SPEED_WALK_KMPH-+>", CommonTools.FormatSpeed( CurVee.getCruiseMP() * 10.8 ) + " km/h" );
-        lookup.put( "<+-SSW_SPEED_RUN_KMPH-+>", CommonTools.FormatSpeed( CurVee.getFlankMP() * 10.8 ) + " km/h" );
-        lookup.put( "<+-SSW_SPEED_WALK_MP-+>", "" + CurVee.getCruiseMP() );
-        lookup.put( "<+-SSW_SPEED_RUN_MP-+>", "" + CurVee.getFlankMP() );
+        lookup.put( "<+-SSW_SPEED_CRUISE_KMPH-+>", CommonTools.FormatSpeed( CurVee.getCruiseMP() * 10.8 ) + " km/h" );
+        lookup.put( "<+-SSW_SPEED_FLANK_KMPH-+>", CommonTools.FormatSpeed( CurVee.getFlankMP() * 10.8 ) + " km/h" );
+        lookup.put( "<+-SSW_SPEED_CRUISE_MP-+>", "" + CurVee.getCruiseMP() );
+        lookup.put( "<+-SSW_SPEED_FLANK_MP-+>", "" + CurVee.getFlankMP() );
         lookup.put( "<+-SSW_SPEED_JUMP_MP-+>", GetJumpingMPLine() );
         lookup.put( "<+-SSW_COST-+>", String.format( "%1$,.0f", CurVee.GetTotalCost() ) );
         //lookup.put( "<+-SSW_DRY_COST-+>", String.format( "%1$,.0f", CurVee.GetDryCost() ) );
@@ -1412,7 +1378,10 @@ public class HTMLWriter {
         lookup.put( "<+-SSW_JUMPJET_TYPE-+>", GetJumpJetTypeLine() );
         lookup.put( "<+-SSW_HEATSINK_COUNT-+>", "" + CurVee.GetHeatSinks().GetNumHS() );
         lookup.put( "<+-SSW_HEATSINK_DISSIPATION-+>", "" + CurVee.GetHeatSinks().TotalDissipation() );
-        lookup.put( "<+-SSW_INTERNAL_TYPE-+>", new stChassisMSBP().CritName() );
+        lookup.put( "<+-SSW_INTERNAL_TYPE-+>", CurVee.GetIntStruc().CritName() );
+        lookup.put( "<+-SSW_CONTROLS_TONNAGE-+>", CurVee.GetControls() );
+        lookup.put( "<+-SSW_LIFTEQUIPMENT_TONNAGE-+>", (CurVee.GetLiftEquipmentTonnage() == 0) ? "" : CurVee.GetLiftEquipmentTonnage() + "" );
+        lookup.put( "<+-SSW_TURRET_TONNAGE-+>", (CurVee.GetLoadout().GetTurret().GetTonnage() == 0) ? "" : CurVee.GetLoadout().GetTurret().GetTonnage() + "" );
         lookup.put( "<+-SSW_RULES_LEVEL-+>", CommonTools.GetRulesLevelString( CurVee.GetRulesLevel() ) );
         if( CurVee.IsOmni() ) {
             lookup.put( "<+-SSW_POD_TONNAGE-+>", FormatTonnage( ( CurVee.GetTonnage() - CurVee.GetCurrentTons() ), 1 ) );
@@ -1494,9 +1463,6 @@ public class HTMLWriter {
         String retval = "";
         if( CurVee.HasBlueShield() ) {
             retval += "* The " + CurVee.GetBlueShield().LookupName() + " occupies 1 slot in every location except the HD." + NL;
-        }
-        if( CurVee.HasEnviroSealing() ) {
-            retval += "* The " + CurVee.GetEnviroSealing().LookupName() + " occupies 1 slot in every location." + NL;
         }
         return retval;
     }

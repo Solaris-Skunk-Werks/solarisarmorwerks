@@ -72,7 +72,7 @@ public class dlgCredits extends javax.swing.JDialog {
         getContentPane().add(btnClose, gridBagConstraints);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("<html>Maelwys<br/>Major Tom<br /></html>");
+        jLabel1.setText("<html>Maelwys<br/>Major Tom<br />LostinSpace<br />Moonsword<br /></html>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;

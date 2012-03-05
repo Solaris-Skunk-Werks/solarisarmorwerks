@@ -66,6 +66,8 @@ public class EquipmentSelectedRenderer extends DefaultListCellRenderer {
             if( Loc < 11 ) {
                 Text = "(" + FileCommon.EncodeLocation( Loc, false, Parent.CurVee ) + ") " + Text;
             }
+            if ( a instanceof TargetingComputer )
+                Text = Text + ((TargetingComputer)a).toDisplay();
         }
 
         label.setText( Text );

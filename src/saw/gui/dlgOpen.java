@@ -209,7 +209,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
         //String msg = "";
         prgResaving.setValue(0);
         prgResaving.setVisible(true);
-        int Response = javax.swing.JOptionPane.showConfirmDialog(this, "This will open and re-save each file in the current directory so that all files are updated with current BV and Cost calculations.\nThis process could take a few minutes, are you ready?", "Batch Mech Processing", javax.swing.JOptionPane.YES_NO_OPTION);
+        int Response = javax.swing.JOptionPane.showConfirmDialog(this, "This will open and re-save each file in the current directory so that all files are updated with current BV and Cost calculations.\nThis process could take a few minutes, are you ready?", "Batch Unit Processing", javax.swing.JOptionPane.YES_NO_OPTION);
         if (Response == javax.swing.JOptionPane.YES_OPTION) {
             msg = "";
             setCursor( Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR ) );
@@ -219,7 +219,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
                 Saving.execute();
             } catch( Exception e ) {
                 // fatal error.  let the user know
-                Media.Messager( this, "A fatal error occured while processing the 'Mechs:\n" + e.getMessage() );
+                Media.Messager( this, "A fatal error occured while processing the Units:\n" + e.getMessage() );
                 e.printStackTrace();
             }
         } else {
@@ -233,7 +233,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
         String shortPath = "";
         if ( dirs.length > 0) {
             for (int i = dirs.length-1; i >= dirs.length-3; i--) {
-                shortPath = "\\" + dirs[i] + shortPath;
+                //shortPath = "\\" + dirs[i] + shortPath;
             }
         }
         txtSelected.setText(data.getInfo() + " (" + shortPath + ")");
@@ -406,7 +406,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
         lblShowing = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Select Mech(s)");
+        setTitle("Select Unit(s)");
         setMinimumSize(new java.awt.Dimension(600, 500));
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
@@ -430,7 +430,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
         tlbActions.setRollover(true);
 
         btnOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/folder-open-document.png"))); // NOI18N
-        btnOpen.setToolTipText("Open Mech");
+        btnOpen.setToolTipText("Open Vehicle");
         btnOpen.setEnabled(false);
         btnOpen.setFocusable(false);
         btnOpen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -456,7 +456,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
         tlbActions.add(btnChangeDir);
 
         btnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/printer.png"))); // NOI18N
-        btnPrint.setToolTipText("Print Selected Mechs");
+        btnPrint.setToolTipText("Print Selected Vehicles");
         btnPrint.setEnabled(false);
         btnPrint.setFocusable(false);
         btnPrint.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -519,7 +519,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
         tlbActions.add(btnOptions);
 
         btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/arrow-circle-double.png"))); // NOI18N
-        btnRefresh.setToolTipText("Refresh Mech List");
+        btnRefresh.setToolTipText("Refresh List");
         btnRefresh.setFocusable(false);
         btnRefresh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnRefresh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -532,7 +532,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
         tlbActions.add(jSeparator2);
 
         btnMagic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/wand.png"))); // NOI18N
-        btnMagic.setToolTipText("Update Mech Files (Long Process!)");
+        btnMagic.setToolTipText("Update Unit Files (Long Process!)");
         btnMagic.setFocusable(false);
         btnMagic.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnMagic.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -1055,7 +1055,7 @@ public class dlgOpen extends javax.swing.JFrame implements PropertyChangeListene
                 .addGap(19, 19, 19))
         );
 
-        lblStatus.setText("Loading Mechs....");
+        lblStatus.setText("Loading Vehicles....");
 
         prgResaving.setStringPainted(true);
 

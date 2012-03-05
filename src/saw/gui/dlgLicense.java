@@ -57,13 +57,13 @@ public class dlgLicense extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setText("Solaris Skunk Werks");
+        jLabel1.setText("Solaris Armor Werks");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 0, 4);
         getContentPane().add(jLabel1, gridBagConstraints);
 
-        jLabel2.setText("Copyright (c) 2008 ~ 2009, Justin R. Bengtson (LostInSpace@SolarisSkunkWerks.com)");
+        jLabel2.setText("Copyright (c) 2008 ~ 2012, George Blouin Jr. (Skyhigh@SolarisSkunkWerks.com)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;

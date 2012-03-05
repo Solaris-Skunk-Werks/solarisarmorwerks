@@ -75,7 +75,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;&lt;h3&gt;Solaris Skunkwerks needs to know where you have placed your Mech files.&lt;/h3&gt;&#xa;&lt;p&gt;If you have not downloaded the zip file containing these files yet please go to &lt;br /&gt;&#xa;&lt;h4&gt;http://www.solarisskunkwerks.com/downloads&lt;/h4&gt;&lt;br /&gt;&#xa; and download the Master file available there. &lt;/p&gt;&#xa;&lt;br /&gt;&#xa;&lt;p&gt;Once this file has downloaded you can unzip it wherever you would like as the next step will be to tell SSW where you put them.&lt;/p&gt;"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt; &lt;h3&gt;Solaris Armorwerks needs to know where you have placed your Unit files.&lt;/h3&gt; &lt;p&gt;If you have not downloaded the zip file containing these files yet please go to &lt;br /&gt; &lt;h4&gt;http://www.solarisskunkwerks.com/downloads&lt;/h4&gt;&lt;br /&gt;  and download the Master file available there. &lt;/p&gt; &lt;br /&gt; &lt;p&gt;Once this file has downloaded you can unzip it wherever you would like as the next step will be to tell SAW where you put them.&lt;/p&gt;"/>
       </Properties>
     </Component>
   </SubComponents>

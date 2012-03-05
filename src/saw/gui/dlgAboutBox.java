@@ -169,7 +169,7 @@ public class dlgAboutBox extends javax.swing.JDialog {
         getContentPane().add(btnClose, gridBagConstraints);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Copyright (c) 2008, Justin R. Bengtson (poopshotgun@yahoo.com)");
+        jLabel1.setText("Copyright (c) 2008 ~ 2012, George Blouin Jr. (skyhigh@solarisskunkwerks.com)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;

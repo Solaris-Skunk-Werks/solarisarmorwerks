@@ -28,29 +28,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package saw.gui;
 
-import common.CommonTools;
+import components.Ammunition;
 import javax.swing.SpinnerNumberModel;
-import components.Equipment;
 
-public class dlgVariableSize extends javax.swing.JDialog {
+public class dlgAmmoLotSize extends javax.swing.JDialog {
 
-    private Equipment CurEquip;
-    private double CurTons;
+    private Ammunition Ammo;
+    private int CurAmmo;
     private boolean result = true;
 
     /** Creates new form dlgVariableSize */
-    public dlgVariableSize( java.awt.Frame parent, boolean modal, Equipment e ) {
+    public dlgAmmoLotSize( java.awt.Frame parent, boolean modal, Ammunition a ) {
         super( parent, modal );
         initComponents();
-        CurEquip = e;
-        CurTons = CurEquip.GetTonnage();
+        Ammo = a;
+        CurAmmo = Ammo.GetLotSize();
         SetState();
     }
 
     private void SetState() {
-        spnTonnage.setModel( new javax.swing.SpinnerNumberModel(
-            CurTons, CurEquip.GetMinTons(), CurEquip.GetMaxTons(), CurEquip.GetVariableIncrement() ) );
-        setTitle( "Setting tonnage for " + CurEquip );
+        spnTonnage.setModel( new javax.swing.SpinnerNumberModel( Ammo.GetLotSize(), 1, Ammo.GetMaxLotSize(), 1 ) );
+        setTitle( "Setting ammo tonnage." );
     }
 
     public boolean GetResult() {
@@ -99,7 +97,7 @@ public class dlgVariableSize extends javax.swing.JDialog {
         gridBagConstraints.gridy = 2;
         getContentPane().add(jPanel1, gridBagConstraints);
 
-        jLabel2.setText("Tonnage:");
+        jLabel2.setText("Lot Size:");
         jPanel2.add(jLabel2);
 
         spnTonnage.setMinimumSize(new java.awt.Dimension(75, 20));
@@ -117,7 +115,7 @@ public class dlgVariableSize extends javax.swing.JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jPanel2, gridBagConstraints);
 
-        jLabel1.setText("Choose a tonnage:");
+        jLabel1.setText("Set Ammunition Amount:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -144,15 +142,15 @@ public class dlgVariableSize extends javax.swing.JDialog {
             return;
         }
 
-        CurTons = n.getNumber().doubleValue();
+        CurAmmo = n.getNumber().intValue();
     }//GEN-LAST:event_spnTonnageStateChanged
 
     private void btnOkayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkayActionPerformed
         // now round to the nearest increment (up)
-        double value = CommonTools.RoundHalfUp(CurTons); //Math.ceil( CurTons / CurEquip.GetVariableIncrement() ) * CurEquip.GetVariableIncrement();
-        if( value > CurEquip.GetMaxTons() ) { value = CurEquip.GetMaxTons(); }
-        if( value < CurEquip.GetMinTons() ) { value = CurEquip.GetMinTons(); }
-        CurEquip.SetTonnage( value );
+        int value = CurAmmo;
+        if( value > Ammo.GetMaxLotSize() ) { value = Ammo.GetMaxLotSize(); }
+        if( value < 1 ) { value = 1; }
+        Ammo.SetLotSize( CurAmmo );
         result = true;
         setVisible( false );
     }//GEN-LAST:event_btnOkayActionPerformed
@@ -161,7 +159,6 @@ public class dlgVariableSize extends javax.swing.JDialog {
         result = false;
         setVisible( false );
     }//GEN-LAST:event_btnCancelActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
@@ -172,5 +169,4 @@ public class dlgVariableSize extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSpinner spnTonnage;
     // End of variables declaration//GEN-END:variables
-
 }

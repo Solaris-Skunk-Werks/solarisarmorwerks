@@ -28,11 +28,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package saw.gui;
 
-import Force.Scenario;
 import Print.BFBPrinter;
 import Print.PagePrinter;
 import Print.PrintVehicle;
-import Print.preview.*;
+import Print.preview.dlgPreview;
 import battleforce.BattleForceStats;
 import common.*;
 import components.*;
@@ -51,6 +50,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
@@ -70,6 +71,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
     private Cursor Hourglass = new Cursor( Cursor.WAIT_CURSOR );
     private Cursor NormalCursor = new Cursor( Cursor.DEFAULT_CURSOR );
     boolean Load = false,
+            isLocked = false,
             SetSource = true;
     Object[][] Equipment = { { null }, { null }, { null }, { null }, { null }, { null }, { null }, { null } };
     final int BALLISTIC = 0,
@@ -153,6 +155,29 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         setTitle( saw.Constants.AppDescription + " " + saw.Constants.Version );
 
+        // added for easy checking
+        PPCCapAC.SetISCodes( 'E', 'X', 'X', 'E' );
+        PPCCapAC.SetISDates( 3057, 3060, true, 3060, 0, 0, false, false );
+        PPCCapAC.SetISFactions( "DC", "DC", "", "" );
+        PPCCapAC.SetPBMAllowed( true );
+        PPCCapAC.SetPIMAllowed( true );
+        PPCCapAC.SetRulesLevels( AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_UNALLOWED, AvailableCode.RULES_UNALLOWED );
+        LIAC.SetISCodes( 'E', 'F', 'F', 'X' );
+        LIAC.SetISDates( 0, 0, false, 2575, 2820, 0, true, false );
+        LIAC.SetISFactions( "TH", "", "", "" );
+        LIAC.SetCLCodes( 'E', 'X', 'E', 'F' );
+        LIAC.SetCLDates( 0, 0, false, 2575, 0, 0, false, false );
+        LIAC.SetCLFactions( "TH", "", "", "" );
+        LIAC.SetPBMAllowed( true );
+        LIAC.SetPIMAllowed( true );
+        LIAC.SetRulesLevels( AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_UNALLOWED, AvailableCode.RULES_UNALLOWED );
+        CaselessAmmoAC.SetISCodes( 'D', 'X', 'X', 'E' );
+        CaselessAmmoAC.SetISDates( 3055, 3056, true, 3056, 0, 0, false, false );
+        CaselessAmmoAC.SetISFactions( "FC", "FC", "", "" );
+        CaselessAmmoAC.SetPBMAllowed( true );
+        CaselessAmmoAC.SetPIMAllowed( true );
+        CaselessAmmoAC.SetRulesLevels( AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_EXPERIMENTAL, AvailableCode.RULES_UNALLOWED, AvailableCode.RULES_UNALLOWED );
+
         // get the data factory ready
         try {
             data = new DataFactory( CurVee );
@@ -176,6 +201,137 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         pnlVariants.add( Variants );
         pnlNotables.add( Notables );
         pack();
+
+        
+        mnuDetails.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GetInfoOn();
+                ShowInfoOn(CurItem);
+            }
+        });
+
+        mnuSetVariable.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVariableSize();
+            }
+        });
+
+        mnuSetLotSize.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetAmmoLotSize();
+            }
+        });
+
+        mnuAddCapacitor.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                PPCCapacitor();
+            }
+        });
+
+        mnuAddInsulator.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                LaserInsulator();
+            }
+        });
+
+        mnuDumper.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DumperMount();
+            }
+        });
+
+        mnuCaseless.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SwitchCaseless();
+            }
+        });
+
+        mnuVGLArcFore.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVGLArcFore();
+            }
+        });
+
+        mnuVGLArcForeSide.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVGLArcForeSide();
+            }
+        });
+
+        mnuVGLArcRear.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVGLArcRear();
+            }
+        });
+
+        mnuVGLArcRearSide.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVGLArcRearSide();
+            }
+        });
+
+        mnuVGLAmmoFrag.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVGLAmmoFrag();
+            }
+        });
+
+        mnuVGLAmmoChaff.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVGLAmmoChaff();
+            }
+        });
+
+        mnuVGLAmmoIncen.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVGLAmmoIncendiary();
+            }
+        });
+
+        mnuVGLAmmoSmoke.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SetVGLAmmoSmoke();
+            }
+        });
+
+        mnuRemoveItem.addActionListener( new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RemoveItemCritTab();
+            }
+        });
+
+        mnuVGLArc.setText( "Set VGL Arc" );
+        mnuVGLArc.add( mnuVGLArcFore );
+        mnuVGLArc.add( mnuVGLArcForeSide );
+        mnuVGLArc.add( mnuVGLArcRear );
+        mnuVGLArc.add( mnuVGLArcRearSide );
+
+        mnuVGLAmmo.setText( "Set VGL Ammo" );
+        mnuVGLAmmo.add( mnuVGLAmmoFrag );
+        mnuVGLAmmo.add( mnuVGLAmmoChaff );
+        mnuVGLAmmo.add( mnuVGLAmmoIncen );
+        mnuVGLAmmo.add( mnuVGLAmmoSmoke );
+
+        mnuUtilities.add( mnuDetails );
+        mnuUtilities.add( mnuSetVariable );
+        mnuUtilities.add( mnuSetLotSize );
+        mnuUtilities.add( mnuAddCapacitor );
+        mnuUtilities.add( mnuAddInsulator );
+        mnuUtilities.add( mnuCaseless );
+        mnuUtilities.add( mnuVGLArc );
+        mnuUtilities.add( mnuVGLAmmo );
+        mnuUtilities.add( mnuDumper );
+        mnuUtilities.add( mnuUnallocateAll );
+        mnuUtilities.add( mnuRemoveItem );
+
+        mnuSetVariable.setVisible( false );
+        mnuArmorComponent.setVisible( false );
+        mnuAddCapacitor.setVisible( false );
+        mnuAddInsulator.setVisible( false );
+        mnuTurret.setVisible( false );
+        mnuCaseless.setVisible( false );
+        mnuVGLArc.setVisible( false );
+        mnuVGLAmmo.setVisible( false );
         
         // set the program options
         cmbRulesLevel.setSelectedItem( Prefs.get( "NewCV_RulesLevel", "Tournament Legal" ) );
@@ -277,10 +433,244 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         
         tblWeaponManufacturers.getInputMap( javax.swing.JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put( javax.swing.KeyStroke.getKeyStroke( java.awt.event.KeyEvent.VK_TAB, 0, false ), "selectNextRow" );
 
+        if( Prefs.getBoolean( "LoadLastMech", false ) ) { LoadVehicleFromFile(Prefs.get("LastOpenCVDirectory", "") + Prefs.get("LastOpenCVFile", "") ); }
         LoadVehicleFromFile(Prefs.get("LastOpenCVDirectory", "") + Prefs.get("LastOpenCVFile", "") );
         CurVee.SetChanged(false);
     }
 
+    private void GetInfoOn() {
+        // throws up a window detailing the current item
+        if( CurItem instanceof ifWeapon || CurItem instanceof Ammunition ) {
+            dlgWeaponInfo WepInfo = new dlgWeaponInfo( this, true, CurItem );
+            WepInfo.setLocationRelativeTo( this );
+            WepInfo.setVisible( true );
+        } else {
+            dlgPlaceableInfo ItemInfo = new dlgPlaceableInfo( this, true, CurItem );
+            ItemInfo.setLocationRelativeTo( this );
+            ItemInfo.setVisible( true );
+        }
+    }
+    
+    private void SetAmmoLotSize() {
+        if( CurItem instanceof Ammunition ) {
+            dlgAmmoLotSize ammo = new dlgAmmoLotSize( this, true, (Ammunition) CurItem );
+            ammo.setLocationRelativeTo( this );
+            ammo.setVisible( true );
+        }
+        RefreshSummary();
+        RefreshInfoPane();
+    }
+    
+    private void PPCCapacitor() {
+        // if the current item can support a capacitor, adds one on
+        if( CurItem instanceof RangedWeapon ) {
+            if( ((RangedWeapon) CurItem).IsUsingCapacitor() ) {
+                abPlaceable p = ((RangedWeapon) CurItem).GetCapacitor();
+                ((RangedWeapon) CurItem).UseCapacitor( false );
+                CurVee.GetLoadout().Remove( p );
+            } else {
+                ((RangedWeapon) CurItem).UseCapacitor( true );
+                abPlaceable p = ((RangedWeapon) CurItem).GetCapacitor();
+                LocationIndex Loc = CurVee.GetLoadout().FindIndex( CurItem );
+                if( Loc.Location != -1 ) {
+                    try {
+                        CurVee.GetLoadout().Remove(CurItem);
+                        CurVee.GetLoadout().AddTo( CurItem, Loc.Location );
+                    } catch( Exception e ) {
+                        // couldn't allocate the capacitor?  Unallocate the PPC.
+                        try {
+                            CurVee.GetLoadout().UnallocateAll( CurItem, false );
+                            // remove the capacitor if it's in the queue
+                            //if( CurVee.GetLoadout().QueueContains( p ) ) {
+                            //    CurVee.GetLoadout().GetQueue().remove( p );
+                            //}
+                        } catch( Exception e1 ) {
+                            // failed big.  no problem
+                            Media.Messager( this, "Fatal error adding a PPC Capacitor:\n" + e.getMessage() + "\nThe Capacitor will be removed." );
+                            ((RangedWeapon) CurItem).UseCapacitor( false );
+                        }
+                    }
+                }
+            }
+        }
+        RefreshInfoPane();
+        Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+        lstSelectedEquipment.setListData( Equipment[SELECTED] );
+        lstSelectedEquipment.repaint();
+    }
+
+    private void LaserInsulator() {
+        // if the current item can support an insulator, adds one on
+        if( CurItem instanceof RangedWeapon ) {
+            if( ((RangedWeapon) CurItem).IsUsingInsulator() ) {
+                abPlaceable p = ((RangedWeapon) CurItem).GetInsulator();
+                ((RangedWeapon) CurItem).UseInsulator( false );
+                CurVee.GetLoadout().Remove( p );
+            } else {
+                ((RangedWeapon) CurItem).UseInsulator( true );
+                abPlaceable p = ((RangedWeapon) CurItem).GetInsulator();
+                LocationIndex Loc = CurVee.GetLoadout().FindIndex( CurItem );
+                if( Loc.Location != -1 ) {
+                    try {
+                        CurVee.GetLoadout().Remove(CurItem);
+                        CurVee.GetLoadout().AddTo( CurItem, Loc.Location );
+                    } catch( Exception e ) {
+                        // couldn't allocate the insulator?  Unallocate the PPC.
+                        try {
+                            CurVee.GetLoadout().UnallocateAll( CurItem, false );
+                            // remove the insulator if it's in the queue
+                            //if( CurVee.GetLoadout().QueueContains( p ) ) {
+                            //    CurVee.GetLoadout().GetQueue().remove( p );
+                            //}
+                        } catch( Exception e1 ) {
+                            // failed big.  no problem
+                            Media.Messager( this, "Fatal error adding a Laser Insulator:\n" + e.getMessage() + "\nThe Insulator will be removed." );
+                            ((RangedWeapon) CurItem).UseInsulator( false );
+                        }
+                    }
+                }
+            }
+        }
+        RefreshInfoPane();
+        Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+        lstSelectedEquipment.setListData( Equipment[SELECTED] );
+        lstSelectedEquipment.repaint();
+    }
+
+    private void DumperMount() {
+        if ( CurItem instanceof Equipment ) {
+           
+        }
+    }
+
+    private void SwitchCaseless() {
+        if( CurItem instanceof RangedWeapon ) {
+            RangedWeapon r = (RangedWeapon) CurItem;
+            // get the original ammo index
+            int origIDX = r.GetAmmoIndex();
+
+            // switch over to caseless
+            r.SetCaseless( ! r.IsCaseless() );
+            int newIDX = r.GetAmmoIndex();
+
+            // check for other weapons with the original ammo index
+            ArrayList check = CurVee.GetLoadout().GetNonCore();
+            ArrayList replace = new ArrayList();
+            abPlaceable p;
+            boolean HasOrig = false;
+            for( int i = 0; i < check.size(); i++ ) {
+                p = (abPlaceable) check.get( i );
+                if( p instanceof RangedWeapon ) {
+                    if( ((RangedWeapon) p).GetAmmoIndex() == origIDX ) {
+                        HasOrig = true;
+                    }
+                }
+                if( p instanceof Ammunition ) {
+                    replace.add( p );
+                }
+            }
+
+            // replace any ammo with the new stuff if there are no other original weapons
+            if( ! HasOrig ) {
+                Object[] newammo = data.GetEquipment().GetAmmo( newIDX, CurVee );
+                for( int i = 0; i < replace.size(); i++ ) {
+                    p = (abPlaceable) replace.get( i );
+                    if( ((Ammunition) p).GetAmmoIndex() == origIDX ) {
+                        CurVee.GetLoadout().Remove( p );
+                        if( newammo.length > 0 ) {
+                            p = data.GetEquipment().GetCopy( (abPlaceable) newammo[0], CurVee);
+                            try {
+                                CurVee.GetLoadout().AddTo( p, LocationIndex.CV_LOC_BODY );
+                            } catch (Exception ex) {
+                                Media.Messager(ex.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        RefreshSummary();
+        RefreshInfoPane();
+        SetWeaponChoosers();
+        ResetAmmo();
+    }
+
+    public void SetVGLArcFore() {
+        if( CurItem instanceof VehicularGrenadeLauncher ) {
+            ((VehicularGrenadeLauncher) CurItem).SetArcFore();
+            RefreshInfoPane();
+        }
+    }
+
+    public void SetVGLArcRear() {
+        if( CurItem instanceof VehicularGrenadeLauncher ) {
+            ((VehicularGrenadeLauncher) CurItem).SetArcRear();
+            RefreshInfoPane();
+        }
+    }
+
+    public void SetVGLArcForeSide() {
+        if( CurItem instanceof VehicularGrenadeLauncher ) {
+            ((VehicularGrenadeLauncher) CurItem).SetArcForeSide();
+            RefreshInfoPane();
+        }
+    }
+
+    public void SetVGLArcRearSide() {
+        if( CurItem instanceof VehicularGrenadeLauncher ) {
+            ((VehicularGrenadeLauncher) CurItem).SetArcRearSide();
+            RefreshInfoPane();
+        }
+    }
+
+    public void SetVGLAmmoFrag() {
+        if( CurItem instanceof VehicularGrenadeLauncher ) {
+            ((VehicularGrenadeLauncher) CurItem).SetAmmoFrag();
+            RefreshInfoPane();
+        }
+    }
+
+    public void SetVGLAmmoChaff() {
+        if( CurItem instanceof VehicularGrenadeLauncher ) {
+            ((VehicularGrenadeLauncher) CurItem).SetAmmoChaff();
+            RefreshInfoPane();
+        }
+    }
+
+    public void SetVGLAmmoIncendiary() {
+        if( CurItem instanceof VehicularGrenadeLauncher ) {
+            ((VehicularGrenadeLauncher) CurItem).SetAmmoIncen();
+            RefreshInfoPane();
+        }
+    }
+
+    public void SetVGLAmmoSmoke() {
+        if( CurItem instanceof VehicularGrenadeLauncher ) {
+            ((VehicularGrenadeLauncher) CurItem).SetAmmoSmoke();
+            RefreshInfoPane();
+        }
+    }
+
+    public void SetVariableSize() {
+        if( CurItem instanceof Equipment ) {
+            if( ((Equipment) CurItem).IsVariableSize() ) {
+                dlgVariableSize SetTons = new dlgVariableSize( this, true, (Equipment) CurItem );
+                SetTons.setLocationRelativeTo( this );
+                SetTons.setVisible( true );
+                CurVee.GetLoadout().Remove(CurItem);
+                try {
+                    CurVee.GetLoadout().AddTo(CurItem, LocationIndex.CV_LOC_BODY);
+                } catch (Exception ex) {
+                    Media.Messager(ex.getMessage());
+                }
+                RefreshInfoPane();
+                Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+                lstSelectedEquipment.setListData( Equipment[SELECTED] );
+                lstSelectedEquipment.repaint();
+            }
+        }
+    }
+    
     private void setViewToolbar(boolean Visible)
     {
         tlbIconBar.setVisible(Visible);
@@ -298,7 +688,6 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         boolean insul = LegalInsulator( CurItem ) && CommonTools.IsAllowed( LIAC, CurVee );
         boolean caseless = LegalCaseless( CurItem ) && CommonTools.IsAllowed( CaselessAmmoAC, CurVee );
         boolean lotchange = LegalLotChange( CurItem );
-        boolean turreted = LegalTurretMount( CurItem );
         boolean dumper = LegalDumper( CurItem );
         mnuAddCapacitor.setEnabled( cap );
         mnuAddInsulator.setEnabled( insul );
@@ -307,15 +696,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         mnuAddInsulator.setVisible( insul );
         mnuCaseless.setVisible( caseless );
         mnuSetLotSize.setVisible( lotchange );
-        mnuTurret.setVisible( turreted );
         mnuDumper.setVisible( dumper );
-        if( turreted && ( CurItem instanceof RangedWeapon ) ) {
-            if( ((RangedWeapon) CurItem).IsTurreted() ) {
-                mnuTurret.setText( "Remove from Turret" );
-            } else {
-                mnuTurret.setText( "Add to Turret");
-            }
-        }
         if( cap || insul || caseless ) {
             if( CurItem instanceof RangedWeapon ) {
                 if( ((RangedWeapon) CurItem).IsUsingCapacitor() ) {
@@ -342,49 +723,12 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                 mnuUnallocateAll.setText( "Unallocate All" );
                 mnuUnallocateAll.setEnabled( false );
             } else if( ! CurItem.LocationLocked() ) {
-                if( CurItem.Contiguous() ) {
-                    mnuUnallocateAll.setText( "Unallocate " + CurItem.CritName() );
-                } else {
-                    mnuUnallocateAll.setText( "Unallocate All" );
-                }
+                mnuUnallocateAll.setText( "Unallocate All" );
                 mnuUnallocateAll.setEnabled( true );
             } else {
                 mnuUnallocateAll.setText( "Unallocate All" );
                 mnuUnallocateAll.setEnabled( false );
             }
-            mnuMountRear.setEnabled( false );
-            mnuMountRear.setText( "Mount Rear " );
-            if( CurItem.Contiguous() ) {
-                EquipmentCollection C = CurVee.GetLoadout().GetCollection( CurItem );
-                if( C == null ) {
-                    mnuAuto.setEnabled( false );
-                    mnuSelective.setEnabled( false );
-                } else {
-                    mnuAuto.setEnabled( true );
-                    mnuSelective.setEnabled( true );
-                }
-            } else {
-                mnuSelective.setEnabled( true );
-                mnuAuto.setEnabled( true );
-            }
-        } else {
-            if( CurItem.Contiguous() ) {
-                EquipmentCollection C = CurVee.GetLoadout().GetCollection( CurItem );
-                if( C == null ) {
-                    mnuAuto.setEnabled( false );
-                    mnuSelective.setEnabled( false );
-                } else {
-                    mnuAuto.setEnabled( true );
-                    mnuSelective.setEnabled( true );
-                }
-            } else {
-                mnuSelective.setEnabled( true );
-                mnuAuto.setEnabled( true );
-            }
-            mnuUnallocateAll.setText( "Unallocate All" );
-            mnuUnallocateAll.setEnabled( false );
-            mnuMountRear.setEnabled( false );
-            mnuMountRear.setText( "Mount Rear " );
         }
         if( CurItem instanceof Equipment ) {
             if( ((Equipment) CurItem).IsVariableSize() ) {
@@ -399,6 +743,32 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
             mnuRemoveItem.setEnabled( false );
         } else {
             mnuRemoveItem.setEnabled( true );
+        }
+    }
+
+    private void RemoveItemCritTab() {
+        if( ! CurItem.CoreComponent() && CurItem.Contiguous() ) {
+            CurVee.GetLoadout().Remove( CurItem );
+
+            // refresh the selected equipment listbox
+            if( CurVee.GetLoadout().GetNonCore().toArray().length <= 0 ) {
+                Equipment[SELECTED] = new Object[] { " " };
+            } else {
+                Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+            }
+            lstSelectedEquipment.setListData( Equipment[SELECTED] );
+
+            // Check the targeting computer if needed
+            if( CurVee.UsingTC() ) {
+                CurVee.UnallocateTC();
+            }
+
+            // refresh the ammunition display
+            ResetAmmo();
+
+            // now refresh the information panes
+            RefreshSummary();
+            RefreshInfoPane();
         }
     }
 
@@ -612,7 +982,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         jSeparator1 = new javax.swing.JToolBar.Separator();
         btnPrint = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton5 = new javax.swing.JButton();
+        btnExportClipboardIcon = new javax.swing.JButton();
+        btnExportHTMLIcon = new javax.swing.JButton();
+        btnExportTextIcon = new javax.swing.JButton();
+        btnExportMTFIcon = new javax.swing.JButton();
+        btnChatInfo = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         btnPostToS7 = new javax.swing.JButton();
         jSeparator25 = new javax.swing.JToolBar.Separator();
@@ -658,6 +1032,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         lblVeeLimits = new javax.swing.JLabel();
         jLabel91 = new javax.swing.JLabel();
         spnHeatSinks = new javax.swing.JSpinner();
+        spnTurretTonnage = new javax.swing.JSpinner();
         pnlMovement = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         spnCruiseMP = new javax.swing.JSpinner();
@@ -1105,11 +1480,65 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         tlbIconBar.add(btnPrint);
         tlbIconBar.add(jSeparator2);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/document--arrow.png"))); // NOI18N
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        tlbIconBar.add(jButton5);
+        btnExportClipboardIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/document-clipboard.png"))); // NOI18N
+        btnExportClipboardIcon.setToolTipText("Export Text to Clipboard");
+        btnExportClipboardIcon.setFocusable(false);
+        btnExportClipboardIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnExportClipboardIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnExportClipboardIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportClipboardIconActionPerformed(evt);
+            }
+        });
+        tlbIconBar.add(btnExportClipboardIcon);
+
+        btnExportHTMLIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/document-image.png"))); // NOI18N
+        btnExportHTMLIcon.setToolTipText("Export HTML");
+        btnExportHTMLIcon.setFocusable(false);
+        btnExportHTMLIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnExportHTMLIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnExportHTMLIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportHTMLIconActionPerformed(evt);
+            }
+        });
+        tlbIconBar.add(btnExportHTMLIcon);
+
+        btnExportTextIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/document-text.png"))); // NOI18N
+        btnExportTextIcon.setToolTipText("Export Text");
+        btnExportTextIcon.setFocusable(false);
+        btnExportTextIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnExportTextIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnExportTextIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportTextIconActionPerformed(evt);
+            }
+        });
+        tlbIconBar.add(btnExportTextIcon);
+
+        btnExportMTFIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/document--arrow.png"))); // NOI18N
+        btnExportMTFIcon.setToolTipText("Export MTF");
+        btnExportMTFIcon.setFocusable(false);
+        btnExportMTFIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnExportMTFIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnExportMTFIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportMTFIconActionPerformed(evt);
+            }
+        });
+        tlbIconBar.add(btnExportMTFIcon);
+
+        btnChatInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/balloon.png"))); // NOI18N
+        btnChatInfo.setToolTipText("Copy Chat Line");
+        btnChatInfo.setFocusable(false);
+        btnChatInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnChatInfo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnChatInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChatInfoActionPerformed(evt);
+            }
+        });
+        tlbIconBar.add(btnChatInfo);
         tlbIconBar.add(jSeparator3);
 
         btnPostToS7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/saw/images/server.png"))); // NOI18N
@@ -1193,6 +1622,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         jLabel2.setText("Rules Level:");
 
         cmbRulesLevel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Introductory", "Tournament Legal", "Advanced", "Experimental" }));
+        cmbRulesLevel.setSelectedIndex(1);
         cmbRulesLevel.setMinimumSize(new java.awt.Dimension(150, 20));
         cmbRulesLevel.setPreferredSize(new java.awt.Dimension(150, 20));
         cmbRulesLevel.addActionListener(new java.awt.event.ActionListener() {
@@ -1203,7 +1633,8 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         jLabel5.setText("Era:");
 
-        cmbEra.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Age of War/Star League", "Succession Wars", "Clan Invasion", "All Eras (non-canon)" }));
+        cmbEra.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Age of War/Star League", "Succession Wars", "Clan Invasion", "Dark Ages", "All Eras (non-canon)" }));
+        cmbEra.setSelectedIndex(1);
         cmbEra.setMinimumSize(new java.awt.Dimension(150, 20));
         cmbEra.setPreferredSize(new java.awt.Dimension(150, 20));
         cmbEra.addActionListener(new java.awt.event.ActionListener() {
@@ -1397,6 +1828,12 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         });
 
         chkTrailer.setText("Trailer");
+        chkTrailer.setEnabled(false);
+        chkTrailer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkTrailerActionPerformed(evt);
+            }
+        });
 
         spnTonnage.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(10), Integer.valueOf(1), null, Integer.valueOf(1)));
         spnTonnage.setMinimumSize(new java.awt.Dimension(45, 20));
@@ -1468,49 +1905,56 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
             }
         });
 
+        spnTurretTonnage.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 50.0d, 0.5d));
+        spnTurretTonnage.setEnabled(false);
+        spnTurretTonnage.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnTurretTonnageStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlChassisLayout = new javax.swing.GroupLayout(pnlChassis);
         pnlChassis.setLayout(pnlChassisLayout);
         pnlChassisLayout.setHorizontalGroup(
             pnlChassisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlChassisLayout.createSequentialGroup()
-                .addGroup(pnlChassisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlChassisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlChassisLayout.createSequentialGroup()
+                    .addComponent(jLabel7)
+                    .addGap(2, 2, 2)
+                    .addComponent(cmbMotiveType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlChassisLayout.createSequentialGroup()
+                    .addGap(65, 65, 65)
+                    .addComponent(chkOmniVee))
+                .addGroup(pnlChassisLayout.createSequentialGroup()
+                    .addGap(65, 65, 65)
+                    .addComponent(chkTrailer))
+                .addGroup(pnlChassisLayout.createSequentialGroup()
+                    .addGap(27, 27, 27)
                     .addGroup(pnlChassisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(pnlChassisLayout.createSequentialGroup()
-                            .addComponent(jLabel7)
-                            .addGap(2, 2, 2)
-                            .addComponent(cmbMotiveType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlChassisLayout.createSequentialGroup()
-                            .addGap(65, 65, 65)
-                            .addComponent(chkOmniVee))
-                        .addGroup(pnlChassisLayout.createSequentialGroup()
-                            .addGap(65, 65, 65)
-                            .addComponent(chkTrailer))
-                        .addGroup(pnlChassisLayout.createSequentialGroup()
-                            .addGap(27, 27, 27)
-                            .addGroup(pnlChassisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(pnlChassisLayout.createSequentialGroup()
-                                    .addComponent(jLabel32)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cmbTurret, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(pnlChassisLayout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addGap(2, 2, 2)
-                                    .addComponent(cmbEngineType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(pnlChassisLayout.createSequentialGroup()
-                            .addGap(17, 17, 17)
-                            .addComponent(jLabel8)
-                            .addGap(2, 2, 2)
-                            .addComponent(spnTonnage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblVeeClass)
+                            .addComponent(jLabel32)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lblVeeLimits)))
-                    .addGroup(pnlChassisLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel91)
-                        .addGap(2, 2, 2)
-                        .addComponent(spnHeatSinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cmbTurret, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(spnTurretTonnage))
+                        .addGroup(pnlChassisLayout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addGap(2, 2, 2)
+                            .addComponent(cmbEngineType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(pnlChassisLayout.createSequentialGroup()
+                    .addGap(17, 17, 17)
+                    .addComponent(jLabel8)
+                    .addGap(2, 2, 2)
+                    .addComponent(spnTonnage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblVeeClass)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblVeeLimits)))
+            .addGroup(pnlChassisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel91)
+                .addGap(2, 2, 2)
+                .addComponent(spnHeatSinks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlChassisLayout.setVerticalGroup(
             pnlChassisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1542,7 +1986,8 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlChassisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
-                    .addComponent(cmbTurret, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbTurret, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnTurretTonnage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlChassisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlChassisLayout.createSequentialGroup()
@@ -1634,6 +2079,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         chkFlotationHull.setText("Flotation Hull");
         chkFlotationHull.setEnabled(false);
+        chkFlotationHull.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkFlotationHullActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -1642,6 +2092,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         chkLimitedAmph.setText("Limited Amphibious");
         chkLimitedAmph.setEnabled(false);
+        chkLimitedAmph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkLimitedAmphActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -1650,6 +2105,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         chkFullAmph.setText("Fully Amphibious");
         chkFullAmph.setEnabled(false);
+        chkFullAmph.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkFullAmphActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -1658,6 +2118,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         chkDuneBuggy.setText("Dune Buggy");
         chkDuneBuggy.setEnabled(false);
+        chkDuneBuggy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkDuneBuggyActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -1667,6 +2132,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         chkEnviroSealing.setText("Enviro (Vacuum) Sealing");
         chkEnviroSealing.setEnabled(false);
         chkEnviroSealing.setNextFocusableComponent(chkArmoredMotive);
+        chkEnviroSealing.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkEnviroSealingActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -2298,15 +2768,15 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlChassis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlExperimental, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlChassis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlSummary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlOmniInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnlBasicSetupLayout.setVerticalGroup(
             pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2539,6 +3009,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         spnRearTurretArmor.setMinimumSize(new java.awt.Dimension(45, 20));
         spnRearTurretArmor.setPreferredSize(new java.awt.Dimension(45, 20));
+        spnRearTurretArmor.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                spnRearTurretArmorStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -2781,7 +3256,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3626,10 +4101,10 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                         .addComponent(tbpWeaponChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlSpecials, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(pnlSpecials, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                             .addComponent(pnlControls, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlSelected, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE))
+                        .addComponent(pnlSelected, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))
                     .addComponent(pnlEquipInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -3829,6 +4304,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         jLabel87.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel87.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel87.setText("Chassis Model:");
+        jLabel87.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -3931,6 +4407,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         txtArmorModel.addMouseListener( mlArmorModel );
 
         txtChassisModel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtChassisModel.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -4188,11 +4665,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 795, Short.MAX_VALUE)
+            .addGap(0, 777, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                     .addComponent(pnlFluff, javax.swing.GroupLayout.PREFERRED_SIZE, 767, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(28, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4303,7 +4780,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlBFStats, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4579,8 +5056,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tlbIconBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlInfoPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(tbpMainTabPane)
+            .addComponent(pnlInfoPane, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tbpMainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4892,8 +5372,8 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                 }
                 BuildTechBaseSelector();
                 cmbTechBase.setSelectedIndex( CurVee.GetLoadout().GetTechBase() );
-                //RefreshEquipment();
-                //RecalcEquipment();
+                RefreshEquipment();
+                RecalcEquipment();
             } else {
                 // can't.  reset to the default rules level and scold the user
                 Media.Messager( this, "You cannot set an OmniVee's loadout to a Rules Level\nlower than it's chassis' Rules Level." );
@@ -4981,7 +5461,8 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         ArrayList list = new ArrayList();
         String curTurret = cmbTurret.getSelectedItem().toString();
 
-        cmbTurret.setEnabled(true);
+        if ( !CurVee.IsOmni())
+            cmbTurret.setEnabled(true);
 
         list.add("No Turret");
         if ( CurVee.CanUseTurret() ) list.add("Single Turret");
@@ -5016,7 +5497,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
             if ( !CurVee.CanUseEnviroSealing() ) {
                 chkEnviroSealing.setEnabled(false);
-                chkEnviroSealing.setSelected(true);
+                chkEnviroSealing.setSelected(false);
             }
             
             if ( !CurVee.CanUseFlotationHull() ) {
@@ -5027,6 +5508,8 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
             if ( !CurVee.CanUseAmphibious() ) {
                 chkLimitedAmph.setEnabled(false);
                 chkLimitedAmph.setSelected(false);
+                chkFullAmph.setEnabled(false);
+                chkFullAmph.setSelected(false);
             }
 
             if ( !CurVee.CanBeDuneBuggy() ) {
@@ -5333,7 +5816,10 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 }//GEN-LAST:event_chkSuperchargerActionPerformed
 
     private void chkUseTCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkUseTCActionPerformed
- 
+        CurVee.UseTC(chkUseTC.isSelected(), (CurVee.GetTechBase() == AvailableCode.TECH_CLAN) );
+        SetWeaponChoosers();
+        RefreshSummary();
+        RefreshInfoPane();
 }//GEN-LAST:event_chkUseTCActionPerformed
 
     private void chkFCSAIVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkFCSAIVActionPerformed
@@ -5409,7 +5895,9 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 }//GEN-LAST:event_chkClanCASEActionPerformed
 
     private void lstSelectedEquipmentValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSelectedEquipmentValueChanged
-      
+        if( lstSelectedEquipment.getSelectedIndex() < 0 ) { return; }
+        abPlaceable p = (abPlaceable) Equipment[SELECTED][lstSelectedEquipment.getSelectedIndex()];
+        ShowInfoOn( p );
 }//GEN-LAST:event_lstSelectedEquipmentValueChanged
 
     private void lstSelectedEquipmentKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lstSelectedEquipmentKeyPressed
@@ -5426,7 +5914,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         for( int i = selected.length - 1; i >= 0; i-- ) {
             // abPlaceable p = (abPlaceable) locArmor.GetLoadout().GetNonCore().get( lstSelectedEquipment.getSelectedIndex() );
             abPlaceable p = (abPlaceable) CurVee.GetLoadout().GetNonCore().get( selected[i] );
-            if( p.LocationLocked() &! ( p instanceof Talons ) ) {
+            if( p.LocationLocked() ) {
                 Media.Messager( this, "You may not remove a locked item from the loadout." );
                 return;
             } else {
@@ -5558,9 +6046,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                 CurVee.GetLoadout().CheckExclusions( a );
                 if( a instanceof Equipment ) {
                     if ( ! ((Equipment) a).Validate( CurVee ) ) {
-                        if( ((Equipment) a).RequiresQuad() ) {
-                            throw new Exception( a.CritName() + " may only be mounted on a quad 'Mech." );
-                        } else if( ((Equipment) a).MaxAllowed() > 0 ) {
+                        if( ((Equipment) a).MaxAllowed() > 0 ) {
                             throw new Exception( "Only " + ((Equipment) a).MaxAllowed() + " " + a.CritName() + "(s) may be mounted on one Vehicle." );
                         }
                     }
@@ -6080,11 +6566,20 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         cmbEra.setEnabled( true );
         cmbProductionEra.setEnabled( true );
         cmbTechBase.setEnabled( true );
+        cmbTurret.setSelectedIndex(0);
+        spnTurretTonnage.setModel(new SpinnerNumberModel(0.0, 0.0, 50.0, 0.5));
         txtProdYear.setEnabled( true );
 
         cmbRulesLevel.setSelectedItem( Prefs.get( "NewVee_RulesLevel", "Tournament Legal" ) );
         cmbEra.setSelectedItem( Prefs.get( "NewVee_Era", "Age of War/Star League" ) );
+        BuildTechBaseSelector();
         cmbProductionEra.setSelectedIndex( 0 );
+
+        chkFlotationHull.setSelected(false);
+        chkLimitedAmph.setSelected(false);
+        chkFullAmph.setSelected(false);
+        chkDuneBuggy.setSelected(false);
+        chkEnviroSealing.setSelected(false);
 
         if( Omni ) {
             UnlockGUIFromOmni();
@@ -6110,7 +6605,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
             CurVee.SetYear( 0, false );
             break;
         }
-        BuildTechBaseSelector();
+        
         cmbTechBase.setSelectedItem( Prefs.get( "NewVee_Techbase", "Inner Sphere" ) );
         switch( cmbTechBase.getSelectedIndex() ) {
             case AvailableCode.TECH_INNER_SPHERE:
@@ -6138,8 +6633,8 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         BuildEngineSelector();
         BuildArmorSelector();
         CheckOmni();
-        //cmbEngineType.setSelectedItem( SSWConstants.DEFAULT_ENGINE );
-        //cmbArmorType.setSelectedItem( SSWConstants.DEFAULT_ARMOR );
+        //cmbEngineType.setSelectedItem( saw.Constants.DEFAULT_ENGINE );
+        //cmbArmorType.setSelectedItem( saw.Constants.DEFAULT_ARMOR );
         FixMPSpinner();
         FixJJSpinnerModel();
         FixArmorSpinners();
@@ -6395,7 +6890,6 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         } else {
             try {
                 //if( ! chkBSPFD.isEnabled() ) { locArmor.SetBlueShield( false ); }
-                if( ! chkEnviroSealing.isEnabled() ) { CurVee.SetEnviroSealing( false ); }
                 //if( ! chkCommandConsole.isEnabled() ) { locArmor.SetCommandConsole( false ); }
             } catch( Exception e ) {
                 // we should never get this, but report it if we do
@@ -6443,11 +6937,16 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
     private void UnlockGUIFromOmni() {
         // this should be used anytime a new mech is made or when unlocking
         // an Omni.
+        isLocked = false;
+        
         chkOmniVee.setSelected( false );
         chkOmniVee.setEnabled( true );
-        //mnuUnlock.setEnabled( false );
+        mnuUnlock.setEnabled( false );
         cmbMotiveType.setEnabled( true );
+        spnTonnage.setEnabled( true );
         cmbEngineType.setEnabled( true );
+        cmbTurret.setEnabled( true );
+        spnTurretTonnage.setEnabled( true );
         spnFrontArmor.setEnabled( true );
         spnLeftArmor.setEnabled( true );
         spnRightArmor.setEnabled( true );
@@ -6458,6 +6957,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         btnMaximize.setEnabled( true );
         btnSetArmorTons.setEnabled( true );
         btnUseRemaining.setEnabled( true );
+        chkTrailer.setEnabled( true );
         //btnEfficientArmor.setEnabled( true );
         //btnBalanceArmor.setEnabled( true );
         //btnLockChassis.setEnabled( true );
@@ -6466,17 +6966,17 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         chkFCSApollo.setEnabled( true );
         chkOmniVee.setSelected( false );
         chkOmniVee.setEnabled( true );
-        //btnLockChassis.setEnabled( false );
+        btnLockChassis.setEnabled( true );
         spnCruiseMP.setEnabled( true );
         chkYearRestrict.setEnabled( true );
         //chkBSPFD.setEnabled( true );
         chkSupercharger.setEnabled( true );
         chkEnviroSealing.setEnabled( false );
         // now enable the Omni controls
-        //cmbOmniVariant.setEnabled( false );
-        //btnAddVariant.setEnabled( false );
-        //btnDeleteVariant.setEnabled( false );
-        //btnRenameVariant.setEnabled( false );
+        cmbOmniVariant.setEnabled( false );
+        btnAddVariant.setEnabled( false );
+        btnDeleteVariant.setEnabled( false );
+        btnRenameVariant.setEnabled( false );
     }
 
     private void RecalcArmor() {
@@ -6532,7 +7032,14 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
                         }
                     }
                 }
-                CurVee.GetLoadout().AddToQueue( a );
+                try {
+                    CurVee.GetLoadout().AddTo( a, LocationIndex.CV_LOC_BODY );
+                    Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+                    lstSelectedEquipment.setListData( Equipment[SELECTED] );
+                } catch (Exception ex) {
+                    Media.Messager(ex.getMessage());
+                    return false;
+                }
             }
             return true;
         } else {
@@ -6972,10 +7479,9 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
     private void btnExportTXTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportTXTActionPerformed
         // exports the mech to TXT format
-        /*
         String CurLoadout = "";
-        if( locArmor.IsOmni() ) {
-            CurLoadout = locArmor.GetLoadout().GetName();
+        if( CurVee.IsOmni() ) {
+            CurLoadout = CurVee.GetLoadout().GetName();
         }
 
         String dir = Prefs.get( "TXTExportPath", "none" );
@@ -6988,7 +7494,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         }
 
         String filename = "";
-        TXTWriter txtw = new TXTWriter( locArmor );
+        CVTXTWriter txtw = new CVTXTWriter( CurVee );
         try {
             filename = savemech.getCanonicalPath();
             txtw.WriteTXT( filename );
@@ -7001,13 +7507,11 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         Media.Messager( this, "Mech saved successfully to TXT:\n" + filename );
 
         // lastly, if this is an Omni, reset the display to the last loadout
-        if( locArmor.IsOmni() ) {
+        if( CurVee.IsOmni() ) {
             //cmbOmniVariant.setSelectedItem( CurLoadout );
             //cmbOmniVariantActionPerformed( evt );
         }
-        setTitle( saw.Constants.AppName + " " + saw.Constants.Version + " - " + locArmor.GetName() + " " + locArmor.GetModel() );
-         * 
-         */
+        setTitle( saw.Constants.AppName + " " + saw.Constants.Version + " - " + CurVee.GetName() + " " + CurVee.GetModel() );
 }//GEN-LAST:event_btnExportTXTActionPerformed
 
     private void btnExportHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportHTMLActionPerformed
@@ -7049,7 +7553,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
     private void btnExportMTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportMTFActionPerformed
         // exports the mech to MTF format for use in Megamek
-/*
+
         String dir = Prefs.get( "MTFExportPath", "none" );
         if( dir.equals( "none" ) ) {
             dir = Prefs.get( "LastOpenCVDirectory", "" );
@@ -7060,7 +7564,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         }
 
         String filename = "";
-        IO.MTFWriter mtfw = new IO.MTFWriter( locArmor );
+        IO.MTFWriter mtfw = new IO.MTFWriter( CurVee );
         try {
             filename = savemech.getCanonicalPath();
             mtfw.WriteMTF( filename );
@@ -7071,9 +7575,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         // if there were no problems, let the user know how it went
         Media.Messager( this, "Mech saved successfully to MTF:\n" + filename );
-        setTitle( saw.Constants.AppName + " " + saw.Constants.Version + " - " + locArmor.GetName() + " " + locArmor.GetModel() );
- *
- */
+        setTitle( saw.Constants.AppName + " " + saw.Constants.Version + " - " + CurVee.GetName() + " " + CurVee.GetModel() );
 }//GEN-LAST:event_btnExportMTFActionPerformed
 
     private void btnAddQuirkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddQuirkActionPerformed
@@ -7090,14 +7592,19 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         if( Load ) { return; }
         //TODO add logic to CombatVehicle to handle the turret
         String Turret = cmbTurret.getSelectedItem().toString();
-        if ( Turret.equals("Single Turret"))
+        if ( Turret.equals("Single Turret")) {
             CurVee.setHasTurret1(true);
-        else if(Turret.equals("Dual Turret")) {
+            if (chkOmniVee.isSelected() && !isLocked )
+                spnTurretTonnage.setEnabled(true);
+        } else if(Turret.equals("Dual Turret")) {
             CurVee.setHasTurret1(true);
             CurVee.setHasTurret2(true);
+            if (chkOmniVee.isSelected() && !isLocked )
+                spnTurretTonnage.setEnabled(true);
         } else {
             CurVee.setHasTurret1(false);
             CurVee.setHasTurret2(false);
+            spnTurretTonnage.setEnabled(false);
         }
 
         BuildLocationSelector();
@@ -7732,13 +8239,16 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
     
     private void LockGUIForOmni() {
         // this locks most of the GUI controls.  Used mainly by Omnimechs.
+        isLocked = true;
+        
         chkOmniVee.setSelected( true );
         chkOmniVee.setEnabled( false );
-        //mnuUnlock.setEnabled( true );
+        mnuUnlock.setEnabled( true );
         spnTonnage.setEnabled( false );
         cmbMotiveType.setEnabled( false );
         cmbEngineType.setEnabled( false );
         cmbTurret.setEnabled( false );
+        spnTurretTonnage.setEnabled( false );
         spnFrontArmor.setEnabled( false );
         spnLeftArmor.setEnabled( false );
         spnRightArmor.setEnabled( false );
@@ -7752,6 +8262,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         btnUseRemaining.setEnabled( false );
         btnLockChassis.setEnabled( false );
         chkYearRestrict.setEnabled( false );
+        chkTrailer.setEnabled( false );
         if( CurVee.GetBaseLoadout().GetJumpJets().GetNumJJ() > 0 ) {
             //cmbJumpJetType.setEnabled( false );
         }
@@ -7919,6 +8430,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         } else {
             btnLockChassis.setEnabled( false );
         }
+        cmbTurretActionPerformed(evt);
     }//GEN-LAST:event_chkOmniVeeActionPerformed
 
     private void cmbProductionEraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbProductionEraActionPerformed
@@ -8065,6 +8577,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
 
         cmbRulesLevel.setSelectedIndex( CurVee.GetRulesLevel() );
         cmbEra.setSelectedIndex( CurVee.GetEra() );
+        BuildTechBaseSelector();
         cmbProductionEra.setSelectedIndex( CurVee.GetProductionEra() );
 
         if( chkYearRestrict.isSelected() ) {
@@ -8088,12 +8601,13 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         Load = false;
         
         if( CurVee.IsOmni() ) {
+            if ( CurVee.isHasTurret1() )
+                spnTurretTonnage.setModel( new SpinnerNumberModel(CurVee.GetBaseLoadout().GetTurret().GetMaxTonnage(), 0, 99.0, 0.5) );
             LockGUIForOmni();
             RefreshOmniVariants();
             RefreshOmniChoices();
         }
 
-        BuildTechBaseSelector();
         FixTonnageSpinner(CurVee.GetMaxTonnage());
         BuildChassisSelector();
         BuildEngineSelector();
@@ -8109,7 +8623,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         RefreshEquipment();
         chkUseTC.setSelected( CurVee.UsingTC() );
         chkClanCASE.setSelected( CurVee.GetLoadout().IsUsingClanCASE() );
-        chkEnviroSealing.setSelected( CurVee.HasEnviroSealing() );
+        chkEnviroSealing.setSelected( CurVee.HasEnvironmentalSealing() );
         //chkCommandConsole.setSelected( CurVee.HasCommandConsole() );
         RefreshSummary();
         RefreshInfoPane();
@@ -8143,10 +8657,12 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         txtCommSystem.setText( CurVee.GetCommSystem() );
         txtTNTSystem.setText( CurVee.GetTandTSystem() );
 
-        
         setTitle( saw.Constants.AppName + " " + saw.Constants.Version + " - " + CurVee.GetName() + " " + CurVee.GetModel() );
+        CurVee.SetChanged(false);
     }
 
+    
+    
     private void mnuImportHMPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuImportHMPActionPerformed
         if (CurVee.HasChanged()) {
             int choice = javax.swing.JOptionPane.showConfirmDialog(this,
@@ -8764,6 +9280,181 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
         ResetAmmo();
     }//GEN-LAST:event_chkYearRestrictActionPerformed
 
+    private void btnExportClipboardIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportClipboardIconActionPerformed
+    // takes the text export and copies it to thesystem clipboard.
+        String CurLoadout = "";
+        String output = "";
+
+        if( CurVee.IsOmni() ) {
+            CurLoadout = CurVee.GetLoadout().GetName();
+        }
+
+        // Solidify the mech first.
+        SolidifyVehicle();
+
+        if( ! VerifyVehicle( evt ) ) {
+            return;
+        }
+
+        CVTXTWriter txtw = new CVTXTWriter( CurVee );
+        output = txtw.GetTextExport();
+        java.awt.datatransfer.StringSelection export = new java.awt.datatransfer.StringSelection( output );
+
+        // lastly, if this is an omnimech, reset the display to the last loadout
+        if( CurVee.IsOmni() ) {
+            cmbOmniVariant.setSelectedItem( CurLoadout );
+            cmbOmniVariantActionPerformed( evt );
+        }
+        java.awt.datatransfer.Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents( export, this );
+    }//GEN-LAST:event_btnExportClipboardIconActionPerformed
+
+    private void btnChatInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChatInfoActionPerformed
+        java.awt.datatransfer.StringSelection export = new java.awt.datatransfer.StringSelection(CurVee.GetChatInfo());
+        java.awt.datatransfer.Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(export, this);
+    }//GEN-LAST:event_btnChatInfoActionPerformed
+
+    private void btnExportHTMLIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportHTMLIconActionPerformed
+        SetSource = false;
+        // exports the mech to HTML format
+        String CurLoadout = "";
+        if( CurVee.IsOmni() ) {
+            CurLoadout = CurVee.GetLoadout().GetName();
+        }
+
+        String dir = Prefs.get( "HTMLExportPath", "none" );
+        if( dir.equals( "none" ) ) {
+            dir = Prefs.get( "LastOpenDirectory", "" );
+        }
+        File savemech = GetSaveFile( "html", dir, false, false );
+        if( savemech == null ) {
+            return;
+        }
+
+        String filename = "";
+        HTMLWriter HTMw = new HTMLWriter( CurVee );
+        try {
+            filename = savemech.getCanonicalPath();
+            HTMw.WriteHTML( saw.Constants.HTMLTemplateName, filename );
+        } catch( IOException e ) {
+            Media.Messager( this, "There was a problem writing the file:\n" + e.getMessage() );
+            return;
+        }
+
+        // if there were no problems, let the user know how it went
+        Media.Messager( this, "Mech saved successfully to HTML:\n" + filename );
+
+        // lastly, if this is an omnimech, reset the display to the last loadout
+        if( CurVee.IsOmni() ) {
+            cmbOmniVariant.setSelectedItem( CurLoadout );
+            cmbOmniVariantActionPerformed( evt );
+        }
+        setTitle( saw.Constants.AppName + " " + saw.Constants.Version + " - " + CurVee.GetName() + " " + CurVee.GetModel() );
+        SetSource = true;
+    }//GEN-LAST:event_btnExportHTMLIconActionPerformed
+
+    private void btnExportTextIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportTextIconActionPerformed
+        SetSource = false;
+        btnExportTXTActionPerformed( evt );
+        SetSource = true;
+    }//GEN-LAST:event_btnExportTextIconActionPerformed
+
+    private void btnExportMTFIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportMTFIconActionPerformed
+        SetSource = false;
+        btnExportMTFActionPerformed( evt );
+        SetSource = true;
+    }//GEN-LAST:event_btnExportMTFIconActionPerformed
+
+    private void spnTurretTonnageStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnTurretTonnageStateChanged
+        double Tons = 0;
+        try
+        {
+           Tons = Double.parseDouble(spnTurretTonnage.getValue().toString());
+           CurVee.GetLoadout().GetTurret().SetTonnage(Tons);
+        } catch ( Exception e ) {
+            Media.Messager(e.getMessage());
+            return;
+        }
+        
+        RefreshSummary();
+        RefreshInfoPane();
+    }//GEN-LAST:event_spnTurretTonnageStateChanged
+
+    private void chkTrailerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTrailerActionPerformed
+        CurVee.SetTrailer(chkTrailer.isSelected());
+    }//GEN-LAST:event_chkTrailerActionPerformed
+
+    private void chkFlotationHullActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkFlotationHullActionPerformed
+        CurVee.SetFlotationHull(chkFlotationHull.isSelected());
+        RefreshSummary();
+        RefreshInfoPane();
+    }//GEN-LAST:event_chkFlotationHullActionPerformed
+
+    private void chkLimitedAmphActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkLimitedAmphActionPerformed
+        CurVee.SetLimitedAmphibious(chkLimitedAmph.isSelected());
+        RefreshSummary();
+        RefreshInfoPane();
+    }//GEN-LAST:event_chkLimitedAmphActionPerformed
+
+    private void chkDuneBuggyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkDuneBuggyActionPerformed
+        CurVee.SetDuneBuggy(chkDuneBuggy.isSelected());
+        RefreshSummary();
+        RefreshInfoPane();
+    }//GEN-LAST:event_chkDuneBuggyActionPerformed
+
+    private void chkEnviroSealingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkEnviroSealingActionPerformed
+        CurVee.SetEnvironmentalSealing(chkEnviroSealing.isSelected());
+        RefreshSummary();
+        RefreshInfoPane();
+    }//GEN-LAST:event_chkEnviroSealingActionPerformed
+
+    private void spnRearTurretArmorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnRearTurretArmorStateChanged
+        if( Load ) { return; }
+        // see what changed and perform the appropriate action
+        javax.swing.SpinnerNumberModel n = (SpinnerNumberModel) spnRearTurretArmor.getModel();
+        javax.swing.JComponent editor = spnRearTurretArmor.getEditor();
+        javax.swing.JFormattedTextField tf = ((javax.swing.JSpinner.DefaultEditor)editor).getTextField();
+
+        // get the value from the text box, if it's valid.
+        try {
+            spnRearTurretArmor.commitEdit();
+        } catch ( java.text.ParseException pe ) {
+            // Edited value is invalid, spinner.getValue() will return
+            // the last valid value, you could revert the spinner to show that:
+            if (editor instanceof javax.swing.JSpinner.DefaultEditor) {
+                tf.setValue(spnRearTurretArmor.getValue());
+            }
+            return;
+        }
+
+        // the commitedit worked, so set the armor value appropriately
+        CVArmor a = CurVee.GetArmor();
+        int locArmor = a.GetLocationArmor( LocationIndex.CV_LOC_TURRET2 );
+        int curframe = n.getNumber().intValue();
+        if( curframe > locArmor ) {
+            while( curframe > locArmor ) {
+                a.IncrementArmor( LocationIndex.CV_LOC_TURRET2 );
+                curframe--;
+            }
+        } else {
+            while( locArmor > curframe ) {
+                a.DecrementArmor( LocationIndex.CV_LOC_TURRET2 );
+                locArmor = a.GetLocationArmor( LocationIndex.CV_LOC_TURRET2 );
+            }
+        }
+
+        // now refresh the information panes
+        RefreshSummary();
+        RefreshInfoPane();
+    }//GEN-LAST:event_spnRearTurretArmorStateChanged
+
+    private void chkFullAmphActionPerformed(java.awt.event.ActionEvent evt) {
+        CurVee.SetFullAmphibious(chkFullAmph.isSelected());
+        RefreshSummary();
+        RefreshInfoPane();
+    }
+    
     private PagePrinter SetupPrinter() {
         PagePrinter printer = new PagePrinter();
         Media media = new Media();
@@ -8850,12 +9541,17 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
     private javax.swing.JButton btnAddQuirk;
     private javax.swing.JButton btnAddToForceList;
     private javax.swing.JButton btnAddVariant;
+    private javax.swing.JButton btnChatInfo;
     private javax.swing.JButton btnClearEquip;
     private javax.swing.JButton btnClearImage;
     private javax.swing.JButton btnDeleteVariant;
+    private javax.swing.JButton btnExportClipboardIcon;
     private javax.swing.JButton btnExportHTML;
+    private javax.swing.JButton btnExportHTMLIcon;
     private javax.swing.JButton btnExportMTF;
+    private javax.swing.JButton btnExportMTFIcon;
     private javax.swing.JButton btnExportTXT;
+    private javax.swing.JButton btnExportTextIcon;
     private javax.swing.JButton btnForceList;
     private javax.swing.JButton btnLoadImage;
     private javax.swing.JButton btnLockChassis;
@@ -8904,7 +9600,6 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
     private javax.swing.JComboBox cmbRulesLevel;
     private javax.swing.JComboBox cmbTechBase;
     private javax.swing.JComboBox cmbTurret;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -9196,6 +9891,7 @@ public class frmVee extends javax.swing.JFrame implements java.awt.datatransfer.
     private javax.swing.JSpinner spnRotorArmor;
     private javax.swing.JSpinner spnTonnage;
     private javax.swing.JSpinner spnTurretArmor;
+    private javax.swing.JSpinner spnTurretTonnage;
     private javax.swing.JTable tblQuirks;
     private javax.swing.JTable tblWeaponManufacturers;
     private javax.swing.JTabbedPane tbpFluffEditors;
