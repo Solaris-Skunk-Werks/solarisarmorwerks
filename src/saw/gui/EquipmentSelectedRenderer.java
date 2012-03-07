@@ -36,11 +36,11 @@ import components.*;
 import filehandlers.FileCommon;
 
 public class EquipmentSelectedRenderer extends DefaultListCellRenderer {
-    private frmVee Parent;
+    private ifVeeForm Parent;
     private abPlaceable a = null;
 
-    public EquipmentSelectedRenderer( frmVee p ) {
-        Parent = p;
+    public EquipmentSelectedRenderer( ifVeeForm v ) {
+        Parent = v;
     }
 
     @Override
@@ -49,8 +49,8 @@ public class EquipmentSelectedRenderer extends DefaultListCellRenderer {
         String Text = "";
         if( value instanceof abPlaceable ) {
             a = (abPlaceable) value;
-            int Loc = Parent.CurVee.GetLoadout().Find( a );
-            if( Parent.CurVee.GetLoadout().GetTechBase() == AvailableCode.TECH_BOTH ) {
+            int Loc = Parent.GetVehicle().GetLoadout().Find( a );
+            if( Parent.GetVehicle().GetLoadout().GetTechBase() == AvailableCode.TECH_BOTH ) {
                 if( a instanceof Equipment ) {
                     if( ((Equipment) a).IsVariableSize() ) {
                         Text = a.CritName();
@@ -61,10 +61,10 @@ public class EquipmentSelectedRenderer extends DefaultListCellRenderer {
                     Text = a.LookupName();
                 }
             } else {
-                Text = a.CritName();
+                Text = a.toString();
             }
             if( Loc < 11 ) {
-                Text = "(" + FileCommon.EncodeLocation( Loc, false, Parent.CurVee ) + ") " + Text;
+                Text = "(" + FileCommon.EncodeLocation( Loc, false, Parent.GetVehicle() ) + ") " + Text.replace("(R)", "");
             }
             if ( a instanceof TargetingComputer )
                 Text = Text + ((TargetingComputer)a).toDisplay();

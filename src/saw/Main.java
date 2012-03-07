@@ -39,6 +39,7 @@ import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import saw.gui.frmVee;
+import saw.gui.frmVeeWide;
 
 public class Main {
 
@@ -49,6 +50,7 @@ public class Main {
     public static void main(String[] args) {
         Preferences prefs = Preferences.userRoot().node( common.Constants.SAWPrefs );
         prefs.remove("FileToOpen");
+        final int screensize = prefs.getInt( "SSWScreenSize", Constants.SCREEN_SIZE_NORMAL ); //= 1; 
 
         //Was trying to save args into Prefs and read inside frmVee but keeps showing up as blank!?!?!
         //Turns out that the prefs are going to ssw/gui/frmVee but are going to java/lang.
@@ -59,7 +61,7 @@ public class Main {
         }
 
         // uncomment the following line before creating a build.
-        //SetupLogFile( SAWConstants.LogFileName );
+        SetupLogFile( Constants.LogFileName );
 
         Runtime runtime = Runtime.getRuntime();
         System.out.println("Memory Allocated [" + runtime.maxMemory() / 1000 + "]");
@@ -113,17 +115,28 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ImageIcon icon;
-                frmVee MainFrame = new frmVee();
+                javax.swing.JFrame MainFrame;
+                switch( screensize ) {
+                    case Constants.SCREEN_SIZE_WIDE_1280:
+                        MainFrame = new frmVeeWide();
+                        MainFrame.setSize( 1280, 800 );
+                        break;
+                    default:
+                        MainFrame = new frmVee();
+                        //MainFrame.setSize( 800, 600 );
+                        break;
+                }
+                
                 try {
                     icon = new ImageIcon(MainFrame.getClass().getResource("/saw/Images/appicon.png"));
                     MainFrame.setIconImage(icon.getImage());
                 } catch (Exception e) {
                     System.out.println("Error loading Icon image...\n" + e.getMessage());
                 }
+                
                 MainFrame.setTitle( Constants.AppDescription + " " + Constants.Version );
-                //MainFrame.setSize( 800, 600 );
                 MainFrame.setLocationRelativeTo( null );
-                MainFrame.setResizable( true );
+                //MainFrame.setResizable( true );
                 MainFrame.setDefaultCloseOperation( javax.swing.JFrame.DISPOSE_ON_CLOSE );
                 MainFrame.setVisible( true );
             }

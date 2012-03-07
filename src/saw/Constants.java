@@ -34,10 +34,10 @@ public class Constants {
     // here is the versioning and program name
     public final static String AppName = "SAW",
                         AppDescription = "Solaris Armor Werks",
-                        Version = "0.1.0",
+                        Version = "0.1.1",
                         AppRelease = "Alpha",
                         ImageListFileName = "S7Images",
-                        LogFileName = "SAW_Log.txt",
+                        LogFileName = "Logs/SAW_Log.txt",
                         HTMLTemplateName = "Data/Templates/Vee_HTML.html",
                         DEFAULT_ENGINE = "Fusion Engine",
                         DEFAULT_ARMOR = "Standard Armor",

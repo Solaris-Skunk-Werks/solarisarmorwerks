@@ -33,16 +33,18 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import components.AvailableCode;
+import components.CombatVehicle;
 import components.Equipment;
 import components.abPlaceable;
 import components.EquipmentCollection;
 
 public class EquipmentListRenderer extends DefaultListCellRenderer {
-    private frmVee Parent;
+    private ifVeeForm Parent;
+    private CombatVehicle CurVee;
     private abPlaceable a = null;
 
-    public EquipmentListRenderer( frmVee p ) {
-        Parent = p;
+    public EquipmentListRenderer( ifVeeForm v ) {
+        Parent = v;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class EquipmentListRenderer extends DefaultListCellRenderer {
         if( value instanceof abPlaceable ) {
             a = (abPlaceable) value;
             if( a.Contiguous() ) {
-                if( Parent.CurVee.GetLoadout().GetTechBase() == AvailableCode.TECH_BOTH ) {
+                if( Parent.GetVehicle().GetLoadout().GetTechBase() == AvailableCode.TECH_BOTH ) {
                     if( a instanceof Equipment ) {
                         if( ((Equipment) a).IsVariableSize() ) {
                             Text = a.CritName();
