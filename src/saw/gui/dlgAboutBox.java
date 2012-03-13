@@ -82,7 +82,6 @@ public class dlgAboutBox extends javax.swing.JDialog {
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         lblLogo.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ssw/Images/SSW_Logo.png"))); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridheight = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;

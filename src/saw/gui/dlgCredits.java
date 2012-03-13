@@ -72,7 +72,7 @@ public class dlgCredits extends javax.swing.JDialog {
         getContentPane().add(btnClose, gridBagConstraints);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("<html>Maelwys<br/>Major Tom<br />LostinSpace<br />Moonsword<br /></html>");
+        jLabel1.setText("<html>Maelwys<br/>Major Tom<br />LostinSpace<br />Moonsword<br />LastChanceCav<br />SnakeEyes</html>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -113,7 +113,7 @@ public class dlgCredits extends javax.swing.JDialog {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 0, 4);
         getContentPane().add(jLabel4, gridBagConstraints);
 
-        jLabel5.setText("<html>Maewlys<br />Major Tom<br />nckestrel</html>");
+        jLabel5.setText("<html>Maewlys<br />Major Tom</html>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;

@@ -148,7 +148,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         CurVee = new CombatVehicle( );
         initComponents();
 
-        Prefs = Preferences.userRoot().node( Constants.SAWPrefs );
+        Prefs = Preferences.userRoot().node( Constants.SSWPrefs );
         cmbMotiveTypeActionPerformed(null);
         spnTonnageStateChanged(null);
         ArmorTons = new VSetArmorTonnage( Prefs );
@@ -1170,72 +1170,55 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         txtArmorSpace = new javax.swing.JTextField();
         lblArmorTonsWasted = new javax.swing.JLabel();
         lblArmorLeftInLot = new javax.swing.JLabel();
-        pnlBFStats = new javax.swing.JPanel();
-        jLabel70 = new javax.swing.JLabel();
-        jLabel71 = new javax.swing.JLabel();
-        jLabel72 = new javax.swing.JLabel();
-        jLabel73 = new javax.swing.JLabel();
-        jLabel74 = new javax.swing.JLabel();
-        jLabel75 = new javax.swing.JLabel();
-        jLabel76 = new javax.swing.JLabel();
-        jLabel77 = new javax.swing.JLabel();
-        jLabel78 = new javax.swing.JLabel();
-        jLabel79 = new javax.swing.JLabel();
-        lblBFMV = new javax.swing.JLabel();
-        lblBFWt = new javax.swing.JLabel();
-        lblBFOV = new javax.swing.JLabel();
-        lblBFExtreme = new javax.swing.JLabel();
-        lblBFShort = new javax.swing.JLabel();
-        lblBFMedium = new javax.swing.JLabel();
-        lblBFLong = new javax.swing.JLabel();
-        lblBFArmor = new javax.swing.JLabel();
-        lblBFStructure = new javax.swing.JLabel();
-        lblBFSA = new javax.swing.JLabel();
-        jLabel80 = new javax.swing.JLabel();
-        lblBFPoints = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jScrollPane14 = new javax.swing.JScrollPane();
-        jTextAreaBFConversion = new javax.swing.JTextArea();
-        pnlImage = new javax.swing.JPanel();
-        lblFluffImage = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        btnLoadImage = new javax.swing.JButton();
-        btnClearImage = new javax.swing.JButton();
-        tbpFluffEditors = new javax.swing.JTabbedPane();
-        pnlOverview = new javax.swing.JPanel();
-        pnlCapabilities = new javax.swing.JPanel();
-        pnlHistory = new javax.swing.JPanel();
-        pnlDeployment = new javax.swing.JPanel();
-        pnlVariants = new javax.swing.JPanel();
-        pnlNotables = new javax.swing.JPanel();
-        pnlAdditionalFluff = new javax.swing.JPanel();
-        pnlManufacturers = new javax.swing.JPanel();
-        jLabel82 = new javax.swing.JLabel();
-        jLabel83 = new javax.swing.JLabel();
-        jLabel84 = new javax.swing.JLabel();
-        jLabel85 = new javax.swing.JLabel();
-        jLabel86 = new javax.swing.JLabel();
-        jLabel87 = new javax.swing.JLabel();
-        jLabel88 = new javax.swing.JLabel();
-        jLabel89 = new javax.swing.JLabel();
-        txtManufacturer = new javax.swing.JTextField();
-        txtEngineManufacturer = new javax.swing.JTextField();
-        txtArmorModel = new javax.swing.JTextField();
-        txtChassisModel = new javax.swing.JTextField();
-        txtCommSystem = new javax.swing.JTextField();
-        txtTNTSystem = new javax.swing.JTextField();
-        pnlWeaponsManufacturers = new javax.swing.JPanel();
-        chkIndividualWeapons = new javax.swing.JCheckBox();
-        scpWeaponManufacturers = new javax.swing.JScrollPane();
-        tblWeaponManufacturers = new javax.swing.JTable();
-        txtManufacturerLocation = new javax.swing.JTextField();
-        jLabel90 = new javax.swing.JLabel();
-        txtJJModel = new javax.swing.JTextField();
-        pnlQuirks = new javax.swing.JPanel();
-        lblBattleMechQuirks = new javax.swing.JLabel();
-        scpQuirkTable = new javax.swing.JScrollPane();
-        tblQuirks = new javax.swing.JTable();
-        btnAddQuirk = new javax.swing.JButton();
+        pnlEquipment = new javax.swing.JPanel();
+        pnlEquipInfo = new javax.swing.JPanel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        lblInfoAVSL = new javax.swing.JLabel();
+        lblInfoAVSW = new javax.swing.JLabel();
+        lblInfoAVCI = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jLabel56 = new javax.swing.JLabel();
+        lblInfoIntro = new javax.swing.JLabel();
+        lblInfoExtinct = new javax.swing.JLabel();
+        lblInfoReintro = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        jLabel60 = new javax.swing.JLabel();
+        jLabel61 = new javax.swing.JLabel();
+        lblInfoName = new javax.swing.JLabel();
+        lblInfoType = new javax.swing.JLabel();
+        lblInfoHeat = new javax.swing.JLabel();
+        lblInfoDamage = new javax.swing.JLabel();
+        lblInfoRange = new javax.swing.JLabel();
+        jSeparator17 = new javax.swing.JSeparator();
+        jLabel62 = new javax.swing.JLabel();
+        jLabel63 = new javax.swing.JLabel();
+        jLabel64 = new javax.swing.JLabel();
+        jLabel65 = new javax.swing.JLabel();
+        lblInfoAmmo = new javax.swing.JLabel();
+        lblInfoTonnage = new javax.swing.JLabel();
+        lblInfoCrits = new javax.swing.JLabel();
+        lblInfoSpecials = new javax.swing.JLabel();
+        jSeparator20 = new javax.swing.JSeparator();
+        jLabel66 = new javax.swing.JLabel();
+        lblInfoCost = new javax.swing.JLabel();
+        jLabel67 = new javax.swing.JLabel();
+        lblInfoBV = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
+        lblInfoMountRestrict = new javax.swing.JLabel();
+        jLabel69 = new javax.swing.JLabel();
+        lblInfoRulesLevel = new javax.swing.JLabel();
+        pnlSpecials = new javax.swing.JPanel();
+        jLabel37 = new javax.swing.JLabel();
+        chkUseTC = new javax.swing.JCheckBox();
+        chkFCSAIV = new javax.swing.JCheckBox();
+        chkFCSAV = new javax.swing.JCheckBox();
+        chkFCSApollo = new javax.swing.JCheckBox();
+        chkClanCASE = new javax.swing.JCheckBox();
         pnlControls = new javax.swing.JPanel();
         btnRemoveEquip = new javax.swing.JButton();
         btnClearEquip = new javax.swing.JButton();
@@ -1282,59 +1265,77 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         jScrollPane22 = new javax.swing.JScrollPane();
         lstChooseAmmunition = new javax.swing.JList();
         jSeparator16 = new javax.swing.JSeparator();
-        pnlSpecials = new javax.swing.JPanel();
-        jLabel37 = new javax.swing.JLabel();
-        chkUseTC = new javax.swing.JCheckBox();
-        chkFCSAIV = new javax.swing.JCheckBox();
-        chkFCSAV = new javax.swing.JCheckBox();
-        chkFCSApollo = new javax.swing.JCheckBox();
-        chkClanCASE = new javax.swing.JCheckBox();
-        pnlEquipInfo = new javax.swing.JPanel();
-        jLabel38 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
-        jLabel53 = new javax.swing.JLabel();
-        lblInfoAVSL = new javax.swing.JLabel();
-        lblInfoAVSW = new javax.swing.JLabel();
-        lblInfoAVCI = new javax.swing.JLabel();
-        jLabel54 = new javax.swing.JLabel();
-        jLabel55 = new javax.swing.JLabel();
-        jLabel56 = new javax.swing.JLabel();
-        lblInfoIntro = new javax.swing.JLabel();
-        lblInfoExtinct = new javax.swing.JLabel();
-        lblInfoReintro = new javax.swing.JLabel();
-        jLabel57 = new javax.swing.JLabel();
-        jLabel58 = new javax.swing.JLabel();
-        jLabel59 = new javax.swing.JLabel();
-        jLabel60 = new javax.swing.JLabel();
-        jLabel61 = new javax.swing.JLabel();
-        lblInfoName = new javax.swing.JLabel();
-        lblInfoType = new javax.swing.JLabel();
-        lblInfoHeat = new javax.swing.JLabel();
-        lblInfoDamage = new javax.swing.JLabel();
-        lblInfoRange = new javax.swing.JLabel();
-        jSeparator17 = new javax.swing.JSeparator();
-        jLabel62 = new javax.swing.JLabel();
-        jLabel63 = new javax.swing.JLabel();
-        jLabel64 = new javax.swing.JLabel();
-        jLabel65 = new javax.swing.JLabel();
-        lblInfoAmmo = new javax.swing.JLabel();
-        lblInfoTonnage = new javax.swing.JLabel();
-        lblInfoCrits = new javax.swing.JLabel();
-        lblInfoSpecials = new javax.swing.JLabel();
-        jSeparator20 = new javax.swing.JSeparator();
-        jLabel66 = new javax.swing.JLabel();
-        lblInfoCost = new javax.swing.JLabel();
-        jLabel67 = new javax.swing.JLabel();
-        lblInfoBV = new javax.swing.JLabel();
-        jLabel68 = new javax.swing.JLabel();
-        lblInfoMountRestrict = new javax.swing.JLabel();
-        jLabel69 = new javax.swing.JLabel();
-        lblInfoRulesLevel = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        pnlFluff = new javax.swing.JPanel();
         pnlExport = new javax.swing.JPanel();
         btnExportTXT = new javax.swing.JButton();
         btnExportHTML = new javax.swing.JButton();
         btnExportMTF = new javax.swing.JButton();
+        tbpFluffEditors = new javax.swing.JTabbedPane();
+        pnlOverview = new javax.swing.JPanel();
+        pnlCapabilities = new javax.swing.JPanel();
+        pnlHistory = new javax.swing.JPanel();
+        pnlDeployment = new javax.swing.JPanel();
+        pnlVariants = new javax.swing.JPanel();
+        pnlNotables = new javax.swing.JPanel();
+        pnlAdditionalFluff = new javax.swing.JPanel();
+        pnlManufacturers = new javax.swing.JPanel();
+        jLabel82 = new javax.swing.JLabel();
+        jLabel83 = new javax.swing.JLabel();
+        jLabel84 = new javax.swing.JLabel();
+        jLabel85 = new javax.swing.JLabel();
+        jLabel86 = new javax.swing.JLabel();
+        jLabel87 = new javax.swing.JLabel();
+        jLabel88 = new javax.swing.JLabel();
+        jLabel89 = new javax.swing.JLabel();
+        txtManufacturer = new javax.swing.JTextField();
+        txtEngineManufacturer = new javax.swing.JTextField();
+        txtArmorModel = new javax.swing.JTextField();
+        txtChassisModel = new javax.swing.JTextField();
+        txtCommSystem = new javax.swing.JTextField();
+        txtTNTSystem = new javax.swing.JTextField();
+        pnlWeaponsManufacturers = new javax.swing.JPanel();
+        chkIndividualWeapons = new javax.swing.JCheckBox();
+        scpWeaponManufacturers = new javax.swing.JScrollPane();
+        tblWeaponManufacturers = new javax.swing.JTable();
+        txtManufacturerLocation = new javax.swing.JTextField();
+        jLabel90 = new javax.swing.JLabel();
+        txtJJModel = new javax.swing.JTextField();
+        pnlQuirks = new javax.swing.JPanel();
+        lblBattleMechQuirks = new javax.swing.JLabel();
+        scpQuirkTable = new javax.swing.JScrollPane();
+        tblQuirks = new javax.swing.JTable();
+        btnAddQuirk = new javax.swing.JButton();
+        pnlBFStats = new javax.swing.JPanel();
+        jLabel70 = new javax.swing.JLabel();
+        jLabel71 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        jLabel73 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
+        jLabel75 = new javax.swing.JLabel();
+        jLabel76 = new javax.swing.JLabel();
+        jLabel77 = new javax.swing.JLabel();
+        jLabel78 = new javax.swing.JLabel();
+        jLabel79 = new javax.swing.JLabel();
+        lblBFMV = new javax.swing.JLabel();
+        lblBFWt = new javax.swing.JLabel();
+        lblBFOV = new javax.swing.JLabel();
+        lblBFExtreme = new javax.swing.JLabel();
+        lblBFShort = new javax.swing.JLabel();
+        lblBFMedium = new javax.swing.JLabel();
+        lblBFLong = new javax.swing.JLabel();
+        lblBFArmor = new javax.swing.JLabel();
+        lblBFStructure = new javax.swing.JLabel();
+        lblBFSA = new javax.swing.JLabel();
+        jLabel80 = new javax.swing.JLabel();
+        lblBFPoints = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jScrollPane14 = new javax.swing.JScrollPane();
+        jTextAreaBFConversion = new javax.swing.JTextArea();
+        pnlImage = new javax.swing.JPanel();
+        lblFluffImage = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        btnLoadImage = new javax.swing.JButton();
+        btnClearImage = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuFile = new javax.swing.JMenu();
         mnuNewMech = new javax.swing.JMenuItem();
@@ -1376,8 +1377,9 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         mnuAboutSSW = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1680, 1050));
-        setPreferredSize(new java.awt.Dimension(1680, 1050));
+        setMaximumSize(new java.awt.Dimension(1280, 600));
+        setMinimumSize(new java.awt.Dimension(1280, 600));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -3115,7 +3117,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chkBalanceLRArmor)
                             .addComponent(chkBalanceFRArmor))))
-                .addGap(10, 10, 10))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3197,594 +3199,412 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 0);
         jPanel8.add(lblArmorLeftInLot, gridBagConstraints);
 
-        pnlBFStats.setBorder(javax.swing.BorderFactory.createTitledBorder("BattleForce Stats"));
-        pnlBFStats.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel70.setText("MV");
-        pnlBFStats.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
-
-        jLabel71.setText("S (+0)");
-        pnlBFStats.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
-
-        jLabel72.setText("M (+2)");
-        pnlBFStats.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
-
-        jLabel73.setText("L (+4)");
-        pnlBFStats.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
-
-        jLabel74.setText("E (+6)");
-        pnlBFStats.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
-
-        jLabel75.setText("Wt.");
-        pnlBFStats.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, -1, -1));
-
-        jLabel76.setText("OV");
-        pnlBFStats.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
-
-        jLabel77.setText("Armor:");
-        pnlBFStats.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, -1));
-
-        jLabel78.setText("Structure:");
-        pnlBFStats.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
-
-        jLabel79.setText("Special Abilities:");
-        pnlBFStats.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
-
-        lblBFMV.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFMV.setText("0");
-        pnlBFStats.add(lblBFMV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 30, -1));
-
-        lblBFWt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFWt.setText("1");
-        pnlBFStats.add(lblBFWt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 30, -1));
-
-        lblBFOV.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFOV.setText("0");
-        pnlBFStats.add(lblBFOV, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 30, -1));
-
-        lblBFExtreme.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFExtreme.setText("0");
-        pnlBFStats.add(lblBFExtreme, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 30, -1));
-
-        lblBFShort.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFShort.setText("0");
-        pnlBFStats.add(lblBFShort, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 30, -1));
-
-        lblBFMedium.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFMedium.setText("0");
-        pnlBFStats.add(lblBFMedium, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 30, -1));
-
-        lblBFLong.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFLong.setText("0");
-        pnlBFStats.add(lblBFLong, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 30, -1));
-
-        lblBFArmor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFArmor.setText("0");
-        pnlBFStats.add(lblBFArmor, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 30, -1));
-
-        lblBFStructure.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBFStructure.setText("0");
-        pnlBFStats.add(lblBFStructure, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, 30, -1));
-
-        lblBFSA.setText("Placeholder");
-        pnlBFStats.add(lblBFSA, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 430, 20));
-
-        jLabel80.setText("Points:");
-        pnlBFStats.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, -1, -1));
-
-        lblBFPoints.setText("0");
-        pnlBFStats.add(lblBFPoints, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, -1, -1));
-
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Conversion Steps"));
-
-        jTextAreaBFConversion.setColumns(20);
-        jTextAreaBFConversion.setEditable(false);
-        jTextAreaBFConversion.setRows(5);
-        jScrollPane14.setViewportView(jTextAreaBFConversion);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addComponent(jScrollPane14, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
-                .addContainerGap())
+        javax.swing.GroupLayout pnlBasicSetupLayout = new javax.swing.GroupLayout(pnlBasicSetup);
+        pnlBasicSetup.setLayout(pnlBasicSetupLayout);
+        pnlBasicSetupLayout.setHorizontalGroup(
+            pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBasicSetupLayout.createSequentialGroup()
+                .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlChassisMods, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlMovement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlExperimental, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlChassis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlSummary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlOmniInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+        pnlBasicSetupLayout.setVerticalGroup(
+            pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBasicSetupLayout.createSequentialGroup()
+                .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBasicSetupLayout.createSequentialGroup()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBasicSetupLayout.createSequentialGroup()
+                        .addComponent(pnlChassis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlExperimental, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(pnlBasicSetupLayout.createSequentialGroup()
+                            .addComponent(pnlOmniInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlSummary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(pnlInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBasicSetupLayout.createSequentialGroup()
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(pnlMovement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(2, 2, 2)
+                            .addComponent(pnlChassisMods, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlImage.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fluff Image", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
+        tbpMainTabPane.addTab("Basic Setup and Armor", pnlBasicSetup);
 
-        lblFluffImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFluffImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        lblFluffImage.setMaximumSize(new java.awt.Dimension(375, 260));
-        lblFluffImage.setMinimumSize(new java.awt.Dimension(375, 260));
-        lblFluffImage.setPreferredSize(new java.awt.Dimension(220, 115));
+        pnlEquipInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Information"));
+        pnlEquipInfo.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
-
-        btnLoadImage.setText("Load Image");
-        btnLoadImage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoadImageActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnLoadImage, new java.awt.GridBagConstraints());
-
-        btnClearImage.setText("Clear Image");
-        btnClearImage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearImageActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        jPanel1.add(btnClearImage, gridBagConstraints);
-
-        javax.swing.GroupLayout pnlImageLayout = new javax.swing.GroupLayout(pnlImage);
-        pnlImage.setLayout(pnlImageLayout);
-        pnlImageLayout.setHorizontalGroup(
-            pnlImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(lblFluffImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        pnlImageLayout.setVerticalGroup(
-            pnlImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlImageLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(lblFluffImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        tbpFluffEditors.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        tbpFluffEditors.setMaximumSize(new java.awt.Dimension(420, 455));
-        tbpFluffEditors.setMinimumSize(new java.awt.Dimension(420, 455));
-
-        pnlOverview.setMaximumSize(new java.awt.Dimension(427, 485));
-        pnlOverview.setMinimumSize(new java.awt.Dimension(427, 485));
-        pnlOverview.setLayout(new javax.swing.BoxLayout(pnlOverview, javax.swing.BoxLayout.Y_AXIS));
-        tbpFluffEditors.addTab("Overview", pnlOverview);
-
-        pnlCapabilities.setMaximumSize(new java.awt.Dimension(427, 485));
-        pnlCapabilities.setMinimumSize(new java.awt.Dimension(427, 485));
-        pnlCapabilities.setLayout(new javax.swing.BoxLayout(pnlCapabilities, javax.swing.BoxLayout.Y_AXIS));
-        tbpFluffEditors.addTab("Capabilities", pnlCapabilities);
-
-        pnlHistory.setLayout(new javax.swing.BoxLayout(pnlHistory, javax.swing.BoxLayout.Y_AXIS));
-        tbpFluffEditors.addTab("Battle History", pnlHistory);
-
-        pnlDeployment.setLayout(new javax.swing.BoxLayout(pnlDeployment, javax.swing.BoxLayout.Y_AXIS));
-        tbpFluffEditors.addTab("Deployment", pnlDeployment);
-
-        pnlVariants.setLayout(new javax.swing.BoxLayout(pnlVariants, javax.swing.BoxLayout.Y_AXIS));
-        tbpFluffEditors.addTab("Variants", pnlVariants);
-
-        pnlNotables.setLayout(new javax.swing.BoxLayout(pnlNotables, javax.swing.BoxLayout.Y_AXIS));
-        tbpFluffEditors.addTab("Notables", pnlNotables);
-
-        pnlAdditionalFluff.setLayout(new javax.swing.BoxLayout(pnlAdditionalFluff, javax.swing.BoxLayout.Y_AXIS));
-        tbpFluffEditors.addTab("Additional", pnlAdditionalFluff);
-
-        pnlManufacturers.setLayout(new java.awt.GridBagLayout());
-
-        jLabel82.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel82.setText("Manufacturer Information");
-        jLabel82.setMaximumSize(new java.awt.Dimension(175, 15));
-        jLabel82.setMinimumSize(new java.awt.Dimension(175, 15));
-        jLabel82.setPreferredSize(new java.awt.Dimension(175, 15));
+        jLabel38.setText("Availability(AoW/SL)");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        pnlEquipInfo.add(jLabel38, gridBagConstraints);
+
+        jLabel39.setText("Availability (SW)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        pnlEquipInfo.add(jLabel39, gridBagConstraints);
+
+        jLabel53.setText("Availability (CI)");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        pnlEquipInfo.add(jLabel53, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoAVSL, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoAVSW, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoAVCI, gridBagConstraints);
+
+        jLabel54.setText("Introduction");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
-        pnlManufacturers.add(jLabel82, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel54, gridBagConstraints);
 
-        jLabel83.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel83.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel83.setText("Manufacturing Company:");
+        jLabel55.setText("Extinction");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
-        pnlManufacturers.add(jLabel83, gridBagConstraints);
-
-        jLabel84.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel84.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel84.setText("Location:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 76;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        pnlManufacturers.add(jLabel84, gridBagConstraints);
-
-        jLabel85.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel85.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel85.setText("Engine Manufacturer:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 17;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        pnlManufacturers.add(jLabel85, gridBagConstraints);
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel55, gridBagConstraints);
 
-        jLabel86.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel86.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel86.setText("Armor Model:");
+        jLabel56.setText("Reintroduction");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 56;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        pnlManufacturers.add(jLabel86, gridBagConstraints);
-
-        jLabel87.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel87.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel87.setText("Chassis Model:");
-        jLabel87.setEnabled(false);
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel56, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 47;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        pnlManufacturers.add(jLabel87, gridBagConstraints);
-
-        jLabel88.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel88.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel88.setText("Communications System:");
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoIntro, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        pnlManufacturers.add(jLabel88, gridBagConstraints);
-
-        jLabel89.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel89.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel89.setText("Targeting and Tracking:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        pnlManufacturers.add(jLabel89, gridBagConstraints);
-
-        txtManufacturer.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 2, 0, 11);
-        pnlManufacturers.add(txtManufacturer, gridBagConstraints);
-        MouseListener mlManufacturer = new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-            public void mousePressed( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-        };
-        txtManufacturer.addMouseListener( mlManufacturer );
-
-        txtEngineManufacturer.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
-        pnlManufacturers.add(txtEngineManufacturer, gridBagConstraints);
-        MouseListener mlEngineManufacturer = new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-            public void mousePressed( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-        };
-        txtEngineManufacturer.addMouseListener( mlEngineManufacturer );
-
-        txtArmorModel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoExtinct, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
-        pnlManufacturers.add(txtArmorModel, gridBagConstraints);
-        MouseListener mlArmorModel = new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-            public void mousePressed( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-        };
-        txtArmorModel.addMouseListener( mlArmorModel );
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoReintro, gridBagConstraints);
 
-        txtChassisModel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txtChassisModel.setEnabled(false);
+        jLabel57.setText("Name");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
-        pnlManufacturers.add(txtChassisModel, gridBagConstraints);
-        MouseListener mlChassisModel = new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-            public void mousePressed( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-        };
-        txtChassisModel.addMouseListener( mlChassisModel );
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 3);
+        pnlEquipInfo.add(jLabel57, gridBagConstraints);
 
-        txtCommSystem.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel58.setText("Type");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
-        pnlManufacturers.add(txtCommSystem, gridBagConstraints);
-        MouseListener mlCommSystem = new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-            public void mousePressed( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-        };
-        txtCommSystem.addMouseListener( mlCommSystem );
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel58, gridBagConstraints);
 
-        txtTNTSystem.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel59.setText("Heat");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
-        pnlManufacturers.add(txtTNTSystem, gridBagConstraints);
-        MouseListener mlTNTSystem = new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-            public void mousePressed( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-        };
-        txtTNTSystem.addMouseListener( mlTNTSystem );
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel59, gridBagConstraints);
 
-        pnlWeaponsManufacturers.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Weapons Manufacturers", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
-        pnlWeaponsManufacturers.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        pnlWeaponsManufacturers.setMinimumSize(new java.awt.Dimension(315, 260));
-        pnlWeaponsManufacturers.setLayout(new java.awt.GridBagLayout());
+        jLabel60.setText("Damage");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel60, gridBagConstraints);
 
-        chkIndividualWeapons.setText("Assign manufacturers individually");
+        jLabel61.setText("Range");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel61, gridBagConstraints);
+
+        lblInfoName.setText(" ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 10, 4, 0);
-        pnlWeaponsManufacturers.add(chkIndividualWeapons, gridBagConstraints);
-
-        scpWeaponManufacturers.setPreferredSize(new java.awt.Dimension(452, 392));
-
-        tblWeaponManufacturers.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Weapon", "Manufacturer"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        scpWeaponManufacturers.setViewportView(tblWeaponManufacturers);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.ipadx = 280;
-        gridBagConstraints.ipady = 180;
-        pnlWeaponsManufacturers.add(scpWeaponManufacturers, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 10, 2, 10);
-        pnlManufacturers.add(pnlWeaponsManufacturers, gridBagConstraints);
-
-        txtManufacturerLocation.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
+        pnlEquipInfo.add(lblInfoName, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoType, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoHeat, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoDamage, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoRange, gridBagConstraints);
+
+        jSeparator17.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
-        pnlManufacturers.add(txtManufacturerLocation, gridBagConstraints);
-        MouseListener mlManufacturerLocation = new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-            public void mousePressed( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-        };
-        txtManufacturerLocation.addMouseListener( mlManufacturerLocation );
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        pnlEquipInfo.add(jSeparator17, gridBagConstraints);
 
-        jLabel90.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel90.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel90.setText("Jump Jet Model:");
+        jLabel62.setText("Ammo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel62, gridBagConstraints);
+
+        jLabel63.setText("Tonnage");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel63, gridBagConstraints);
+
+        jLabel64.setText("Crits");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
+        pnlEquipInfo.add(jLabel64, gridBagConstraints);
+
+        jLabel65.setText("Specials");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 0);
+        pnlEquipInfo.add(jLabel65, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoAmmo, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoTonnage, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(lblInfoCrits, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        pnlEquipInfo.add(lblInfoSpecials, gridBagConstraints);
+
+        jSeparator20.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 44;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        pnlManufacturers.add(jLabel90, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        pnlEquipInfo.add(jSeparator20, gridBagConstraints);
 
-        txtJJModel.setEnabled(false);
+        jLabel66.setText("Cost");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel66, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        pnlEquipInfo.add(lblInfoCost, gridBagConstraints);
+
+        jLabel67.setText("BV");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel67, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        pnlEquipInfo.add(lblInfoBV, gridBagConstraints);
+
+        jLabel68.setText("Mounting Restrictions");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 3);
+        pnlEquipInfo.add(jLabel68, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 4, 0);
+        pnlEquipInfo.add(lblInfoMountRestrict, gridBagConstraints);
+
+        jLabel69.setText("Rules Level");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
+        pnlEquipInfo.add(jLabel69, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
+        pnlEquipInfo.add(lblInfoRulesLevel, gridBagConstraints);
+
+        pnlSpecials.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Specials"));
+        pnlSpecials.setLayout(new java.awt.GridBagLayout());
+
+        jLabel37.setText("Missile Guidance:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 184;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
-        pnlManufacturers.add(txtJJModel, gridBagConstraints);
-        MouseListener mlJJModel = new MouseAdapter() {
-            public void mouseReleased( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-            public void mousePressed( MouseEvent e ) {
-                if( e.isPopupTrigger() ) {
-                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
-                }
-            }
-        };
-        txtJJModel.addMouseListener( mlJJModel );
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
+        pnlSpecials.add(jLabel37, gridBagConstraints);
 
-        tbpFluffEditors.addTab("Manufacturers", pnlManufacturers);
-
-        lblBattleMechQuirks.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        lblBattleMechQuirks.setText("Quirks");
-        lblBattleMechQuirks.setMaximumSize(new java.awt.Dimension(175, 15));
-        lblBattleMechQuirks.setMinimumSize(new java.awt.Dimension(175, 15));
-        lblBattleMechQuirks.setPreferredSize(new java.awt.Dimension(175, 15));
-
-        tblQuirks.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Quirk", "Cost"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblQuirks.setColumnSelectionAllowed(true);
-        tblQuirks.getTableHeader().setReorderingAllowed(false);
-        scpQuirkTable.setViewportView(tblQuirks);
-
-        btnAddQuirk.setText("Add Quirk");
-        btnAddQuirk.addActionListener(new java.awt.event.ActionListener() {
+        chkUseTC.setText("Targeting Computer");
+        chkUseTC.setEnabled(false);
+        chkUseTC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddQuirkActionPerformed(evt);
+                chkUseTCActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 0, 0);
+        pnlSpecials.add(chkUseTC, gridBagConstraints);
 
-        javax.swing.GroupLayout pnlQuirksLayout = new javax.swing.GroupLayout(pnlQuirks);
-        pnlQuirks.setLayout(pnlQuirksLayout);
-        pnlQuirksLayout.setHorizontalGroup(
-            pnlQuirksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblBattleMechQuirks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(pnlQuirksLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlQuirksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQuirksLayout.createSequentialGroup()
-                        .addGap(0, 430, Short.MAX_VALUE)
-                        .addComponent(btnAddQuirk))
-                    .addComponent(scpQuirkTable, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        pnlQuirksLayout.setVerticalGroup(
-            pnlQuirksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlQuirksLayout.createSequentialGroup()
-                .addComponent(lblBattleMechQuirks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scpQuirkTable, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAddQuirk)
-                .addContainerGap())
-        );
+        chkFCSAIV.setText("Use Artemis IV");
+        chkFCSAIV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkFCSAIVActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
+        pnlSpecials.add(chkFCSAIV, gridBagConstraints);
 
-        tbpFluffEditors.addTab("Quirks", pnlQuirks);
+        chkFCSAV.setText("Use Artemis V");
+        chkFCSAV.setEnabled(false);
+        chkFCSAV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkFCSAVActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
+        pnlSpecials.add(chkFCSAV, gridBagConstraints);
+
+        chkFCSApollo.setText("Use MRM Apollo");
+        chkFCSApollo.setEnabled(false);
+        chkFCSApollo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkFCSApolloActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
+        pnlSpecials.add(chkFCSApollo, gridBagConstraints);
+
+        chkClanCASE.setText("Use CASE");
+        chkClanCASE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkClanCASEActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 2, 0, 0);
+        pnlSpecials.add(chkClanCASE, gridBagConstraints);
 
         pnlControls.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Controls"));
         pnlControls.setLayout(new java.awt.GridBagLayout());
@@ -4258,454 +4078,41 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
 
         tbpWeaponChooser.addTab("Ammunition", pnlAmmunition);
 
-        pnlSpecials.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Specials"));
-        pnlSpecials.setLayout(new java.awt.GridBagLayout());
-
-        jLabel37.setText("Missile Guidance:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
-        pnlSpecials.add(jLabel37, gridBagConstraints);
-
-        chkUseTC.setText("Targeting Computer");
-        chkUseTC.setEnabled(false);
-        chkUseTC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkUseTCActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 0, 0);
-        pnlSpecials.add(chkUseTC, gridBagConstraints);
-
-        chkFCSAIV.setText("Use Artemis IV");
-        chkFCSAIV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkFCSAIVActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
-        pnlSpecials.add(chkFCSAIV, gridBagConstraints);
-
-        chkFCSAV.setText("Use Artemis V");
-        chkFCSAV.setEnabled(false);
-        chkFCSAV.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkFCSAVActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
-        pnlSpecials.add(chkFCSAV, gridBagConstraints);
-
-        chkFCSApollo.setText("Use MRM Apollo");
-        chkFCSApollo.setEnabled(false);
-        chkFCSApollo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkFCSApolloActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 8, 0, 0);
-        pnlSpecials.add(chkFCSApollo, gridBagConstraints);
-
-        chkClanCASE.setText("Use CASE");
-        chkClanCASE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chkClanCASEActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 0, 0);
-        pnlSpecials.add(chkClanCASE, gridBagConstraints);
-
-        pnlEquipInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Information"));
-        pnlEquipInfo.setLayout(new java.awt.GridBagLayout());
-
-        jLabel38.setText("Availability(AoW/SL)");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
-        pnlEquipInfo.add(jLabel38, gridBagConstraints);
-
-        jLabel39.setText("Availability (SW)");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
-        pnlEquipInfo.add(jLabel39, gridBagConstraints);
-
-        jLabel53.setText("Availability (CI)");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
-        pnlEquipInfo.add(jLabel53, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoAVSL, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoAVSW, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoAVCI, gridBagConstraints);
-
-        jLabel54.setText("Introduction");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(jLabel54, gridBagConstraints);
-
-        jLabel55.setText("Extinction");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(jLabel55, gridBagConstraints);
-
-        jLabel56.setText("Reintroduction");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(jLabel56, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoIntro, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoExtinct, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoReintro, gridBagConstraints);
-
-        jLabel57.setText("Name");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 0, 3);
-        pnlEquipInfo.add(jLabel57, gridBagConstraints);
-
-        jLabel58.setText("Type");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
-        pnlEquipInfo.add(jLabel58, gridBagConstraints);
-
-        jLabel59.setText("Heat");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
-        pnlEquipInfo.add(jLabel59, gridBagConstraints);
-
-        jLabel60.setText("Damage");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
-        pnlEquipInfo.add(jLabel60, gridBagConstraints);
-
-        jLabel61.setText("Range");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
-        pnlEquipInfo.add(jLabel61, gridBagConstraints);
-
-        lblInfoName.setText(" ");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 3);
-        pnlEquipInfo.add(lblInfoName, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoType, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoHeat, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoDamage, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoRange, gridBagConstraints);
-
-        jSeparator17.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
-        pnlEquipInfo.add(jSeparator17, gridBagConstraints);
-
-        jLabel62.setText("Ammo");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
-        pnlEquipInfo.add(jLabel62, gridBagConstraints);
-
-        jLabel63.setText("Tonnage");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
-        pnlEquipInfo.add(jLabel63, gridBagConstraints);
-
-        jLabel64.setText("Crits");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 3);
-        pnlEquipInfo.add(jLabel64, gridBagConstraints);
-
-        jLabel65.setText("Specials");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(4, 3, 0, 0);
-        pnlEquipInfo.add(jLabel65, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoAmmo, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoTonnage, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(lblInfoCrits, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 8;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
-        pnlEquipInfo.add(lblInfoSpecials, gridBagConstraints);
-
-        jSeparator20.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
-        pnlEquipInfo.add(jSeparator20, gridBagConstraints);
-
-        jLabel66.setText("Cost");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(jLabel66, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
-        pnlEquipInfo.add(lblInfoCost, gridBagConstraints);
-
-        jLabel67.setText("BV");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(jLabel67, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
-        pnlEquipInfo.add(lblInfoBV, gridBagConstraints);
-
-        jLabel68.setText("Mounting Restrictions");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 4, 3);
-        pnlEquipInfo.add(jLabel68, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 4, 0);
-        pnlEquipInfo.add(lblInfoMountRestrict, gridBagConstraints);
-
-        jLabel69.setText("Rules Level");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 3);
-        pnlEquipInfo.add(jLabel69, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 3, 0, 0);
-        pnlEquipInfo.add(lblInfoRulesLevel, gridBagConstraints);
-
-        javax.swing.GroupLayout pnlBasicSetupLayout = new javax.swing.GroupLayout(pnlBasicSetup);
-        pnlBasicSetup.setLayout(pnlBasicSetupLayout);
-        pnlBasicSetupLayout.setHorizontalGroup(
-            pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                        .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlChassisMods, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlMovement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlExperimental, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlChassis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlSummary, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlOmniInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(pnlEquipInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                            .addComponent(tbpWeaponChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(pnlControls, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(pnlSpecials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(pnlSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        javax.swing.GroupLayout pnlEquipmentLayout = new javax.swing.GroupLayout(pnlEquipment);
+        pnlEquipment.setLayout(pnlEquipmentLayout);
+        pnlEquipmentLayout.setHorizontalGroup(
+            pnlEquipmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEquipmentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tbpWeaponChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                        .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pnlImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlBFStats, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(tbpFluffEditors, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE))
+                .addGroup(pnlEquipmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlControls, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlSpecials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlSelected, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlEquipInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        pnlBasicSetupLayout.setVerticalGroup(
-            pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                        .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                                .addComponent(pnlBFStats, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pnlImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tbpFluffEditors, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                        .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                                .addComponent(pnlChassis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pnlExperimental, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                                    .addComponent(pnlOmniInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(pnlSummary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(pnlInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlBasicSetupLayout.createSequentialGroup()
-                                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(pnlMovement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(2, 2, 2)
-                                    .addComponent(pnlChassisMods, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlBasicSetupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(pnlSelected, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tbpWeaponChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(pnlBasicSetupLayout.createSequentialGroup()
-                                .addComponent(pnlControls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pnlSpecials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlEquipInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+        pnlEquipmentLayout.setVerticalGroup(
+            pnlEquipmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlEquipmentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlEquipmentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(pnlSelected, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tbpWeaponChooser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlEquipmentLayout.createSequentialGroup()
+                        .addComponent(pnlControls, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlSpecials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(139, Short.MAX_VALUE))
+            .addGroup(pnlEquipmentLayout.createSequentialGroup()
+                .addComponent(pnlEquipInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        tbpMainTabPane.addTab("Basic Setup and Armor", pnlBasicSetup);
+        tbpMainTabPane.addTab("Equipment", pnlEquipment);
 
         pnlExport.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Export", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
         pnlExport.setLayout(new java.awt.GridBagLayout());
@@ -4740,24 +4147,630 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         pnlExport.add(btnExportMTF, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        tbpFluffEditors.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        tbpFluffEditors.setMaximumSize(new java.awt.Dimension(420, 455));
+        tbpFluffEditors.setMinimumSize(new java.awt.Dimension(420, 455));
+
+        pnlOverview.setMaximumSize(new java.awt.Dimension(427, 485));
+        pnlOverview.setMinimumSize(new java.awt.Dimension(427, 485));
+        pnlOverview.setLayout(new javax.swing.BoxLayout(pnlOverview, javax.swing.BoxLayout.Y_AXIS));
+        tbpFluffEditors.addTab("Overview", pnlOverview);
+
+        pnlCapabilities.setMaximumSize(new java.awt.Dimension(427, 485));
+        pnlCapabilities.setMinimumSize(new java.awt.Dimension(427, 485));
+        pnlCapabilities.setLayout(new javax.swing.BoxLayout(pnlCapabilities, javax.swing.BoxLayout.Y_AXIS));
+        tbpFluffEditors.addTab("Capabilities", pnlCapabilities);
+
+        pnlHistory.setLayout(new javax.swing.BoxLayout(pnlHistory, javax.swing.BoxLayout.Y_AXIS));
+        tbpFluffEditors.addTab("Battle History", pnlHistory);
+
+        pnlDeployment.setLayout(new javax.swing.BoxLayout(pnlDeployment, javax.swing.BoxLayout.Y_AXIS));
+        tbpFluffEditors.addTab("Deployment", pnlDeployment);
+
+        pnlVariants.setLayout(new javax.swing.BoxLayout(pnlVariants, javax.swing.BoxLayout.Y_AXIS));
+        tbpFluffEditors.addTab("Variants", pnlVariants);
+
+        pnlNotables.setLayout(new javax.swing.BoxLayout(pnlNotables, javax.swing.BoxLayout.Y_AXIS));
+        tbpFluffEditors.addTab("Notables", pnlNotables);
+
+        pnlAdditionalFluff.setLayout(new javax.swing.BoxLayout(pnlAdditionalFluff, javax.swing.BoxLayout.Y_AXIS));
+        tbpFluffEditors.addTab("Additional", pnlAdditionalFluff);
+
+        pnlManufacturers.setLayout(new java.awt.GridBagLayout());
+
+        jLabel82.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel82.setText("Manufacturer Information");
+        jLabel82.setMaximumSize(new java.awt.Dimension(175, 15));
+        jLabel82.setMinimumSize(new java.awt.Dimension(175, 15));
+        jLabel82.setPreferredSize(new java.awt.Dimension(175, 15));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        pnlManufacturers.add(jLabel82, gridBagConstraints);
+
+        jLabel83.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel83.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel83.setText("Manufacturing Company:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
+        pnlManufacturers.add(jLabel83, gridBagConstraints);
+
+        jLabel84.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel84.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel84.setText("Location:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 76;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        pnlManufacturers.add(jLabel84, gridBagConstraints);
+
+        jLabel85.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel85.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel85.setText("Engine Manufacturer:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 17;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        pnlManufacturers.add(jLabel85, gridBagConstraints);
+
+        jLabel86.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel86.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel86.setText("Armor Model:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 56;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        pnlManufacturers.add(jLabel86, gridBagConstraints);
+
+        jLabel87.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel87.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel87.setText("Chassis Model:");
+        jLabel87.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 47;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        pnlManufacturers.add(jLabel87, gridBagConstraints);
+
+        jLabel88.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel88.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel88.setText("Communications System:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        pnlManufacturers.add(jLabel88, gridBagConstraints);
+
+        jLabel89.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel89.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel89.setText("Targeting and Tracking:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        pnlManufacturers.add(jLabel89, gridBagConstraints);
+
+        txtManufacturer.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 2, 0, 11);
+        pnlManufacturers.add(txtManufacturer, gridBagConstraints);
+        MouseListener mlManufacturer = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        txtManufacturer.addMouseListener( mlManufacturer );
+
+        txtEngineManufacturer.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
+        pnlManufacturers.add(txtEngineManufacturer, gridBagConstraints);
+        MouseListener mlEngineManufacturer = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        txtEngineManufacturer.addMouseListener( mlEngineManufacturer );
+
+        txtArmorModel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
+        pnlManufacturers.add(txtArmorModel, gridBagConstraints);
+        MouseListener mlArmorModel = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        txtArmorModel.addMouseListener( mlArmorModel );
+
+        txtChassisModel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txtChassisModel.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
+        pnlManufacturers.add(txtChassisModel, gridBagConstraints);
+        MouseListener mlChassisModel = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        txtChassisModel.addMouseListener( mlChassisModel );
+
+        txtCommSystem.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
+        pnlManufacturers.add(txtCommSystem, gridBagConstraints);
+        MouseListener mlCommSystem = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        txtCommSystem.addMouseListener( mlCommSystem );
+
+        txtTNTSystem.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
+        pnlManufacturers.add(txtTNTSystem, gridBagConstraints);
+        MouseListener mlTNTSystem = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        txtTNTSystem.addMouseListener( mlTNTSystem );
+
+        pnlWeaponsManufacturers.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Weapons Manufacturers", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
+        pnlWeaponsManufacturers.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        pnlWeaponsManufacturers.setMinimumSize(new java.awt.Dimension(315, 260));
+        pnlWeaponsManufacturers.setLayout(new java.awt.GridBagLayout());
+
+        chkIndividualWeapons.setText("Assign manufacturers individually");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 10, 4, 0);
+        pnlWeaponsManufacturers.add(chkIndividualWeapons, gridBagConstraints);
+
+        scpWeaponManufacturers.setPreferredSize(new java.awt.Dimension(452, 392));
+
+        tblWeaponManufacturers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Weapon", "Manufacturer"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        scpWeaponManufacturers.setViewportView(tblWeaponManufacturers);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.ipadx = 280;
+        gridBagConstraints.ipady = 180;
+        pnlWeaponsManufacturers.add(scpWeaponManufacturers, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(2, 10, 2, 10);
+        pnlManufacturers.add(pnlWeaponsManufacturers, gridBagConstraints);
+
+        txtManufacturerLocation.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
+        pnlManufacturers.add(txtManufacturerLocation, gridBagConstraints);
+        MouseListener mlManufacturerLocation = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        txtManufacturerLocation.addMouseListener( mlManufacturerLocation );
+
+        jLabel90.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel90.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel90.setText("Jump Jet Model:");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 44;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        pnlManufacturers.add(jLabel90, gridBagConstraints);
+
+        txtJJModel.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 184;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 11);
+        pnlManufacturers.add(txtJJModel, gridBagConstraints);
+        MouseListener mlJJModel = new MouseAdapter() {
+            public void mouseReleased( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+            public void mousePressed( MouseEvent e ) {
+                if( e.isPopupTrigger() ) {
+                    mnuFluff.show( e.getComponent(), e.getX(), e.getY() );
+                }
+            }
+        };
+        txtJJModel.addMouseListener( mlJJModel );
+
+        tbpFluffEditors.addTab("Manufacturers", pnlManufacturers);
+
+        lblBattleMechQuirks.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        lblBattleMechQuirks.setText("Quirks");
+        lblBattleMechQuirks.setMaximumSize(new java.awt.Dimension(175, 15));
+        lblBattleMechQuirks.setMinimumSize(new java.awt.Dimension(175, 15));
+        lblBattleMechQuirks.setPreferredSize(new java.awt.Dimension(175, 15));
+
+        tblQuirks.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Quirk", "Cost"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblQuirks.setColumnSelectionAllowed(true);
+        tblQuirks.getTableHeader().setReorderingAllowed(false);
+        scpQuirkTable.setViewportView(tblQuirks);
+
+        btnAddQuirk.setText("Add Quirk");
+        btnAddQuirk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddQuirkActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlQuirksLayout = new javax.swing.GroupLayout(pnlQuirks);
+        pnlQuirks.setLayout(pnlQuirksLayout);
+        pnlQuirksLayout.setHorizontalGroup(
+            pnlQuirksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lblBattleMechQuirks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(pnlQuirksLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1402, Short.MAX_VALUE))
+                .addGroup(pnlQuirksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlQuirksLayout.createSequentialGroup()
+                        .addGap(0, 313, Short.MAX_VALUE)
+                        .addComponent(btnAddQuirk))
+                    .addComponent(scpQuirkTable, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(425, 425, 425)
-                .addComponent(pnlExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(499, Short.MAX_VALUE))
+        pnlQuirksLayout.setVerticalGroup(
+            pnlQuirksLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlQuirksLayout.createSequentialGroup()
+                .addComponent(lblBattleMechQuirks, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scpQuirkTable, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAddQuirk)
+                .addContainerGap())
         );
 
-        tbpMainTabPane.addTab("Equipment, Fluff and BattleForce", jPanel3);
+        tbpFluffEditors.addTab("Quirks", pnlQuirks);
+
+        pnlBFStats.setBorder(javax.swing.BorderFactory.createTitledBorder("BattleForce Stats"));
+        pnlBFStats.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel70.setText("MV");
+        pnlBFStats.add(jLabel70, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
+
+        jLabel71.setText("S (+0)");
+        pnlBFStats.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+
+        jLabel72.setText("M (+2)");
+        pnlBFStats.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
+
+        jLabel73.setText("L (+4)");
+        pnlBFStats.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+
+        jLabel74.setText("E (+6)");
+        pnlBFStats.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
+
+        jLabel75.setText("Wt.");
+        pnlBFStats.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 30, -1, -1));
+
+        jLabel76.setText("OV");
+        pnlBFStats.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
+
+        jLabel77.setText("Armor:");
+        pnlBFStats.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 110, -1, -1));
+
+        jLabel78.setText("Structure:");
+        pnlBFStats.add(jLabel78, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
+
+        jLabel79.setText("Special Abilities:");
+        pnlBFStats.add(jLabel79, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+
+        lblBFMV.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFMV.setText("0");
+        pnlBFStats.add(lblBFMV, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 30, -1));
+
+        lblBFWt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFWt.setText("1");
+        pnlBFStats.add(lblBFWt, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, 30, -1));
+
+        lblBFOV.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFOV.setText("0");
+        pnlBFStats.add(lblBFOV, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 30, -1));
+
+        lblBFExtreme.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFExtreme.setText("0");
+        pnlBFStats.add(lblBFExtreme, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 30, -1));
+
+        lblBFShort.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFShort.setText("0");
+        pnlBFStats.add(lblBFShort, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 30, -1));
+
+        lblBFMedium.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFMedium.setText("0");
+        pnlBFStats.add(lblBFMedium, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 30, -1));
+
+        lblBFLong.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFLong.setText("0");
+        pnlBFStats.add(lblBFLong, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 30, -1));
+
+        lblBFArmor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFArmor.setText("0");
+        pnlBFStats.add(lblBFArmor, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 30, -1));
+
+        lblBFStructure.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblBFStructure.setText("0");
+        pnlBFStats.add(lblBFStructure, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 60, 30, -1));
+
+        lblBFSA.setText("Placeholder");
+        pnlBFStats.add(lblBFSA, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 430, 20));
+
+        jLabel80.setText("Points:");
+        pnlBFStats.add(jLabel80, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 30, -1, -1));
+
+        lblBFPoints.setText("0");
+        pnlBFStats.add(lblBFPoints, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, -1, -1));
+
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Conversion Steps"));
+
+        jTextAreaBFConversion.setColumns(20);
+        jTextAreaBFConversion.setEditable(false);
+        jTextAreaBFConversion.setRows(5);
+        jScrollPane14.setViewportView(jTextAreaBFConversion);
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addComponent(jScrollPane14)
+                .addContainerGap())
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane14)
+        );
+
+        pnlImage.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fluff Image", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 11))); // NOI18N
+
+        lblFluffImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFluffImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblFluffImage.setMaximumSize(new java.awt.Dimension(375, 260));
+        lblFluffImage.setMinimumSize(new java.awt.Dimension(375, 260));
+        lblFluffImage.setPreferredSize(new java.awt.Dimension(350, 350));
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        btnLoadImage.setText("Load Image");
+        btnLoadImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadImageActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLoadImage, new java.awt.GridBagConstraints());
+
+        btnClearImage.setText("Clear Image");
+        btnClearImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearImageActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanel1.add(btnClearImage, gridBagConstraints);
+
+        javax.swing.GroupLayout pnlImageLayout = new javax.swing.GroupLayout(pnlImage);
+        pnlImage.setLayout(pnlImageLayout);
+        pnlImageLayout.setHorizontalGroup(
+            pnlImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(lblFluffImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        pnlImageLayout.setVerticalGroup(
+            pnlImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlImageLayout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(lblFluffImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnlFluffLayout = new javax.swing.GroupLayout(pnlFluff);
+        pnlFluff.setLayout(pnlFluffLayout);
+        pnlFluffLayout.setHorizontalGroup(
+            pnlFluffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFluffLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tbpFluffEditors, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlFluffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFluffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(pnlBFStats, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        pnlFluffLayout.setVerticalGroup(
+            pnlFluffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFluffLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlFluffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnlFluffLayout.createSequentialGroup()
+                        .addComponent(pnlBFStats, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlExport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tbpFluffEditors, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(pnlImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+
+        tbpMainTabPane.addTab("Fluff and BattleForce", pnlFluff);
 
         mnuFile.setText("File");
         mnuFile.addActionListener(new java.awt.event.ActionListener() {
@@ -5023,19 +5036,17 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tlbIconBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlInfoPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tbpMainTabPane)
-                .addContainerGap())
+            .addComponent(tbpMainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(tlbIconBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(tbpMainTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tbpMainTabPane)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlInfoPane, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -5504,7 +5515,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         }
         lblInfoName.setText( p.CritName() );
         lblInfoTonnage.setText( "" + p.GetTonnage() );
-        lblInfoCrits.setText( "" + p.NumCrits() );
+        lblInfoCrits.setText( "" + p.NumCVSpaces() );
         lblInfoCost.setText( "" + String.format( "%1$,.0f", p.GetCost() ) );
         lblInfoBV.setText( CommonTools.GetAggregateReportBV( p ) );
 
@@ -6775,7 +6786,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
     }//GEN-LAST:event_mnuLoadActionPerformed
 
     private void mnuOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpenActionPerformed
-        // TODO add your handling code here:
+        btnOpenActionPerformed(evt);
     }//GEN-LAST:event_mnuOpenActionPerformed
     public CombatVehicle LoadVehicle (){
         CombatVehicle m = null;
@@ -7983,11 +7994,11 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         try {
             switch (CurVee.GetTechBase()) {
                 case AvailableCode.TECH_INNER_SPHERE:
-                    CurVee.GetLoadout().SetISCASE(null);
+                    CurVee.GetLoadout().SetISCASE();
                     break;
                 case AvailableCode.TECH_CLAN:
                     CurVee.GetLoadout().SetClanCASE(true);
-                    CurVee.GetLoadout().SetISCASE(null);
+                    CurVee.GetLoadout().SetISCASE();
                     break;
                 case AvailableCode.TECH_BOTH:
                     dlgTechBaseChooser tech = new dlgTechBaseChooser(this, true);
@@ -7996,7 +8007,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
                     if (tech.IsClan()) {
                         CurVee.GetLoadout().SetClanCASE(true);
                     }
-                    CurVee.GetLoadout().SetISCASE(null);
+                    CurVee.GetLoadout().SetISCASE();
                     break;
             }
         } catch (Exception e) {
@@ -8167,22 +8178,8 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
     private void btnMaximizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaximizeActionPerformed
         // this simply maximizes the mech's armor
         CVArmor a = CurVee.GetArmor();
-
-        // set the simple stuff first.
-        a.SetArmor(LocationIndex.CV_LOC_FRONT, a.GetLocationMax(LocationIndex.CV_LOC_FRONT));
-        a.SetArmor(LocationIndex.CV_LOC_LEFT, a.GetLocationMax(LocationIndex.CV_LOC_LEFT));
-        a.SetArmor(LocationIndex.CV_LOC_RIGHT, a.GetLocationMax(LocationIndex.CV_LOC_RIGHT));
-        a.SetArmor(LocationIndex.CV_LOC_REAR, a.GetLocationMax(LocationIndex.CV_LOC_REAR));
-        if (CurVee.isHasTurret1()) {
-            a.SetArmor(LocationIndex.CV_LOC_TURRET1, a.GetLocationMax(LocationIndex.CV_LOC_TURRET1));
-        }
-        if (CurVee.isHasTurret2()) {
-            a.SetArmor(LocationIndex.CV_LOC_TURRET2, a.GetLocationMax(LocationIndex.CV_LOC_TURRET2));
-        }
-        if (CurVee.IsVTOL()) {
-            a.SetArmor(LocationIndex.CV_LOC_ROTOR, a.GetLocationMax(LocationIndex.CV_LOC_ROTOR));
-        }
-
+        a.Maximize();
+        
         // if we fix the spinner models, they should refresh the screen
         FixArmorSpinners();
 
@@ -9810,7 +9807,6 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -9961,9 +9957,11 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
     private javax.swing.JPanel pnlDeployment;
     private javax.swing.JPanel pnlEnergy;
     private javax.swing.JPanel pnlEquipInfo;
+    private javax.swing.JPanel pnlEquipment;
     private javax.swing.JPanel pnlEquipmentChooser;
     private javax.swing.JPanel pnlExperimental;
     private javax.swing.JPanel pnlExport;
+    private javax.swing.JPanel pnlFluff;
     private javax.swing.JPanel pnlFrontArmor;
     private javax.swing.JPanel pnlHistory;
     private javax.swing.JPanel pnlImage;

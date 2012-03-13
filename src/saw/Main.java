@@ -61,7 +61,7 @@ public class Main {
         }
 
         // uncomment the following line before creating a build.
-        SetupLogFile( Constants.LogFileName );
+        //SetupLogFile( Constants.LogFileName );
 
         Runtime runtime = Runtime.getRuntime();
         System.out.println("Memory Allocated [" + runtime.maxMemory() / 1000 + "]");
@@ -119,7 +119,7 @@ public class Main {
                 switch( screensize ) {
                     case Constants.SCREEN_SIZE_WIDE_1280:
                         MainFrame = new frmVeeWide();
-                        MainFrame.setSize( 1280, 800 );
+                        MainFrame.setSize( 1280, 600 );
                         break;
                     default:
                         MainFrame = new frmVee();

@@ -52,6 +52,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.*;
 import javax.swing.text.JTextComponent;
@@ -148,10 +150,10 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         CurVee = new CombatVehicle( );
         initComponents();
 
-        Prefs = Preferences.userRoot().node( Constants.SAWPrefs );
+        Prefs = Preferences.userRoot().node( Constants.SSWPrefs );
+        ArmorTons = new VSetArmorTonnage( Prefs );
         cmbMotiveTypeActionPerformed(null);
         spnTonnageStateChanged(null);
-        ArmorTons = new VSetArmorTonnage( Prefs );
 
         setTitle( saw.Constants.AppDescription + " " + saw.Constants.Version );
 
@@ -433,7 +435,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         
         tblWeaponManufacturers.getInputMap( javax.swing.JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put( javax.swing.KeyStroke.getKeyStroke( java.awt.event.KeyEvent.VK_TAB, 0, false ), "selectNextRow" );
 
-        if( Prefs.getBoolean( "LoadLastMech", false ) ) { LoadVehicleFromFile(Prefs.get("LastOpenCVDirectory", "") + Prefs.get("LastOpenCVFile", "") ); }
+        //if( Prefs.getBoolean( "LoadLastMech", false ) ) { LoadVehicleFromFile(Prefs.get("LastOpenCVDirectory", "") + Prefs.get("LastOpenCVFile", "") ); }
         //LoadVehicleFromFile(Prefs.get("LastOpenCVDirectory", "") + Prefs.get("LastOpenCVFile", "") );
         CurVee.SetChanged(false);
     }
@@ -2007,7 +2009,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
 
         jLabel10.setText("Cruise MP:");
 
-        spnCruiseMP.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+        spnCruiseMP.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(0), null, Integer.valueOf(1)));
         spnCruiseMP.setMinimumSize(new java.awt.Dimension(45, 20));
         spnCruiseMP.setPreferredSize(new java.awt.Dimension(45, 20));
         spnCruiseMP.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -5158,6 +5160,24 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         FixHeatSinkSpinnerModel();
     }
 
+    private void RecalcArmorPlacement() {
+        double tonnage = CurVee.GetArmor().GetTonnage();
+        ArmorTons.SetArmorTonnage( tonnage );
+        try {
+            CurVee.Visit( ArmorTons );
+        } catch( Exception e ) {
+            // this should never throw an exception, but log it anyway
+            System.err.println( e.getMessage() );
+            e.printStackTrace();
+        }
+        // if we fix the spinner models, they should refresh the screen
+        FixArmorSpinners();
+
+        // now refresh the information panes
+        RefreshSummary();
+        RefreshInfoPane();
+    }
+    
     private void RecalcArmorLocations() {
         pnlRotorArmor.setVisible(false);
         
@@ -5307,7 +5327,11 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         ifState[] check = CurVee.GetEngine().GetStates();
         for( int i = 0; i < check.length; i++ ) {
             if( CommonTools.IsAllowed( check[i].GetAvailability(), CurVee ) ) {
-                list.add( BuildLookupName( check[i] ) );
+                if ( (check[i] instanceof states.stEngineNone) ) {
+                    if ( chkTrailer.isSelected() )
+                        list.add( BuildLookupName( check[i] ) );
+                } else
+                    list.add( BuildLookupName( check[i] ) );
             }
         }
 
@@ -5394,6 +5418,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                 // we can.
                 if( OldLevel > NewLevel ) {
                     CurVee.GetLoadout().FlushIllegal();
+                    CurVee.SetChanged(true);
                 }
                 BuildTechBaseSelector();
                 cmbTechBase.setSelectedIndex( CurVee.GetLoadout().GetTechBase() );
@@ -5408,7 +5433,8 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         } else {
             CurVee.SetRulesLevel( NewLevel );
             CheckTonnage( true );
-
+            CurVee.SetChanged(true);
+            
             // get the currently chosen selections
             SaveSelections();
             BuildTechBaseSelector();
@@ -5589,9 +5615,10 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         BuildChassisSelector();
         lblVeeLimits.setText(CurVee.GetMaxTonnage() + "t Max");
         FixTonnageSpinner(CurVee.GetMaxTonnage());
-        FixArmorSpinners();
         FixMPSpinner();
+        RecalcArmorPlacement();
         RecalcArmorLocations();
+        SetWeaponChoosers();
         RefreshSummary();
         RefreshInfoPane();
 }//GEN-LAST:event_cmbMotiveTypeActionPerformed
@@ -5949,11 +5976,11 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         try {
             switch ( CurVee.GetTechBase() ) {
                 case AvailableCode.TECH_INNER_SPHERE:
-                    CurVee.GetLoadout().SetISCASE(null);
+                    CurVee.GetLoadout().SetISCASE();
                     break;
                 case AvailableCode.TECH_CLAN:
                     CurVee.GetLoadout().SetClanCASE(true);
-                    CurVee.GetLoadout().SetISCASE(null);
+                    CurVee.GetLoadout().SetISCASE();
                     break;
                 case AvailableCode.TECH_BOTH:
                     dlgTechBaseChooser tech = new dlgTechBaseChooser( this, true );
@@ -5961,7 +5988,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                     tech.setVisible( true );
                     if ( tech.IsClan() )
                         CurVee.GetLoadout().SetClanCASE(true);
-                    CurVee.GetLoadout().SetISCASE(null);
+                    CurVee.GetLoadout().SetISCASE();
                     break;
             }
         } catch ( Exception e ) {
@@ -6206,12 +6233,13 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
 
     private void spnCruiseMPStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnCruiseMPStateChanged
         if( Load ) { return; }
+
         // see what changed and perform the appropriate action
         javax.swing.SpinnerNumberModel n = (SpinnerNumberModel) spnCruiseMP.getModel();
         javax.swing.JComponent editor = spnCruiseMP.getEditor();
         javax.swing.JFormattedTextField tf = ((javax.swing.JSpinner.DefaultEditor)editor).getTextField();
 
-        n.setMinimum(1);
+        //n.setMinimum(1);
         // get the value from the text box, if it's valid.
         try {
             spnCruiseMP.commitEdit();
@@ -6226,6 +6254,13 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         try {
             // the commitedit worked, so set the engine rating and report the running mp
             int walkMP = Math.min(n.getNumber().intValue(), CurVee.getMaxCruiseMP());
+            
+            if ( !CurVee.GetEngine().RequiresControls() && walkMP > 0 ) {
+                spnCruiseMP.setValue(0);
+                Media.Messager("Please select an engine first");
+                return;
+            }
+            
             CurVee.setCruiseMP( walkMP );
         } catch( Exception e ) {
             Media.Messager( e.getMessage() );
@@ -6950,6 +6985,9 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             if( CurVee.GetBaseLoadout().HasSupercharger() ) {
                 chkSupercharger.setEnabled( false );
             }
+            if( CurVee.GetBaseLoadout().HasISCASE() ) {
+                chkClanCASE.setEnabled(false);
+            }
         } else {
             try {
                 //if( ! chkBSPFD.isEnabled() ) { locArmor.SetBlueShield( false ); }
@@ -6965,7 +7003,8 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         // sets the weapon choosers up.  first, get the user's choices.
 
         // get the equipment lists for the choices.
-        data.Rebuild( CurVee );
+        if ( data == null ) return;
+                
         Equipment[ENERGY] = data.GetEquipment().GetEnergyWeapons( CurVee );
         Equipment[MISSILE] = data.GetEquipment().GetMissileWeapons( CurVee );
         Equipment[BALLISTIC] = data.GetEquipment().GetBallisticWeapons( CurVee );
@@ -7030,6 +7069,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         chkFCSAIV.setEnabled( true );
         chkFCSAV.setEnabled( true );
         chkFCSApollo.setEnabled( true );
+        chkClanCASE.setEnabled( true );
         chkOmniVee.setSelected( false );
         chkOmniVee.setEnabled( true );
         btnLockChassis.setEnabled( true );
@@ -7240,6 +7280,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             return;
         }
         RecalcEngine();
+        spnCruiseMP.setValue(CurVee.getMinCruiseMP());
         FixMPSpinner();
 
         //When the engine changes we need to re-check the Heat Sinks
@@ -7327,6 +7368,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                 chkYearRestrict.setEnabled( false );
                 break;
         }
+        CurVee.SetChanged(true);
 
         if( CurVee.IsOmni() ) {
             //BuildJumpJetSelector();
@@ -7424,16 +7466,8 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
     private void btnMaximizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaximizeActionPerformed
         // this simply maximizes the mech's armor
         CVArmor a = CurVee.GetArmor();
-
-        // set the simple stuff first.
-        a.SetArmor( LocationIndex.CV_LOC_FRONT, a.GetLocationMax( LocationIndex.CV_LOC_FRONT ) );
-        a.SetArmor( LocationIndex.CV_LOC_LEFT, a.GetLocationMax( LocationIndex.CV_LOC_LEFT ) );
-        a.SetArmor( LocationIndex.CV_LOC_RIGHT, a.GetLocationMax( LocationIndex.CV_LOC_RIGHT ) );
-        a.SetArmor( LocationIndex.CV_LOC_REAR, a.GetLocationMax( LocationIndex.CV_LOC_REAR ) );
-        if ( CurVee.isHasTurret1() ) a.SetArmor( LocationIndex.CV_LOC_TURRET1, a.GetLocationMax( LocationIndex.CV_LOC_TURRET1) );
-        if ( CurVee.isHasTurret2() ) a.SetArmor( LocationIndex.CV_LOC_TURRET2, a.GetLocationMax( LocationIndex.CV_LOC_TURRET2) );
-        if ( CurVee.IsVTOL() ) a.SetArmor( LocationIndex.CV_LOC_ROTOR, a.GetLocationMax( LocationIndex.CV_LOC_ROTOR) );
-
+        a.Maximize();
+        
         // if we fix the spinner models, they should refresh the screen
         FixArmorSpinners();
 
@@ -8340,6 +8374,9 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         if( chkFCSApollo.isSelected() ) {
             chkFCSApollo.setEnabled( false );
         }
+        if ( chkClanCASE.isSelected() ) {
+            chkClanCASE.setEnabled(false);
+        }
 
         chkFractional.setEnabled( false );
         chkEnviroSealing.setEnabled( false );
@@ -8524,7 +8561,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
     }//GEN-LAST:event_mnuLoadActionPerformed
 
     private void mnuOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuOpenActionPerformed
-        // TODO add your handling code here:
+        btnOpenActionPerformed(evt);
     }//GEN-LAST:event_mnuOpenActionPerformed
     public CombatVehicle LoadVehicle (){
         CombatVehicle m = null;
@@ -8621,6 +8658,8 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         cmbEra.setEnabled( true );
         cmbTechBase.setEnabled( true );
         txtProdYear.setEnabled( true );
+        chkTrailer.setSelected( CurVee.isTrailer() );
+        chkClanCASE.setSelected(CurVee.GetLoadout().HasISCASE());
         switch( CurVee.GetEra() ) {
             case AvailableCode.ERA_STAR_LEAGUE:
                 lblEraYears.setText( "2443 ~ 2800" );
@@ -8656,7 +8695,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         cmbTechBase.setSelectedIndex( CurVee.GetLoadout().GetTechBase() );
         cmbMotiveType.setSelectedItem( CurVee.GetMotiveLookupName() );
         spnTonnage.setModel( new javax.swing.SpinnerNumberModel(CurVee.GetTonnage(), 1, CurVee.GetMaxTonnage(), 1) );
-        spnCruiseMP.setModel( new javax.swing.SpinnerNumberModel(CurVee.getCruiseMP(), 1, CurVee.getMaxCruiseMP(), 1) );        
+        spnCruiseMP.setModel( new javax.swing.SpinnerNumberModel(CurVee.getCruiseMP(), CurVee.getMinCruiseMP(), CurVee.getMaxCruiseMP(), 1) );        
         if ( CurVee.isHasTurret1() ) cmbTurret.setSelectedItem("Single Turret");
         if ( CurVee.isHasTurret2() ) cmbTurret.setSelectedItem("Dual Turret");
         FixArmorSpinners();
@@ -8686,7 +8725,6 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         data.Rebuild( CurVee );
         RefreshEquipment();
         chkUseTC.setSelected( CurVee.UsingTC() );
-        chkClanCASE.setSelected( CurVee.GetLoadout().HasISCASE() );
         chkEnviroSealing.setSelected( CurVee.HasEnvironmentalSealing() );
         //chkCommandConsole.setSelected( CurVee.HasCommandConsole() );
         RefreshSummary();
@@ -9184,8 +9222,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         PagePrinter printer = SetupPrinter();
         Scenario s = new Scenario();
         s.getAttackerForce().AddUnit(new Unit(CurVee));
-        dlgPreview prv = new dlgPreview("Print Preview", this, printer, s, imageTracker);
-        prv.setRSOnly();
+        dlgPreview prv = new dlgPreview("Print Preview", this, printer, s, imageTracker, true);
         prv.setLocationRelativeTo(this);
         prv.setVisible(true);
     }//GEN-LAST:event_btnPrintActionPerformed
@@ -9451,6 +9488,33 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
 
     private void chkTrailerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTrailerActionPerformed
         CurVee.SetTrailer(chkTrailer.isSelected());
+        BuildEngineSelector();
+        if ( chkTrailer.isSelected() ) {
+            try {
+                CurVee.setCruiseMP(0);
+            } catch (Exception ex) {
+                Media.Messager(ex.getMessage());
+            }
+            cmbEngineType.setSelectedItem("No Engine");
+            cmbEngineTypeActionPerformed(evt);
+            ((SpinnerNumberModel)spnCruiseMP.getModel()).setMinimum(0);
+            spnCruiseMP.setValue(0);
+            spnCruiseMPStateChanged(null);
+        } else {
+            try {
+                CurVee.setCruiseMP(1);
+            } catch (Exception ex) {
+                Media.Messager(ex.getMessage());
+            }
+            cmbEngineType.setSelectedIndex(0);
+            cmbEngineTypeActionPerformed(evt);
+            spnCruiseMP.setValue(1);
+            ((SpinnerNumberModel)spnCruiseMP.getModel()).setMinimum(1);
+            spnCruiseMPStateChanged(null);
+        }
+        SetWeaponChoosers();
+        RefreshEquipment();
+        RefreshInfoPane();
     }//GEN-LAST:event_chkTrailerActionPerformed
 
     private void chkFlotationHullActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkFlotationHullActionPerformed
@@ -9558,7 +9622,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         lblFlankMP.setText( "" + CurVee.getFlankMP() );
 
         // reset the spinner model and we're done.
-        spnCruiseMP.setModel( new javax.swing.SpinnerNumberModel( CurVee.getCruiseMP(), 1, MaxWalk, 1) );
+        spnCruiseMP.setModel( new javax.swing.SpinnerNumberModel( CurVee.getCruiseMP(), CurVee.getMinCruiseMP(), MaxWalk, 1) );
         ((JSpinner.DefaultEditor)spnCruiseMP.getEditor()).getTextField().addFocusListener(spinners);
     }
 
