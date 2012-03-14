@@ -61,7 +61,7 @@ public class Main {
         }
 
         // uncomment the following line before creating a build.
-        //SetupLogFile( Constants.LogFileName );
+        SetupLogFile( Constants.LogFileName );
 
         Runtime runtime = Runtime.getRuntime();
         System.out.println("Memory Allocated [" + runtime.maxMemory() / 1000 + "]");
@@ -151,8 +151,8 @@ public class Main {
         // Inspriration for this from Megamek.  mine is simpler and probably not
         // as fully featured, but does the job.
         try {
-            if (!new File("./logs/").exists()) {
-                new File("./logs/").mkdir();
+            if (!new File("./Logs/").exists()) {
+                new File("./Logs/").mkdir();
             }
             PrintStream ps = new PrintStream( new BufferedOutputStream( new FileOutputStream( LogFile ), 64 ) );
             System.setOut(ps);
