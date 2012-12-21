@@ -496,9 +496,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             }
         }
         RefreshInfoPane();
-        Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
-        lstSelectedEquipment.setListData( Equipment[SELECTED] );
-        lstSelectedEquipment.repaint();
+        RefreshSelectedEquipment();
     }
 
     private void LaserInsulator() {
@@ -534,9 +532,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             }
         }
         RefreshInfoPane();
-        Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
-        lstSelectedEquipment.setListData( Equipment[SELECTED] );
-        lstSelectedEquipment.repaint();
+        RefreshSelectedEquipment();
     }
 
     private void DumperMount() {
@@ -666,13 +662,17 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                     Media.Messager(ex.getMessage());
                 }
                 RefreshInfoPane();
-                Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
-                lstSelectedEquipment.setListData( Equipment[SELECTED] );
-                lstSelectedEquipment.repaint();
+                RefreshSelectedEquipment();
             }
         }
     }
     
+    private void RefreshSelectedEquipment() {
+        Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
+        lstSelectedEquipment.setListData( Equipment[SELECTED] );
+        lstSelectedEquipment.repaint();
+    }
+
     private void setViewToolbar(boolean Visible)
     {
         tlbIconBar.setVisible(Visible);
@@ -1814,7 +1814,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         pnlChassis.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Chassis"));
         pnlChassis.setNextFocusableComponent(spnCruiseMP);
 
-        cmbMotiveType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hovercraft", "Naval (Displacement)", "Naval (Hydrofoil)", "Naval (Submarine)", "Tracked", "VTOL", "Wheeled", "WiGE" }));
+        cmbMotiveType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Hovercraft", "Naval (Displacement)", "Naval (Hydrofoil)", "Naval (Submarine)", "Tracked", "VTOL", "Wheeled", "WiGE", "Hovercraft (Super Heavy)", "Displacement (Super Heavy)" }));
         cmbMotiveType.setMinimumSize(new java.awt.Dimension(150, 20));
         cmbMotiveType.setPreferredSize(new java.awt.Dimension(150, 20));
         cmbMotiveType.addActionListener(new java.awt.event.ActionListener() {
@@ -4091,6 +4091,11 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         cmbLocation.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         cmbLocation.setSelectedIndex(0);
         cmbLocation.setVisibleRowCount(4);
+        cmbLocation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbLocationMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(cmbLocation);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -5096,6 +5101,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         lblSupensionFacter.setText(""+CurVee.GetSuspensionFactor() );
         lblBaseEngineRating.setText(""+CurVee.GetBaseEngineRating() );
         lblFinalEngineRating.setText(""+CurVee.GetFinalEngineRating() );
+        lblMinEngineTons.setText(""+CurVee.GetMinEngineWeight() );
         txtSumLifTons.setText( "" + CurVee.GetLiftEquipmentTonnage() );
         txtSumHSTons.setText( "" + CurVee.GetHeatSinkTonnage() );
         txtSumJJTons.setText( "" + CurVee.GetJumpJets().GetTonnage() );
@@ -5161,6 +5167,8 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
     }
 
     private void RecalcArmorPlacement() {
+        if ( Load ) return;
+        
         double tonnage = CurVee.GetArmor().GetTonnage();
         ArmorTons.SetArmorTonnage( tonnage );
         try {
@@ -5391,12 +5399,15 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         }
     }
 
-    public void FixTonnageSpinner( int MaximumTonnage ) {
+    public void FixTonnageSpinner( int MinTonnage, int MaxTonnage ) {
         int CurVal = Integer.parseInt(spnTonnage.getValue().toString());
-        if ( CurVal > MaximumTonnage ) {
-            CurVal = MaximumTonnage;
-        }
-        spnTonnage.setModel( new javax.swing.SpinnerNumberModel(CurVal, 1, MaximumTonnage, 1) );
+        if ( CurVal < MinTonnage )
+            CurVal = MinTonnage;
+        
+        if ( CurVal > MaxTonnage )
+            CurVal = MaxTonnage;
+        
+        spnTonnage.setModel( new javax.swing.SpinnerNumberModel(CurVal, MinTonnage, MaxTonnage, 1) );
         spnTonnageStateChanged(null);
     }
 
@@ -5577,6 +5588,9 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
     }
 
     private void cmbMotiveTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMotiveTypeActionPerformed
+        if ( Load ) return;
+        boolean wasVtol = CurVee.IsVTOL();
+        
         switch ( cmbMotiveType.getSelectedIndex() ) {
             case 0:      //Hovercraft
                 CurVee.SetHover();
@@ -5602,6 +5616,12 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             case 7:
                 CurVee.SetWiGE();
                 break;
+            case 8:
+                CurVee.SetSuperHeavyHover();
+                break;
+            case 9:
+                CurVee.SetSuperHeavyDisplacement();
+                break;
             default:
                 CurVee.SetHover();
                 break;
@@ -5614,9 +5634,9 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         cmbTurretActionPerformed(null);
         BuildChassisSelector();
         lblVeeLimits.setText(CurVee.GetMaxTonnage() + "t Max");
-        FixTonnageSpinner(CurVee.GetMaxTonnage());
+        FixTonnageSpinner(CurVee.GetMinTonnage(), CurVee.GetMaxTonnage());
         FixMPSpinner();
-        RecalcArmorPlacement();
+        if( CurVee.IsVTOL() != wasVtol ) RecalcArmorPlacement();
         RecalcArmorLocations();
         SetWeaponChoosers();
         RefreshSummary();
@@ -5704,7 +5724,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         }
         lblInfoName.setText( p.CritName() );
         lblInfoTonnage.setText( "" + p.GetTonnage() );
-        lblInfoCrits.setText( "" + p.NumCrits() );
+        lblInfoCrits.setText( "" + p.NumCVSpaces() );
         lblInfoCost.setText( "" + String.format( "%1$,.0f", p.GetCost() ) );
         lblInfoBV.setText( CommonTools.GetAggregateReportBV( p ) );
 
@@ -5890,6 +5910,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             CurVee.UseTC( false, false );
         }
         SetWeaponChoosers();
+        RefreshSelectedEquipment();
         RefreshSummary();
         RefreshInfoPane();
 }//GEN-LAST:event_chkUseTCActionPerformed
@@ -6019,6 +6040,9 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         for( int i = selected.length - 1; i >= 0; i-- ) {
             // abPlaceable p = (abPlaceable) locArmor.GetLoadout().GetNonCore().get( lstSelectedEquipment.getSelectedIndex() );
             abPlaceable p = (abPlaceable) CurVee.GetLoadout().GetNonCore().get( selected[i] );
+            if ( p instanceof TargetingComputer ) {
+                CurVee.UseTC(false, CurVee.GetTechBase() == AvailableCode.TECH_CLAN);
+            }
             if( p.LocationLocked() ) {
                 Media.Messager( this, "You may not remove a locked item from the loadout." );
                 return;
@@ -6253,11 +6277,11 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         }
         try {
             // the commitedit worked, so set the engine rating and report the running mp
-            int walkMP = Math.min(n.getNumber().intValue(), CurVee.getMaxCruiseMP());
+             int walkMP = Math.min(n.getNumber().intValue(), CurVee.getMaxCruiseMP());
             
             if ( !CurVee.GetEngine().RequiresControls() && walkMP > 0 ) {
                 spnCruiseMP.setValue(0);
-                Media.Messager("Please select an engine first");
+                //Media.Messager("Please select an engine first");
                 return;
             }
             
@@ -6727,7 +6751,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             System.err.println( e.getMessage() );
         }
 
-        FixTonnageSpinner( CurVee.GetMaxTonnage() );
+        FixTonnageSpinner( CurVee.GetMinTonnage(), CurVee.GetMaxTonnage() );
         BuildChassisSelector();
         BuildEngineSelector();
         BuildArmorSelector();
@@ -7140,8 +7164,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                 }
                 try {
                     CurVee.GetLoadout().AddTo( a, LocationIndex.CV_LOC_BODY );
-                    Equipment[SELECTED] = CurVee.GetLoadout().GetNonCore().toArray();
-                    lstSelectedEquipment.setListData( Equipment[SELECTED] );
+                    RefreshSelectedEquipment();
                 } catch (Exception ex) {
                     Media.Messager(ex.getMessage());
                     return false;
@@ -7266,38 +7289,38 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         if( Load ) { return; }
         if( BuildLookupName( CurVee.GetEngine().GetCurrentState() ).equals( (String) cmbEngineType.getSelectedItem() ) ) {
             // only nuclear-powered mechs may use jump jets
-            if( CurVee.GetEngine().IsNuclear() ) {
-                /*
+            /*if( CurVee.GetEngine().IsNuclear() ) {
+                
                 if( cmbJumpJetType.getSelectedItem() == null ) {
                     EnableJumpJets( false );
                 } else {
                     EnableJumpJets( true );
                 }
-                 */
             } else {
                 EnableJumpJets( false );
             }
+             */
             return;
         }
         RecalcEngine();
-        spnCruiseMP.setValue(CurVee.getMinCruiseMP());
+        //spnCruiseMP.setValue(CurVee.getMinCruiseMP());
         FixMPSpinner();
 
         //When the engine changes we need to re-check the Heat Sinks
         CurVee.ResetHeatSinks();
         
         // only nuclear-powered mechs may use jump jets
-        if( CurVee.GetEngine().IsNuclear() ) {
+        /*if( CurVee.GetEngine().IsNuclear() ) {
             /*
             if( cmbJumpJetType.getSelectedItem() == null ) {
                 EnableJumpJets( false );
             } else {
                 EnableJumpJets( true );
             }
-             */
+             
         } else {
             EnableJumpJets( false );
-        }
+        }*/
 
         // refresh the selected equipment listbox
         if( CurVee.GetLoadout().GetNonCore().toArray().length <= 0 ) {
@@ -7712,6 +7735,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
 
         BuildLocationSelector();
         RecalcArmorLocations();
+        RefreshSelectedEquipment();
         RefreshSummary();
         RefreshInfoPane();
     }//GEN-LAST:event_cmbTurretActionPerformed
@@ -8055,44 +8079,44 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
 
     private void lstChooseAmmunitionValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseAmmunitionValueChanged
         if( lstChooseAmmunition.getSelectedIndex() < 0 ) { return; }
-        abPlaceable p = (abPlaceable) Equipment[AMMUNITION][lstChooseAmmunition.getSelectedIndex()];
-        ShowInfoOn( p );
+        CurItem = (abPlaceable) Equipment[AMMUNITION][lstChooseAmmunition.getSelectedIndex()];
+        ShowInfoOn( CurItem );
     }//GEN-LAST:event_lstChooseAmmunitionValueChanged
 
     private void lstChooseArtilleryValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseArtilleryValueChanged
         if( lstChooseArtillery.getSelectedIndex() < 0 ) { return; }
-        abPlaceable p = (abPlaceable) Equipment[ARTILLERY][lstChooseArtillery.getSelectedIndex()];
-        ShowInfoOn( p );
+        CurItem = (abPlaceable) Equipment[ARTILLERY][lstChooseArtillery.getSelectedIndex()];
+        ShowInfoOn( CurItem );
     }//GEN-LAST:event_lstChooseArtilleryValueChanged
 
     private void lstChooseEquipmentValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseEquipmentValueChanged
         if( lstChooseEquipment.getSelectedIndex() < 0 ) { return; }
-        abPlaceable p = (abPlaceable) Equipment[EQUIPMENT][lstChooseEquipment.getSelectedIndex()];
-        ShowInfoOn( p );
+        CurItem = (abPlaceable) Equipment[EQUIPMENT][lstChooseEquipment.getSelectedIndex()];
+        ShowInfoOn( CurItem );
     }//GEN-LAST:event_lstChooseEquipmentValueChanged
 
     private void lstChooseMissileValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseMissileValueChanged
         if( lstChooseMissile.getSelectedIndex() < 0 ) { return; }
-        abPlaceable p = (abPlaceable) Equipment[MISSILE][lstChooseMissile.getSelectedIndex()];
-        ShowInfoOn( p );
+        CurItem = (abPlaceable) Equipment[MISSILE][lstChooseMissile.getSelectedIndex()];
+        ShowInfoOn( CurItem );
     }//GEN-LAST:event_lstChooseMissileValueChanged
 
     private void lstChooseEnergyValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseEnergyValueChanged
         if( lstChooseEnergy.getSelectedIndex() < 0 ) { return; }
-        abPlaceable p = (abPlaceable) Equipment[ENERGY][lstChooseEnergy.getSelectedIndex()];
-        ShowInfoOn( p );
+        CurItem = (abPlaceable) Equipment[ENERGY][lstChooseEnergy.getSelectedIndex()];
+        ShowInfoOn( CurItem );
     }//GEN-LAST:event_lstChooseEnergyValueChanged
 
     private void lstChooseBallisticValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChooseBallisticValueChanged
         if( lstChooseBallistic.getSelectedIndex() < 0 ) { return; }
-        abPlaceable p = (abPlaceable) Equipment[BALLISTIC][lstChooseBallistic.getSelectedIndex()];
-        ShowInfoOn( p );
+        CurItem = (abPlaceable) Equipment[BALLISTIC][lstChooseBallistic.getSelectedIndex()];
+        ShowInfoOn( CurItem );
 }//GEN-LAST:event_lstChooseBallisticValueChanged
 
     private void lstChoosePhysicalValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstChoosePhysicalValueChanged
         if( lstChoosePhysical.getSelectedIndex() < 0 ) { return; }
-        abPlaceable p = (abPlaceable) Equipment[PHYSICAL][lstChoosePhysical.getSelectedIndex()];
-        ShowInfoOn( p );
+        CurItem = (abPlaceable) Equipment[PHYSICAL][lstChoosePhysical.getSelectedIndex()];
+        ShowInfoOn( CurItem );
     }//GEN-LAST:event_lstChoosePhysicalValueChanged
 
     private void cmbTechBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTechBaseActionPerformed
@@ -8711,7 +8735,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             RefreshOmniChoices();
         }
 
-        FixTonnageSpinner(CurVee.GetMaxTonnage());
+        FixTonnageSpinner( CurVee.GetMinTonnage(), CurVee.GetMaxTonnage() );
         BuildChassisSelector();
         BuildEngineSelector();
         BuildArmorSelector();
@@ -9488,6 +9512,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
 
     private void chkTrailerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkTrailerActionPerformed
         CurVee.SetTrailer(chkTrailer.isSelected());
+        String curEngine = cmbEngineType.getSelectedItem().toString();
         BuildEngineSelector();
         if ( chkTrailer.isSelected() ) {
             try {
@@ -9502,14 +9527,18 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             spnCruiseMPStateChanged(null);
         } else {
             try {
-                CurVee.setCruiseMP(1);
+                if ( Integer.parseInt(spnCruiseMP.getValue().toString()) == 0 )
+                    CurVee.setCruiseMP(1);
             } catch (Exception ex) {
                 Media.Messager(ex.getMessage());
             }
-            cmbEngineType.setSelectedIndex(0);
+            if ( curEngine == "No Engine" ) 
+                cmbEngineType.setSelectedIndex(0);
+            else
+                cmbEngineType.setSelectedItem(curEngine);
             cmbEngineTypeActionPerformed(evt);
-            spnCruiseMP.setValue(1);
-            ((SpinnerNumberModel)spnCruiseMP.getModel()).setMinimum(1);
+            //spnCruiseMP.setValue(1);
+            //((SpinnerNumberModel)spnCruiseMP.getModel()).setMinimum(1);
             spnCruiseMPStateChanged(null);
         }
         SetWeaponChoosers();
@@ -9581,6 +9610,11 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         RefreshInfoPane();
     }//GEN-LAST:event_spnRearTurretArmorStateChanged
 
+    private void cmbLocationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbLocationMouseClicked
+        if ( evt.getClickCount() == 2 )
+            btnAddEquipActionPerformed(null);
+    }//GEN-LAST:event_cmbLocationMouseClicked
+
     private void chkFullAmphActionPerformed(java.awt.event.ActionEvent evt) {
         CurVee.SetFullAmphibious(chkFullAmph.isSelected());
         RefreshSummary();
@@ -9607,6 +9641,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         int CurWalk = CurVee.getCruiseMP();
 
         if( CurWalk > MaxWalk ) { CurWalk = MaxWalk; }
+        if( CurWalk < CurVee.getMinCruiseMP() ) { CurWalk = CurVee.getMinCruiseMP(); }
         try {
             CurVee.setCruiseMP( CurWalk );
         } catch( Exception e ) {

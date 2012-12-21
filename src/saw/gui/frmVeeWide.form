@@ -1244,7 +1244,7 @@
                 <Component class="javax.swing.JComboBox" name="cmbMotiveType">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="8">
+                      <StringArray count="10">
                         <StringItem index="0" value="Hovercraft"/>
                         <StringItem index="1" value="Naval (Displacement)"/>
                         <StringItem index="2" value="Naval (Hydrofoil)"/>
@@ -1253,6 +1253,8 @@
                         <StringItem index="5" value="VTOL"/>
                         <StringItem index="6" value="Wheeled"/>
                         <StringItem index="7" value="WiGE"/>
+                        <StringItem index="8" value="Hovercraft (Super Heavy)"/>
+                        <StringItem index="9" value="Displacement (Super Heavy)"/>
                       </StringArray>
                     </Property>
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -4152,6 +4154,9 @@
                         <Property name="selectedIndex" type="int" value="0"/>
                         <Property name="visibleRowCount" type="int" value="4"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cmbLocationMouseClicked"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

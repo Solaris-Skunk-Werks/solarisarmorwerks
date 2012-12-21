@@ -83,7 +83,7 @@ public class dlgWeaponInfo extends javax.swing.JDialog {
             lblFCSClass.setText( ifMissileGuidance.FCS_NAMES[a.GetFCSType()] );
             lblSpecials.setText( "--" );
             lblTonnage.setText( "" + ((abPlaceable) a).GetTonnage() );
-            lblCrits.setText( "" + ((abPlaceable) a).NumCrits() );
+            lblCrits.setText( "" + ((abPlaceable) a).NumCVSpaces() );
             lblCost.setText( "" + CommonTools.RoundFractionalCost( ((abPlaceable) a).GetCost() ) );
             lblBV.setText( CommonTools.GetAggregateReportBV( (abPlaceable) a ) );
 
