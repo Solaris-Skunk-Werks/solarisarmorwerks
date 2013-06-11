@@ -9110,7 +9110,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
             cmbEngineTypeActionPerformed(evt);
             ((SpinnerNumberModel)spnCruiseMP.getModel()).setMinimum(0);
             spnCruiseMP.setValue(0);
-            spnCruiseMPStateChanged(null);
+            lblFlankMP.setText( "" + CurVee.getFlankMP() );
         } else {
             try {
                 CurVee.setCruiseMP(1);
@@ -9121,7 +9121,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
             cmbEngineTypeActionPerformed(evt);
             spnCruiseMP.setValue(1);
             ((SpinnerNumberModel)spnCruiseMP.getModel()).setMinimum(1);
-            spnCruiseMPStateChanged(null);
+            lblFlankMP.setText( "" + CurVee.getFlankMP() );
         }
         SetWeaponChoosers();
         RefreshEquipment();
@@ -9176,8 +9176,10 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
                 CurVee.SetHover();
                 break;
         }
-        chkTrailer.setEnabled(false);
-        if (CurVee.getCurConfig().CanBeTrailer()) {
+        if ( !CurVee.getCurConfig().CanBeTrailer() ) {
+            chkTrailer.setSelected(false);
+            chkTrailer.setEnabled(false);
+        } else {
             chkTrailer.setEnabled(true);
         }
 
@@ -9674,7 +9676,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
         lblFlankMP.setText( "" + CurVee.getFlankMP() );
 
         // reset the spinner model and we're done.
-        spnCruiseMP.setModel( new javax.swing.SpinnerNumberModel( CurVee.getCruiseMP(), 1, MaxWalk, 1) );
+        spnCruiseMP.setModel( new javax.swing.SpinnerNumberModel( CurVee.getCruiseMP(), CurVee.getMinCruiseMP(), MaxWalk, 1) );
         ((JSpinner.DefaultEditor)spnCruiseMP.getEditor()).getTextField().addFocusListener(spinners);
     }
 

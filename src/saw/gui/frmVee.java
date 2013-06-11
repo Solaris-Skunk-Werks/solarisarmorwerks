@@ -5626,9 +5626,12 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                 CurVee.SetHover();
                 break;
         }
-        chkTrailer.setEnabled(false);
-        if ( CurVee.getCurConfig().CanBeTrailer() )
+        if ( !CurVee.getCurConfig().CanBeTrailer() ) {
+            chkTrailer.setSelected(false);
+            chkTrailer.setEnabled(false);
+        } else {
             chkTrailer.setEnabled(true);
+        }
         
         BuildTurretSelector();
         cmbTurretActionPerformed(null);
@@ -6703,6 +6706,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
         chkFullAmph.setSelected(false);
         chkDuneBuggy.setSelected(false);
         chkEnviroSealing.setSelected(false);
+        chkTrailer.setSelected(false);
 
         if( Omni ) {
             UnlockGUIFromOmni();
@@ -9524,7 +9528,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             cmbEngineTypeActionPerformed(evt);
             ((SpinnerNumberModel)spnCruiseMP.getModel()).setMinimum(0);
             spnCruiseMP.setValue(0);
-            spnCruiseMPStateChanged(null);
+            lblFlankMP.setText( "" + CurVee.getFlankMP() );
         } else {
             try {
                 if ( Integer.parseInt(spnCruiseMP.getValue().toString()) == 0 )
@@ -9539,7 +9543,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             cmbEngineTypeActionPerformed(evt);
             //spnCruiseMP.setValue(1);
             //((SpinnerNumberModel)spnCruiseMP.getModel()).setMinimum(1);
-            spnCruiseMPStateChanged(null);
+            lblFlankMP.setText( "" + CurVee.getFlankMP() );
         }
         SetWeaponChoosers();
         RefreshEquipment();
