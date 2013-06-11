@@ -6631,7 +6631,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
                 CurVee.GetHeatSinks().GetNumHS(), CurVee.GetHeatSinks().GetBaseLoadoutNumHS(), 65, 1) );
         } else {
             spnHeatSinks.setModel( new javax.swing.SpinnerNumberModel(
-                CurVee.GetHeatSinks().GetNumHS(), CurVee.GetEngine().FreeHeatSinks(), 65, 1) );
+                CurVee.GetHeatSinks().GetNumHS(), ((CVLoadout)CurVee.GetLoadout()).GetTotalHeat(), 65, 1) );
         }
 
         ((JSpinner.DefaultEditor)spnHeatSinks.getEditor()).getTextField().addFocusListener(spinners);
@@ -7918,7 +7918,7 @@ public final class frmVeeWide extends javax.swing.JFrame implements java.awt.dat
                 }
                 lstSelectedEquipment.setListData(Equipment[SELECTED]);
             }
-            spnHeatSinks.setModel(new SpinnerNumberModel(CurVee.GetHeatSinks().GetNumHS(), CurVee.GetEngine().FreeHeatSinks(), 99, 1));
+            spnHeatSinks.setModel(new SpinnerNumberModel(CurVee.GetHeatSinks().GetNumHS(), ((CVLoadout)CurVee.GetLoadout()).GetTotalHeat(), 99, 1));
 
             // now refresh the information panes
             RefreshSummary();

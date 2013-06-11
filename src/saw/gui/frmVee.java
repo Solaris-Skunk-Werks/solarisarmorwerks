@@ -6047,7 +6047,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                 CurVee.UseTC(false, CurVee.GetTechBase() == AvailableCode.TECH_CLAN);
             }
             if( p.LocationLocked() ) {
-                Media.Messager( this, "You may not remove a locked item from the loadout." );
+                Media.Messager( this, "You may not remove a locked item (" + p.ActualName() + ") from the loadout." );
                 return;
             } else {
                 CurVee.GetLoadout().Remove( p );
@@ -6237,7 +6237,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                 }
                 lstSelectedEquipment.setListData( Equipment[SELECTED] );
             }
-            spnHeatSinks.setModel(new SpinnerNumberModel(CurVee.GetHeatSinks().GetNumHS(), CurVee.GetEngine().FreeHeatSinks(), 99, 1));
+            spnHeatSinks.setModel(new SpinnerNumberModel(CurVee.GetHeatSinks().GetNumHS(), ((CVLoadout)CurVee.GetLoadout()).GetTotalHeat(), 99, 1));
 
             // now refresh the information panes
             RefreshSummary();
@@ -7819,7 +7819,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
                 CurVee.GetHeatSinks().GetNumHS(), CurVee.GetHeatSinks().GetBaseLoadoutNumHS(), 65, 1) );
         } else {
             spnHeatSinks.setModel( new javax.swing.SpinnerNumberModel(
-                CurVee.GetHeatSinks().GetNumHS(), CurVee.GetEngine().FreeHeatSinks(), 65, 1) );
+                CurVee.GetHeatSinks().GetNumHS(), ((CVLoadout)CurVee.GetLoadout()).GetTotalHeat(), 65, 1) );
         }
 
         ((JSpinner.DefaultEditor)spnHeatSinks.getEditor()).getTextField().addFocusListener(spinners);
