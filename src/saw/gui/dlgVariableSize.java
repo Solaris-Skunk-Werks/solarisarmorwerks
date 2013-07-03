@@ -29,6 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package saw.gui;
 
 import common.CommonTools;
+import components.CombatVehicle;
 import javax.swing.SpinnerNumberModel;
 import components.Equipment;
 
@@ -36,20 +37,26 @@ public class dlgVariableSize extends javax.swing.JDialog {
 
     private Equipment CurEquip;
     private double CurTons;
+    private CombatVehicle Owner;
+    private double Max;
     private boolean result = true;
 
     /** Creates new form dlgVariableSize */
-    public dlgVariableSize( java.awt.Frame parent, boolean modal, Equipment e ) {
+    public dlgVariableSize( java.awt.Frame parent, boolean modal, Equipment e, CombatVehicle c ) {
         super( parent, modal );
         initComponents();
         CurEquip = e;
         CurTons = CurEquip.GetTonnage();
+        Owner = c;
+        boolean hasItem = Owner.GetLoadout().Find(e) == 11 ? false : true;
+        Max = Math.max((Owner.GetTonnage() - Owner.GetCurrentTons() + (hasItem ? CurEquip.GetTonnage() : 0.0)), 0);
+        CurEquip.SetMaxTons(Max);
         SetState();
     }
 
     private void SetState() {
         spnTonnage.setModel( new javax.swing.SpinnerNumberModel(
-            CurTons, CurEquip.GetMinTons(), CurEquip.GetMaxTons(), CurEquip.GetVariableIncrement() ) );
+            CurTons, CurEquip.GetMinTons(), Max, CurEquip.GetVariableIncrement() ) );
         setTitle( "Setting tonnage for " + CurEquip );
     }
 
@@ -150,7 +157,7 @@ public class dlgVariableSize extends javax.swing.JDialog {
     private void btnOkayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkayActionPerformed
         // now round to the nearest increment (up)
         double value = CommonTools.RoundHalfUp(CurTons); //Math.ceil( CurTons / CurEquip.GetVariableIncrement() ) * CurEquip.GetVariableIncrement();
-        if( value > CurEquip.GetMaxTons() ) { value = CurEquip.GetMaxTons(); }
+        if( value > Max ) { value = Max; }
         if( value < CurEquip.GetMinTons() ) { value = CurEquip.GetMinTons(); }
         CurEquip.SetTonnage( value );
         result = true;

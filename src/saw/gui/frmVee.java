@@ -652,7 +652,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
     public void SetVariableSize() {
         if( CurItem instanceof Equipment ) {
             if( ((Equipment) CurItem).IsVariableSize() ) {
-                dlgVariableSize SetTons = new dlgVariableSize( this, true, (Equipment) CurItem );
+                dlgVariableSize SetTons = new dlgVariableSize( this, true, (Equipment) CurItem, CurVee );
                 SetTons.setLocationRelativeTo( this );
                 SetTons.setVisible( true );
                 CurVee.GetLoadout().Remove(CurItem);
@@ -6194,7 +6194,7 @@ public final class frmVee extends javax.swing.JFrame implements java.awt.datatra
             boolean result = true;
             if( a instanceof Equipment ) {
                 if( ((Equipment) a).IsVariableSize() ) {
-                    dlgVariableSize SetTons = new dlgVariableSize( this, true, (Equipment) a );
+                    dlgVariableSize SetTons = new dlgVariableSize( this, true, (Equipment) a, CurVee );
                     SetTons.setLocationRelativeTo( this );
                     SetTons.setVisible( true );
                     result = SetTons.GetResult();
